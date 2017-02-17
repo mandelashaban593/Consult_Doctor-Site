@@ -12,6 +12,16 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
   <ul class="topmenu">
     <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
     -->
+      <li><a href="/Doct/" title="Logout">Home</a>
+        <ul class="submenu">
+            <!--   <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+
+    </li>
+    
+
     <li><a href="/Doct/about/">About Us</a>
         <ul class="submenu">
               <!-- <a href="/Doct/diogform/">Diognise</a> -->
@@ -25,20 +35,12 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
                     </ul>
     </li>
 
-    <li><a href="/Doct/">Our Team</a>
+    <li><a href="#">Our Team</a>
       <ul class="submenu">
              <!--  <li><a href="view_taxi.php" title="View Taxi Details">View </a></li>
           <li><a href="edit_taxi.php" title="Update Taxi Details">Update </a></li>                <li><a href="delete_taxi.php" title="Delete Taxi Details">Delete </a></li>   -->         
                     </ul>
     </li>
-
-    <li><a href="/Doct/"> Log In</a>
-          <ul class="submenu">
-              <!-- <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
-              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
-                    
-                    </ul>
-         </li>
 
 
 
@@ -113,37 +115,40 @@ Welcome to Online Doctor Consultation System
 
 {% elif recfm  %}
 
-{% include "index_rform.html" %}
+{% include "Doct/index_rform.html" %}
 
 {%  else %}
 {% load staticfiles %}
 
-<section class="team" id="team" style="width:100%;margin: 30px">
+
 
 
 <table>
  <tr> 
- <td  style="padding: 30px;"><img src="{% static 'img/images4.jpg' %}" alt="checked" width="400px" height="300px" /></td>
-   
-   <td style="padding: 30px"><img src="{% static 'img/avatar.jpeg' %}" alt="checked" width="400px" height="300px" /></td>
-   <td style="padding: 30px"><img src="{% static 'img/background.jpg' %}" alt="checked" width="400px" height="300px" /></td>
-   <td style="padding: 30px"><img src="{% static 'img/about1.jpg' %}" alt="checked" width="400px" height="300px" /></td>
+ <td style="padding: 20px"><img src="{% static 'img/about1.jpg' %}" alt="checked" width="250px" height="300px" /></td>
 
+ <td  style="padding:20px;"><img src="{% static 'img/doctorWom.jpg' %}" alt="checked" width="340px" height="300px" /></td>
+   
+   <td style="padding: 20px"><img src="{% static 'img/doctor2.jpg' %}" alt="checked" width="270px" height="300px" /></td>
+
+   <td style="padding: 20px"><img src="{% static 'img/opolot-jude-3.jpg' %}" alt="checked" width="260px" height="300px" /></td>
+   
    </tr>
    
 
    <tr>
-
-   <td style="padding: 30px;text-align: center;">Joh Paul<br/>(Doctor)</td> 
-   <td style="padding: 30px;text-align: center;">Mandela Shaban <br/>CEO & (Software Engineer)</td>
-   <td style="padding: 30px;text-align: center;">Namara Hannington<br/>(Software Engineer)</td> 
     <td style="padding: 30px;text-align: center;">Kren Sammy <br/>(Software Engineer)</td>
+
+   <td style="padding: 30px;text-align: center;">Jennifer Ricky<br/>(Doctor PHD)</td> 
+   <td style="padding: 30px;text-align: center;">Okuret Paul<br/>CEO & (Software Engineer)</td>
+   <td style="padding: 30px;text-align: center;">James Nalt<br/>(Doctor PHD)</td> 
+   
    </tr>
 
 
    </table>
 
-</section><!-- end of team section -->
+
 
 
 {% endif %}

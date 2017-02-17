@@ -49,6 +49,11 @@
 
 
 
+
+
+
+
+
       <li><a href="/Doct/" title="Logout">Logout</a>
         <ul class="submenu">
              <!--  <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
@@ -76,10 +81,6 @@
 
       <div id="content">
 
-
-
- {% include "Doct/notifications.html" %} 
-
  {% if pdiogs %}
 <h1 style="color: #337ab7; font-size: 18px;font-weight: bold; margin-right: 999px">Sickness Details</h1>
 {% endif %}
@@ -87,12 +88,13 @@
 
 {% if qconvs %}
 
-<table style="position: absolute; left: 500px;font-size: 12px">
+<table style="position: absolute; left: 300px;font-size: 12px">
 
-<tr><td style="width: 200px"><h1 style="">Converse</h1></td></tr>
+<tr><td style="width: px"><h1 style=""></h1></td></tr>
 <tr><td style="width: 200px"><a href="/Doct/patientConverse/{{qconv.dtelno}}/{{qconv.telno}}/">
 {{dname}}(Doctor)
 <br/>
+
 {{dtelno}}
 
 </td></tr>

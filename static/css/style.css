@@ -1,5 +1,5 @@
 body{
-	margin: 0;
+	margin: 10;
 	padding: 0;
 	font-family: 'BenchNine', sans-serif;
 }
@@ -589,6 +589,7 @@ li a.active{
     .carousel-inner,
     .carousel-inner .item {
       height: 100%;
+      width: 80%;
     }
 
 
@@ -819,9 +820,9 @@ responsive area
 
 #navigation
 {
-margin:0 20px 20px 10px;
+margin:0 20px 20px 0px;
 height: 50px;
-width:2308px;
+width:1308px;
 align:center;
 left:0px;
 top:1px;

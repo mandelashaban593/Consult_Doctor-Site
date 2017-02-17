@@ -1,5 +1,5 @@
 from django import forms
-from Doct.models import Page, UserProfile, Topup, Register, Illness, Diognosis,Contact,converse
+from Doct.models import Page, UserProfile, Topup, Register, Illness, Diognosis,Contact,converse,convPersonFrien,Messages
 from django.contrib.auth.models import User
 
 
@@ -61,7 +61,7 @@ class PatientForm(forms.ModelForm):
 class DoctorForm(forms.ModelForm):
 	class Meta:
 		model = Register
-		fields = ('fname', 'sname', 'page', 'gender', 'telno','username','password','email', 'street', 'city', 'state', 'zip_code', 'role', 'specialty')
+		fields = ('fname', 'sname', 'page', 'gender', 'telno','username','password','email', 'street', 'city', 'state', 'zip_code', 'role', 'specialty', 'profile_pic')
 
 
 class IllnessForm(forms.ModelForm):
@@ -140,4 +140,13 @@ class doctorConverseForm (forms.ModelForm):
     class Meta:
         model = converse
         fields = ['telno','phonedoctor','dmsg']
-        
+
+
+class MessagesForm(forms.ModelForm):
+
+    """
+    Form for adding  Illness details
+    """
+    class Meta:
+        model = Messages
+        fields = ['person_phone','friend_phone','msg']

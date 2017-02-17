@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Ubusina - Responsive HTML5 Template</title>
+	<title>E-sDoctor - </title>
 	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -16,7 +16,7 @@
 	<link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
 
 
-	<title>Consult a Doctor- {% block title %}A room {% endblock %}</title>
+	<title>Consult a Doctor- {% block title %} {% endblock %}</title>
 		<!-- JavaScript -->
 		<script src="{% static 'js/jquery_popup.js' %}"></script> <!-- JavaScript -->
 			
@@ -39,32 +39,25 @@
 
 <center>
 <div>
+
 {% block body_block %}	
+
+ <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}">
+    <script type="text/javascript" language="javascript" src="{% static 'js/dataTables.bootstrap.js' %}"></script>
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function() {
+        $('#example').dataTable();
+      } );
+    </script>
+
 
 {% endblock %}
 </div>
 </center>
 
-<!-- footer starts here -->
-<footer class="footer clearfix" style="width:100%; align:center">
-<div class="container" style="width:100%; align:center">
-<div class="row" style="width:100%; align:center">
-<div class="col-xs-6 footer-para" style="width:100%; align:center">
-<p style="width:100%; align:center">&copy;e-sDoctor.com All right reserved</p>
-</div>
-
-<div class="col-xs-6 text-right" style="width:100%; align:center">
-<a href=""><i class="fa fa-facebook" style="width:100%; align:center"></i></a>
-<a href=""><i class="fa fa-twitter"></i></a>
-<a href=""><i class="fa fa-skype"></i></a>
-</div>
-					</div>
-				</div>
-			</footer>
 
 
 
-	
 
 	<!-- script tags
 	============================================================= -->
@@ -80,6 +73,7 @@
 <script type="text/javascript" src="{% static 'js/login_effect.js' %}"></script>
 
 
+    
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
 </script>
 <script type="text/javascript">

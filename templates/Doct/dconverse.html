@@ -11,13 +11,7 @@
     <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
     -->
 
- 
-      <ul class="submenu">
-              <li><a href="view_login.php" title="View Taxi Details">View Login</a></li>
-          <li><a href="edit_login.php" title="Update Taxi Details">Update Login</a></li>                <li><a href="delete_login.php" title="Delete Taxi Details">Delete Login</a></li>           
-                    </ul>
 
-        </li>
           <li><a href="/Doct/" title="Logout">Home</a>
         <ul class="submenu">
               <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
@@ -29,7 +23,7 @@
    
    
  
-     <li><a href="/Doct/receipt/">Print reciept</a>
+     <li><a href="/Doct/doctor_receipt/">Print reciept</a>
           <ul class="submenu">
             <!--   <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
               <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
@@ -38,7 +32,7 @@
          </li>
 
 
-          <li><a href="/Doct/authdiog/">View Your Diognosis</a>
+          <li><a href="#">View Your Diognosis</a>
         <ul class="submenu">
               <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
                     <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
@@ -48,7 +42,7 @@
     </li>
 
 
-     <li><a href="/Doct/repmsg/">Reply message</a>
+          <li><a href="/Doct/ind_illness/">Individual  Sickness Detail</a>
         <ul class="submenu">
               <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
                     <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
@@ -56,6 +50,30 @@
                     </ul>
         
     </li>
+
+ 
+
+
+      <li>
+        <form action="/Doct/doctConv/" style=" height:35px;border: 0px; background-color: #3399FF;" id="changesicknessform_form" method="post">
+{% csrf_token %}
+<input type="hidden" name="dtelno" value="{{phonedoctor}}" style="width: 200px; border: 0px; " id="dname"/>
+
+<tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px; background-color: #3399FF; color: white;" /></td></tr>
+
+</form>
+          <ul class="submenu">
+              <!-- <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
+              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
+                    
+                    </ul>
+         </li>
+
+
+
+
+
+
 
       <li><a href="/Doct/" title="Logout">Logout</a>
         <ul class="submenu">
@@ -84,17 +102,18 @@
 
       <div id="content">
   
-<h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1>
-{% for qconv in qconvs %}
+<h1 style="color: #337ab7; font-size: 18px;margin-left: 400px;font-weight: bold;">Converse</h1>
+{% for pmem in pmem %}
 
 
 
 
-  <form action="/Doct/dviewmsg/" style=" height:35px;border: 0px;  width:60px;" id="changesicknessform_form" method="post">
+  <form action="/Doct/dviewmsg/" style=" height:35px;margin-left: 400px; border:
+  0px; width:60px;" id="changesicknessform_form" method="post">
 {% csrf_token %}
-<input type="hidden" name="telno" value="{{qconv.mem_phone}}" style="width: 200px; border: 0px; " id="dname"/>
+<input type="hidden" name="telno" value="{{pmem.mem_phone}}" style="width: 200px; border: 0px; " id="dname"/>
 
-<tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="{{qconv.mem_phone}}"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
+<tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="{{pmem.mem_phone}}"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
 
 </form>
 

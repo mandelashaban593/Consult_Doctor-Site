@@ -1,25 +1,27 @@
-<div id="formWrapper">
-<form action="/Doct/login/" method="post" id="changeloginform_form">
-{% csrf_token %}
-{% if response %}
-<script type="text/javascript">alert("Incorrect Username or Password");</script>
-{% endif %}
+<div id="" style="margin-left: 300px">
 <fieldset class="first">
-<h3>Enter Your Log In details</h3>
+<h3> Log In </h3>
 
-<label class="labelone" for="username" required>Telephone:</label>
-<input name="username" type="user"/>
-
-<label for="telno">Password:</label>
-<input name="password" type="password"  />
-
-
- 
+<form  action="/Doct/login/"  method="POST">
+{% csrf_token %}
 
 <table>
-<tr><td><input class="btn" name="submit" type="submit" value="Log In" /></td><td><input class="btn" name="submit" type="reset" value="Clear Form" /></td></tr>
+
+<tr  style="padding: 10px"><td style="padding-bottom:10px;">
+<label class="labelone" for="username" required>Telephone:</label></td>
+<td style="padding-bottom:10px;">
+<input name="telno" type="user" type="text"/><br/></td></tr>
+<br/>
+<tr  style="padding: 30px; padding-bottom:20px">
+<td style="padding-bottom:10px;"><label for="telno">Password:</label></td>
+<td style="padding-bottom:10px;"><input  name="password" type="password"  /></td>
+</tr>
+
+
+<tr  style="padding: 10px"><td style="padding-right:20px;"><input class="btn" name="submit" type="reset" value="Clear Form" /></td><td><input class="btn" name="submit" type="submit" value="Log In" /></td></tr>
 </table>
 
 </form>
 
 </fieldset>
+

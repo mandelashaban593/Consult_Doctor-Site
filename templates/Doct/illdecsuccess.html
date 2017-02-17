@@ -48,7 +48,7 @@
     </li>
 
 
-     <li><a href="/Doct/repmsg/">Reply message</a>
+     <li><a href="/Doct/repmsg/">Converse</a>
         <ul class="submenu">
               <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
                     <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
@@ -98,9 +98,9 @@
 
 {% if qconvs %}
 
-<table style="position: absolute; left: 500px ">
+<table style="position: absolute; left: 200px ">
 
-<tr><td style="width: 200px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
+<tr><td style="width: 200px"><h1 style="color: #337ab7; font-size: 25px;font-weight: bold;">Converse</h1></td></tr>
 <tr><td style="width: 200px"><a href="#">
 {{dname}}(Doctor)
 <br/>
@@ -109,12 +109,14 @@
 
 {% for qconv in qconvs %}
 
-<tr><td style="width: 200px">{{qconv.dtelno}}</td></tr>
+<tr><td style="width: 200px;font-size: 100px;">{{qconv.dtelno}}</td></tr>
 <tr><td  style="width: 200px">{{qconv.dmsg}}</td></tr>
 <tr style=""><td  style="width:200px;">{{qconv.telno}}</td></tr>
 <tr style=""><td  style="width:200px;padding-bottom: 7px">{{qconv.pmsg}}</td></tr>
+</table>
 
 {% endfor %}  
+<table style="position: absolute;margin-left:600px">
 
 <form action="/Doct/sendtext/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post">
 {% csrf_token %}
@@ -141,8 +143,9 @@
  
 
 
+<table style="width: 200px; border: 0px;margin-left: 900px;">
 
-<tr><td><form action="/Doct/converse/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post"></td></tr>
+<tr><td><form action="/Doct/converse/" style="width: 200px; border: 0px;margin-left: 400px;" id="changesicknessform_form" method="post"></td></tr>
 {% csrf_token %}
 <tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
 <tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
@@ -159,18 +162,7 @@
 
 
 
-<table>
-
-</table>
-
-
-<table>
-<tr>
-
-<td>
-<table  style="left:0px;margin-left: 0px; ">
-<tr><td>
-<table style="margin-right: 500px; top: 0px;">
+<table style="margin-left: 200px; top: 0px;">
 
 {% if pdiogs %}
 
@@ -178,38 +170,30 @@
 
 <tr><td style="width: 200px">{{pdiog.telno}}</td></tr>
 
+{% if pdiog.gender %} 
 
 <tr><td  style="width: 200px">{{pdiog.illness}}  </td></tr>
+{% endif %}
 
-<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.dname %} {{pdiog.diognosis}} {% else %} <font style="color:green">Pay 3,000 to Mob Phone 0754307471 for seeing doctor's response</font>{% endif %}</td></tr>
+<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.dname  %} {{pdiog.diognosis}} {% else %} <font style="color:green">Pay 3,000 to Mob Phone 0754307471 for seeing doctor's response</font>{% endif %}</td></tr>
 
 {% endfor %}  
 
 </table>
 
+<table>
+<tr>
 
- <td style="margin-top: 0px">{% include "Doct/expillness.html" %}</td></tr>
+ <td style="margin-top: 0px">{% include "Doct/expillness.html" %}</td>
 
 {% else %}
 
  <td style="margin-top: 0px">{% include "Doct/expillness.html" %}</td></tr>
 
-</td>
-
-<td>
-<table>
-
-<tr>
-
 
 {% endif %}
 
-</td></tr>
-</table>
 
-</td>
-<td>
-<table>
 
 <tr>
  <td style="margin-top: 0px">{% include "Doct/expillness.html" %}</td></tr>

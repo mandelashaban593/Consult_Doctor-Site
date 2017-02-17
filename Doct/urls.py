@@ -1,10 +1,15 @@
 from django.conf.urls import patterns, url
 from Doct import views
-from django.conf.urls import patterns, url
+from doct_admin import views as doct_views
+from django.conf.urls import patterns, url,include
+from django.contrib import admin
+admin.autodiscover()
+
 from Doct import views
 urlpatterns = patterns('',
 		url(r'^$', views.index, name='index'),
 		#url(r'^about/$', views.about, name='about'),
+
 		
 		url(r'^add_page/$', views.add_page, name='add_page'),
 
@@ -59,13 +64,22 @@ urlpatterns = patterns('',
 		url(r'^sendtext/$', views.Converse, name='sendtext'),
 		url(r'^dviewmsg/$', views.dviewmsg, name='dviewmsg'),
 		url(r'^sendrep/$', views.sendrep, name='sendrep'),
+		url(r'^convbaddy/$', views.convbaddy, name='convbaddy'),
+		url(r'^searchphone/$', views.searchPhone, name='searchphone'),
+		url(r'^convtext/$', views.convtext, name='convtext'),
+		url(r'^sendtext1/$', views.Converse1, name='sendtext1'),
+		url(r'^chuck/', include(
+                           admin.site.urls)),
 
-	
+		url(r'^addadmin/$', 'doct_admin.views.change_stuff_telephone', name="create_admin_telephone"),
+		url(r'^editpass/$', 'doct_admin.views.change_stuff_password', name="create_admin_telephone"),
+		url(r'^addstuff/$', 'doct_admin.views.create_stuff_user', name="create_admin_user"),
+		 url(r'^users/stuffs/$','doct_admin.views.stuff_users', name="view_admin_user"),
+		 url(r'^404$', views.custom_404, name='custom_404'),
+		url(r'^users/patients/$','doct_admin.views.patients', name="view_patient_user"),
+		url(r'^edit/stuffs/(\w+)/$','doct_admin.views.edit_stuff_user', name="edit_admin_user"),
 		
-	
-		
-	
-	
+
 		)  # New!
 
 

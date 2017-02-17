@@ -1,7 +1,7 @@
 {% load staticfiles %}
 {{illmsg}}
 
-<fieldset style="width:40%; align-self: right; margin-left: 0px;top: 120px;position: absolute;">
+<fieldset style="width:400px; align-self: right; margin-left: 0px;top: 120px;position: absolute;">
 
 <form action="/Doct/illness/" id="changesicknessform_form" method="post">
 {% csrf_token %}
@@ -16,7 +16,7 @@
 <tr style="padding: 10px"> <td>Patient Name</td><td style="padding: 2px"> <input type="text" name="pname" id="pname"/></td></tr>
 <br/>
 
-<tr style="padding: 18px"> <td>Sickness Condition</td> <td style="padding: 2px"><select name="illness"  required="True">{% include "Doct/cond_options.html" %}
+<tr style="padding: 18px"> <td>Sickness Condition</td> <td style="padding: 2px"><select name="illness"  required="True" style="width: 200px;">{% include "Doct/cond_options.html" %}
 </select></td></tr>
 
 <tr><td></td><td></td></tr>

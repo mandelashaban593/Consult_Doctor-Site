@@ -8,49 +8,44 @@
 
 <nav class="cf">
   <ul class="topmenu">
-    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
-    -->
-    <li><!-- <a href="/Doct/" title=" Home">Home</a> --></li>
-
-      <li><a href="/Doct/" title="Logout">Home</a>
+     <li><a href="/Doct/" title="Logout">Home</a>
         <ul class="submenu">
-             <!--  <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
                     <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
                     
                     </ul>
         
     </li>
-    
-    <li><a href="/Doct/diogform/">Diognise</a>
-      <ul class="submenu">
-             <!--  <li><a href="view_payments.php" title="View Taxi Details">View Payments</a></li>
-          <li><a href="edit_payments.php" title="Update Taxi Details">Update Payments</a></li>                <li><a href="delete_payments.php" title="Delete Taxi Details">Delete Payments</a></li>        -->    
-                    </ul>
-
-        </li>
-    <li><a href="/Doct/ind_illness/">Particular Patient Illness Detail</a>
-        <ul class="submenu">
-           <!--    <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-    <li><a href="/Doct/view_illness2/">View illness Details</a>
-        <ul class="submenu">
-            <!--   <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
-
+   
+   
+ 
      <li><a href="/Doct/doctor_receipt/">Print reciept</a>
           <ul class="submenu">
-              <!-- <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
+            <!--   <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
               <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
                     
                     </ul>
          </li>
-    
+
+
+          <li><a href="#">View Your Diognosis</a>
+        <ul class="submenu">
+              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+        
+    </li>
+
+
+          <li><a href="/Doct/ind_illness/">Individual  Sickness Detail</a>
+        <ul class="submenu">
+              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+        
+    </li>
 
     <li>
         <form action="/Doct/doctConv/" style=" height:35px;border: 0px; background-color: #3399FF;" id="changesicknessform_form" method="post">
@@ -116,10 +111,10 @@
 
 {% for qconv in qconvs %}
 
-<tr><td style="width: 200px">{{qconv.telno}}</td></tr>
-<tr><td  style="width: 200px">{{qconv.pmsg}}</td></tr>
-<tr style=""><td  style="width:200px;">{{qconv.phonedoctor}}</td></tr>
-<tr style=""><td  style="width:200px;padding-bottom: 7px">{{qconv.dmsg}}</td></tr>
+<tr><td style="width: 200px;background: #90ee90;">{{qconv.telno}}</td></tr>
+<tr><td  style="width: 200px;background: #90ee90;">{{qconv.pmsg}}</td></tr>
+<tr style=""><td  style="width:200px;background: #add8e6;">{{qconv.phonedoctor}}</td></tr>
+<tr style=""><td  style="width:200px;background: #add8e6;padding-bottom: 7px">{{qconv.dmsg}}</td></tr>
 
 {% endfor %}  
 

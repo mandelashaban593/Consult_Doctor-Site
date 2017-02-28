@@ -119,7 +119,7 @@
 {% endfor %}  
 
 
-<form action="/Doct/sendrep/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post">
+<form action="/Doct/sendrep/" style="width: 200px; border: 0px;" id="converse_area_form" method="post">
 {% csrf_token %}
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
@@ -151,6 +151,9 @@
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"></form></td></tr>
+
+
+
 
 
 
@@ -361,6 +364,74 @@ $(document).ready(function(){
 
 
 </script>
+
+
+
+<script type="text/javascript">  
+
+
+
+          function retDoctConverse(reload)
+{
+//do the search
+//start the ajax
+var myform = $('#converse_area_form');
+var disabled = myform.find(':input:disabled').removeAttr('disabled');
+ // serialize the form
+var serialized = myform.serialize();
+
+ // re-disabled the set of inputs that you previously enabled
+disabled.attr('disabled','disabled')
+
+    $.ajax({
+      //this is the php file that processes the data and send mail
+      url: "{% url 'ajDoctconv_list' %}",
+
+      //GET method is used
+      type: "POST",
+
+      //pass the data
+      data:serialized,
+
+      //Do not cache the page
+      cache: false,
+
+             beforeSend: function(){
+            $('#loading').show();
+            },
+             complete: function(){
+             $('#loading').hide();
+             setTimeout(retrieveConverse, 5000);
+            },
+
+
+      //success
+        success: function (html) {
+        $('#secure_area_message').html(html)  
+        },
+            error : function ()
+            {
+
+            }
+
+
+    });
+}
+
+   
+
+    retDoctConverse();
+  
+
+
+      
+
+
+
+</script>
+
+
+
 
 {% endblock %}
 

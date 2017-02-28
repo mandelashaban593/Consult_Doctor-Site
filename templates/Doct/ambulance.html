@@ -1,0 +1,28 @@
+{% load staticfiles %}
+{{illmsg}}
+
+
+<form action="/Doct/ambulance/"  id="ambform"  style="margin-left:200px" method="post">
+{% csrf_token %}
+<table>
+
+<img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" /><h1 align="center"  style="color: #337ab7; font-size: 18px;font-weight: bold;"><b >Fill Locations</b></h1>
+<tr><td><a href="/Doct/patientH" title="Logout">Back</a><td></td></td></tr>
+<tr style="padding: 18px"><td>Districts</td> <td style="padding: 2px"><select name="districts" id="selectEl" required="True">
+<option value="">Select option</option>
+<option value="Kampala">Kampala</option>
+<option value="Wakiso">Yes</option>
+</select></td></tr>
+<tr style="padding: 18px"><td>Place(e.g Banda)</td> <td style="padding: 2px"><input type="text" name="place" id="page"/></td></tr>
+
+<tr style="padding: 10px"> <td>Phone Number</td><td style="padding: 2px"> <input type="text" name="phone" id="pname"/></td></tr>
+<tr ><td>Amount</td><th style="padding: 5px">ugx.3,000</th></tr>
+<tr><td> Receiver Mob Number: </td><th>0754307471</th></tr>
+
+<tr><td><input type="reset" name="reset" style="width:100px"/></td> <td><input type="submit" name="submit" value="Submit"  style="width:100px"/></td></td></tr>  
+</table> 
+</form>
+
+<div id="secure_area_message" align="center"></div>
+
+

@@ -26,7 +26,7 @@ from Doct.utils import check_illness,mailer,success_message, error_message
 from Doct.sms import send_illness_sms_notification
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from Doct.models import Transaction, Rate, Country, Charge
+from Doct.models import Transaction, Rate, Country, Charge,Ambulance
 from Doct.utils import COUNTRY_CHOICES, NETWORK_CHOICES
 
 # Create your views here.
@@ -637,7 +637,7 @@ def patientConverse(request):
 		pdiogs = Diognosis.objects.filter(telno=ptelno, doctortelno=dtelno)
 		qconv = converse(telno=ptelno, phonedoctor=dtelno,pmsg=pmsg)
 		qconv.save()
-		qconvs = converse.objects.filter(telno=ptelno).order_by("-id")[:10]
+		qconvs = converse.objects.filter(telno=ptelno).order_by("-id")[:5]
 
 
 
@@ -645,7 +645,59 @@ def patientConverse(request):
 
 		
           	
-    	
+ 
+
+
+def add_to_phonebook(request):
+    template = settings.BASE_DIR + 'Doct/converse.html'
+    response = False
+    post_values = {}
+    if request.POST:
+        post_values = request.POST.copy()
+        post_values['user'] = request.user.pk
+        form = AddToPhonebookForm(post_values)
+        if form.is_valid():
+            try:
+                check_phonebook = check_phonebook(post_values)
+                response = False
+                post_values['duplicate'] = True
+            except Exception:
+                form.save()
+                response = True
+        else:
+            print form.errors
+    html = render_to_string(
+        template, {'response': response, 'data': post_values})
+    return HttpResponse(html)
+
+
+def ajconv_list(request):
+	context = RequestContext(request)
+	post_values = {}
+	pdiog = ''
+	pdiogs = ''
+	qconv = ''
+	qconvs = ''
+	ptelno=request.POST.get('telno', False)
+	dtelno=request.POST.get('dtelno', False)
+
+	pmsg=request.POST.get('pmsg', False)
+	dname = "Peter"
+	template = settings.BASE_DIR + 'templates/Doct/converse.html'
+        	
+	if request.POST:
+		pdiogs = Diognosis.objects.filter(telno=ptelno, doctortelno=dtelno)
+		if pmsg:
+			qconv = converse(telno=ptelno, phonedoctor=dtelno,pmsg=pmsg)
+			qconv.save()
+		qconvs = converse.objects.filter(telno=ptelno).order_by("-id")[:5]
+
+	html = render_to_string(
+       template, {'dname':dname,'ptelno':ptelno, 'dtelno':dtelno,  'pdiogs':pdiogs,'qconvs':qconvs})
+
+	return HttpResponse(html)
+
+          	 	
     		
    		
    		
@@ -697,6 +749,12 @@ def Converse(request):
 	qconvs = ''
 	ptelno=request.POST.get('telno', False)
 	dtelno=request.POST.get('dtelno', False)
+	request.session['ptelno'] = ptelno
+	request.session['dtelno'] = dtelno
+	
+	if not dtelno and not ptelno:
+		ptelno=request.session['ptelno'] 
+		dtelno=request.session['dtelno']
 
 	pmsg=request.POST.get('pmsg', False)
 	dname = "Peter"
@@ -741,6 +799,9 @@ def Converse(request):
  	
     
 	return render_to_response('Doct/converse.html', { 'dname':dname,'pdiog':pdiog,'ptelno':ptelno, 'dtelno':dtelno,  'pdiogs':pdiogs,'qconvs':qconvs}, context)
+	
+
+
 
 
 
@@ -1496,7 +1557,7 @@ def enterpay(request):
 			print "diog doesn't exist", e
 
 		try:
-			qconvs = converse.objects.filter(telno=telno).order_by("id")[:10]
+			qconvs = converse.objects.filter(telno=telno).order_by("id")[:5]
 			
 		except Exception,e:
 			print 'nothing', e
@@ -1658,7 +1719,7 @@ def sendrep(request):
 		try:
 			msg = converse(dmsg=dmsg,telno=ptelno,phonedoctor=dtelno)
 			msg.save()
-			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('id')[:10]
+			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('id')[:5]
 
 			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno}, context)
 		except Exception, e:
@@ -1667,10 +1728,44 @@ def sendrep(request):
 	else:
 		pass
 
+		
+		
 
-		
-		
-		
+def ajDoctconv_list(request):
+	# Like before, obtain the context for the user's hrequest.
+	context = RequestContext(request)
+	msg = ''
+	msg2 = ''
+	reply = True
+	qconvs = ''
+	dtelno = ''
+	ptelno = ''
+	pmsg = ''
+	template = settings.BASE_DIR + 'templates/Doct/convdoct.html'
+
+	# If the request is a HTTP POST, try to pull out the relevant information.
+	if request.method == 'POST':
+		dmsg=request.POST.get('dmsg', False)
+		ptelno=request.POST.get('telno', False)
+		dtelno=request.POST.get('dtelno', False)
+		try:
+			if msg:
+
+				msg = converse(dmsg=dmsg,telno=ptelno,phonedoctor=dtelno)
+				msg.save()
+			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('id')[:5]
+			html = render_to_string(
+        	template, {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno})
+
+        	
+		except Exception, e:
+			msg2 = "No doctor message messages for this chat"
+			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno}, context)
+	else:
+		pass
+
+	return HttpResponse(html)
+
 
 
 
@@ -1689,7 +1784,7 @@ def dviewmsg(request):
 	if request.method == 'POST':
 		ptelno=request.POST.get('telno', False)
 
-		qconvs=converse.objects.filter(telno=ptelno)
+		qconvs=converse.objects.filter(telno=ptelno).order_by('id')[:5]
 		
 		replyD = True
 
@@ -1768,6 +1863,20 @@ def user_logout(request):
 
 
 
+def ambulance(request):
+
+	context=RequestContext(request)
+	if request.POST:
+	    districts = request.POST['districts']
+	    place = request.POST['place']
+	    phone = request.POST['phone']
+	    amb=Ambulance(districts=districts,place=place,phone=phone)
+	    amb.save()
+	    
+		
+		
+
+	return render_to_response('Doct/patientH.html', { 'amb_msg': 'Ambulance will come to pick you now' }, context)
 
 
 

@@ -82,30 +82,17 @@
 
 {% block body_block %}
 
-      <div id="content">
-     {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
- return false;
- </script>
- {% endif %}
+
 
 
  {% include "Doct/notifications.html" %} 
 
- {% if pdiogs %}
-<h1 style="color: #337ab7; font-size: 18px;font-weight: bold; margin-right: 999px">Sickness Details</h1>
-{% endif %}
-
+<div id="div11">
 
 {% if qconvs %}
 
-<table style="position: absolute; left: 200px ">
+<table style="">
 
-<tr><td style="width: 200px"><h1 style="color: #337ab7; font-size: 25px;font-weight: bold;">Converse</h1></td></tr>
-<tr><td style="width: 200px"><a href="#">
-{{dname}}(Doctor)
-<br/>
-{{dtelno}}
-</td></tr>
 
 {% for qconv in qconvs %}
 
@@ -116,6 +103,10 @@
 </table>
 
 {% endfor %}  
+</div>
+
+<div id="div12">
+
 <table style="position: absolute;margin-left:600px">
 
 <form action="/Doct/sendtext/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post">
@@ -132,6 +123,9 @@
 
 
 </table>
+
+</div>
+
 {% else %}
 
 
@@ -141,16 +135,18 @@
 {% if pdiogs %}
 
  
+<div id="div15" >
 
+<table style="">
 
-<table style="width: 200px; border: 0px;margin-left: 900px;">
+<tr><td style="margin-right:700px;width: 200px;font-size: 12px">
 
-<tr><td><form action="/Doct/converse/" style="width: 200px; border: 0px;margin-left: 400px;" id="changesicknessform_form" method="post"></td></tr>
+<form action="/Doct/converse/" style="width: 200px; border: 0px;margin-left: 400px;" id="changesicknessform_form" method="post"></td></tr>
 {% csrf_token %}
 <tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
 <tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
+<tr><td style="width: 100px; padding-bottom: 3px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 3px"  readonly="readonly"  id="dname"/></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
 
@@ -159,12 +155,19 @@
 <tr><td style="width: 100px; padding-bottom: 7px"></form></td></tr>
 
 </table>
+</div>
 
 
+<div id="div13" >
 
-<table style="margin-left: 200px; top: 0px;">
+<table style="margin-right: 1000px">
 
 {% if pdiogs %}
+
+ {% if pdiogs %}
+<tr><td style="width: 200px">Sickness Details</td></tr>
+{% endif %}
+
 
 {% for pdiog in pdiogs %}
 
@@ -175,12 +178,17 @@
 <tr><td  style="width: 200px">{{pdiog.illness}}  </td></tr>
 {% endif %}
 
-<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.dname  %} {{pdiog.diognosis}} {% else %} <font style="color:green">Pay 3,000 to Mob Phone 0754307471 for seeing doctor's response</font>{% endif %}</td></tr>
+<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.dname  %} {{pdiog.diognosis}} {% else %} </td> </tr>
+<p>Pay 3,000 to Mob Phone<br> 0754307471 for seeing<br>doctor's response
+{% endif %}
 
 {% endfor %}  
 
 </table>
+</div>
 
+
+<div id="div14">
 <table>
 <tr>
 
@@ -208,27 +216,12 @@
 
 
 {% endif %}
-
-
 </div>
 
 
 
 
-<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/login_effect.js' %}"></script>
-<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript"></script>
-<script>
- $(document).ready(function() {
-  $('#navigation a').click(function(e) {
-   e.preventDefault();
-  /* $("div#my-container").load("/url/to/content/ #content-id")*/
-   $('#content').load($(this).attr('href'));
 
-   return false
-  });
- });
-</script> -->
 
 
 

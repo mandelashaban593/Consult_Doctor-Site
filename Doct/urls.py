@@ -78,6 +78,13 @@ urlpatterns = patterns('',
 		 url(r'^404$', views.custom_404, name='custom_404'),
 		url(r'^users/patients/$','doct_admin.views.patients', name="view_patient_user"),
 		url(r'^edit/stuffs/(\w+)/$','doct_admin.views.edit_stuff_user', name="edit_admin_user"),
+
+		url(r'^ajconv_list/$',
+                           'Doct.views.ajconv_list', name='ajconv_list'),
+		url(r'^ajDoctconv_list/$',
+                           'Doct.views.ajDoctconv_list', name='ajDoctconv_list'),
+
+		url(r'^ambulance/$', views.ambulance, name='ambulance'),
 		
 
 		)  # New!

@@ -79,24 +79,54 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+	$("#ambform").hide();
+	
     $('#purpose').on('change', function() {
       if ( this.value == '1')
       //.....................^.......
       {
         $("#business").show();
+        $("#cond_options").hide();
+        
       }
       else
       {
         $("#business").hide();
+        $("#cond_options").show();
       }
     });
+
+
+     $('#ambulance').on('change', function() {
+      if ( this.value == '1')
+      //.....................^.......
+      {
+        $("#ambform").show();
+        $("#illness").hide();
+        
+      }
+      else
+      {
+        $("#ambform").hide();
+        $("#illness").show();
+      }
+    });
+
+
+
+
+
+
 });
+
+
 
 </script>
 
 
 
  
+
 
 
 

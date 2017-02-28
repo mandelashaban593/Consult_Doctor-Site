@@ -589,7 +589,8 @@ li a.active{
     .carousel-inner,
     .carousel-inner .item {
       height: 100%;
-      width: 80%;
+      padding: 0;
+      margin: 0;
     }
 
 
@@ -947,3 +948,22 @@ width:40px;
 width:20%;	
 height:30%;
 }
+
+
+div { height: 50%; height: 50%; position: fixed; }
+#div1 {top:10%;left:18%; }
+#div2{top:10%;left:30%; }
+#div3{top:5;left:01%;background:  }
+#div4{top:0;left:60%; margin-bottom: 1000px;}
+#div5{top:5;left:60%; margin-bottom: 1000px;}
+
+
+div { height: 50%; height: 50%; position: fixed; }
+#div11 {top:8%;left:18%; }
+#div12{top:10%;left:10%; }
+#div13{top:5;left:0%;background:  }
+#div14{top:0;left:66%; margin-bottom: 1000px;}
+#div15{top:3;left:28%; margin-bottom: 1000px;}
+
+
+

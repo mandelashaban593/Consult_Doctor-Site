@@ -82,6 +82,47 @@
 
 {% block body_block %}
 
+<style>
+.chat_window {
+    position: fixed;
+    display: block;
+    bottom: 0px;
+    right: 20px;
+    z-index: 999;
+    background: #fff;
+    overflow: hidden;
+    border: thin solid black;
+    height: 26px;
+    width: 200px;
+}
+.chat_window .live_support {
+    width: 535px;
+    height: 224px;
+    float: left;
+    border: none;
+    display: none;
+}
+.chat_window {
+    cursor: pointer;
+    background: #F2F2F2;
+    padding: 3px;
+}
+.chat_window {
+    cursor: pointer;
+    background: #F2F2F2;
+    display: none;
+    padding: 3px;
+}
+</style>
+
+
+
+<script type="text/javascript">
+   $('.chat_window').animate({'height': '252px', 'width': '537px'});
+     $('#hide_live_support, #show_live_support, .live_support').toggle();
+</script>
+
+
       <div id="content">
      {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
  return false;
@@ -109,15 +150,15 @@
 
 {% for qconv in qconvs %}
 
-<tr><td style="width: 200px">{{qconv.dtelno}}</td></tr>
-<tr><td  style="width: 200px">{{qconv.dmsg}}</td></tr>
+<tr><td style="width: 200px;">{{qconv.dtelno}}</td></tr>
+<tr><td  style="width: 200px;">{{qconv.dmsg}}</td></tr>
 <tr style=""><td  style="width:200px;">{{qconv.telno}}</td></tr>
-<tr style=""><td  style="width:200px;padding-bottom: 7px">{{qconv.pmsg}}</td></tr>
+<tr style=""><td  style="width:200px;padding-bottom: 7px;">{{qconv.pmsg}}</td></tr>
 
 {% endfor %}  
 
 
-<form action="/Doct/sendtext/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post">
+<form action="/Doct/sendtext/" class="chat_window"  style="width: 200px; border: 0px;" id="show_live_support live_support" method="post">
 {% csrf_token %}
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
@@ -135,7 +176,7 @@
 
 
 
-<tr><td><form action="/Doct/sendtext/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post"></td></tr>
+<tr><td><form action="/Doct/sendtext/"  class="chat_window" style="width: 200px; border: 0px;" id="show_live_support live_support" method="post"></td></tr>
 {% csrf_token %}
 <tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
 <tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
@@ -355,6 +396,71 @@ $(document).ready(function(){
     });
 
 
+
+
+
+</script>
+
+
+
+<script type="text/javascript">  
+
+
+
+          function retrieveConverse(reload)
+{
+//do the search
+//start the ajax
+var myform = $('#phonebook_area_form');
+var disabled = myform.find(':input:disabled').removeAttr('disabled');
+ // serialize the form
+var serialized = myform.serialize();
+
+ // re-disabled the set of inputs that you previously enabled
+disabled.attr('disabled','disabled')
+
+    $.ajax({
+      //this is the php file that processes the data and send mail
+      url: "{% url 'ajconv_list' %}",
+
+      //GET method is used
+      type: "POST",
+
+      //pass the data
+      data:serialized,
+
+      //Do not cache the page
+      cache: false,
+
+             beforeSend: function(){
+            $('#loading').show();
+            },
+             complete: function(){
+             $('#loading').hide();
+             setTimeout(retrieveConverse, 5000);
+            },
+
+
+      //success
+        success: function (html) {
+        $('#secure_area_message').html(html)  
+        },
+            error : function ()
+            {
+
+            }
+
+
+    });
+}
+
+   
+
+    retrieveConverse();
+  
+
+
+      
 
 
 

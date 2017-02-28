@@ -1105,3 +1105,12 @@ class UserActions(models.Model):
         return location
 
 
+
+
+class Ambulance(models.Model):
+    '''store login data'''
+    amb_time = models.DateTimeField(auto_now_add=True)
+    districts = models.CharField(max_length=1000, blank=True, null=True)
+    place = models.CharField(blank=True, max_length=100,  default=False)
+    phone = models.CharField(blank=True, max_length=20,  default=False)
+

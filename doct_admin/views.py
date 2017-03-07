@@ -270,7 +270,7 @@ def stuff_users(request, name=False):
     '''fetch stuff '''
     context = RequestContext(request)
     
-    user_list = Register.objects.all()  # (is_staff=True)
+    user_list = Register.objects.filter(role="doctor")  # (is_staff=True)
     debug(user_list, 'stuff')
     user_list = user_list.filter().order_by('-id')
     # search query
@@ -352,12 +352,33 @@ def edit_stuff_user(request, name):
     id = int(name)
     context = RequestContext(request)
     users = ''
+    post_values = {}
     user = get_object_or_404(Register.objects.filter(id=id))
     form = EditAdminUserForm()
+    post_values = request.POST.copy()
+    fname = request.POST['fname']
+    sname = request.POST['sname']
+    page = request.POST['page']
+    gender = request.POST['gender']
+    email = request.POST['email']
+    username = request.POST['username']
+    street = request.POST['street']
+    specialty = request.POST['specialty']
+    profile_pic = request.POST['profile_pic']
+    role = request.POST['role']
     if request.POST:
-        form = EditAdminUserForm(request.POST, instance=user.user)
+        form = EditAdminUserForm(request.POST)
         if form.is_valid():
-
+            user.fname = fname
+            user.sname = sname
+            user.page = page
+            user.gender = gender
+            user.email = email
+            user.username = username
+            user.street = street
+            user.specialty = specialty
+            user.profile_pic = profile_pic
+            user.role = role
             user.save()
 
             messages.success(request, "The Stuff User Was Successfully Edited")
@@ -366,3 +387,28 @@ def edit_stuff_user(request, name):
 
 
 
+
+
+def dashboard(request):
+    context = RequestContext(request)
+
+    doctlog=True
+    diog = Diognosis.objects.all()
+
+    paginator = Paginator(diog, settings.PAGNATION_LIMIT)
+    page = request.GET.get('page')
+    try:
+        diog = paginator.page(page)
+    except PageNotAnInteger:
+        diog = paginator.page(1)
+        # If page is not an integer, deliver first page.
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        diog = paginator.page(paginator.num_pages)
+
+    staf=True
+        
+  
+    return render_to_response('Doct/index_staff.html', {'diogs':diog,'staf':staf, 'doctlog':doctlog}, context)
+
+   

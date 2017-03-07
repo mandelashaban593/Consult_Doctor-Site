@@ -92,6 +92,7 @@ class Diognosis(models.Model):
     amt = models.CharField(blank=False, max_length=30) 
     doctortelno = models.CharField(blank=False, max_length=30) 
     illness = models.CharField(blank=False, max_length=700)
+    ill_id  =  models.CharField(blank=False, max_length=30) 
 
     @models.permalink
     def edit_diognosis(self):
@@ -1059,9 +1060,11 @@ class Register(models.Model):
 
 
 
-class Contact(Register):
+class Contact(models.Model):
 
     # user = models.OneToOneField(User)
+    telno = models.CharField(blank=True, max_length=20,  default=False)
+    email = models.CharField(blank=True,max_length=50,  default=False)
     msg = models.CharField(blank=False, max_length=20,  default=False)
 
 

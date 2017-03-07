@@ -1,5 +1,5 @@
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.template import RequestContext
 from django.shortcuts import render_to_response, render
@@ -581,7 +581,7 @@ def illness(request):
     context = RequestContext(request)
     post_values = {}
     if request.POST:
-		post_values = request.POST.copy()
+		Fpost_values = request.POST.copy()
 		illness = request.POST['illness']
 		page = request.POST['page']
 		ptelno = request.POST['telno']
@@ -595,8 +595,9 @@ def illness(request):
 		ill_det=Illness(gender=gender, illness=illness, page=page,kintelno=ptelno)
 		ill_det.save()
 		gender = ill_det.gender	
+		ill_id = ill_det.id	
 		amb = request.POST['amb']
-		diog=Diognosis(page=page,diognosis=illness,amb=amb,telno=ptelno, doctortelno=dtelno, illness=illness)
+		diog=Diognosis(page=page,ill_id=ill_id, diognosis=illness,amb=amb,telno=ptelno, doctortelno=dtelno, illness=illness)
 		diog.save()
 		pdiogs = Diognosis.objects.filter(id=diog.id).order_by("id")[:10]
 		qconvs = converse.objects.filter(telno=ptelno).order_by("id")[:10]
@@ -792,7 +793,7 @@ def Converse(request):
 	        	qconv.save()
        
 	        
-	        qconvs = converse.objects.filter(telno=ptelno, phonedoctor=dtelno).order_by("id")
+	        qconvs = converse.objects.filter(telno=ptelno, phonedoctor=dtelno).order_by("-id")[:5]
 
 
 
@@ -1586,7 +1587,7 @@ def enterpay(request):
 	return render_to_response('Doct/payconsult.html', {'pay':pay}, context)	
 
 
-def editdiog(request,diog_id=1):
+def editdiog(request,diog_id=1, ill_id=1):
 	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)
 	msg = ''
@@ -1597,11 +1598,12 @@ def editdiog(request,diog_id=1):
 	if request.method == 'GET':
 		
 		ediog = Diognosis.objects.get(id=diog_id)
+		illpay = Illness.objects.get(id=ill_id)
 		
 		editD = True
 		staf = True 
 		
-		return render_to_response('Doct/index_staff.html', {'ediog':ediog, 'editD':editD, 'staf':staf}, context)
+		return render_to_response('Doct/index_staff.html', {'ediog':ediog,'illpay':illpay, 'editD':editD, 'staf':staf}, context)
 		
 	else:
 	# No context variables to pass to the template system, hence the
@@ -1719,7 +1721,7 @@ def sendrep(request):
 		try:
 			msg = converse(dmsg=dmsg,telno=ptelno,phonedoctor=dtelno)
 			msg.save()
-			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('id')[:5]
+			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('-id')[:5]
 
 			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno}, context)
 		except Exception, e:
@@ -2027,3 +2029,30 @@ def change_stuff_telephone(request, is_customer_care=False):
 
 
 
+def addcontact(request):
+    template = settings.AJAX_TEMPLATE_DIR + 'addcontact.html'
+    response = False
+    post_values = {}
+    context = RequestContext(request)
+
+    if request.POST:
+        post_values = request.POST.copy()
+        telno = post_values['telno']
+        email = post_values['email']
+        msg = post_values['msg']
+        print "Message %s " %  msg
+        
+    	cont=Contact(telno=telno,email=email, msg=msg)
+    	cont.save()
+    	response = True
+
+    	if cont:
+    		messages.success(request, "Your contact details have been Successfully added")
+            
+            
+        else:
+        	messages.success(request, "Error occured while adding your contact details")
+          
+
+
+    return render_to_response('Doct/contactus.html', {}, context)

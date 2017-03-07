@@ -120,29 +120,72 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 {%  else %}
 
-<h2 style="color: #42B3E5; margin-left: 260px;">contact us</h2>
+<h2 style="color: #42B3E5; margin-left: 460px;">contact us</h2>
+<p></p>
 
+{% include "Doct/notifications.html" %}
 
-<form style="margin-left: 340px;" action="/Doct/illness/" id="changesicknessform_form" method="post">
+    <div class="container">
+<div class="col-sm-8 col-sm-offset-2">
+    <!-- PAGE HEADER -->
+    <!-- FORM -->
+    <!-- pass in the variable if our form is valid or invalid -->
+    <form ng-app="myApp" action="/Doct/addcontact/" ng-controller="validateCtrl" name="myForm" novalidate>
 {% csrf_token %}
-<table>
+<p>Phonenumber:<br>
+  <input type="text" name="telno"  style="width:280px" ng-model="phone" required>
+  <span style="color:red" ng-show="myForm.telno.$dirty && myForm.telno.$invalid">
+  <span ng-show="myForm.telno.$error.required">Phonenumber is required.</span>
+  </span>
+</p>
 
-<tr style="padding: 10px"> <td>Phone</td><td style="padding: 2px"> <input  placeholder="Phone" type="text" name="phone" id="pname"/></td></tr>
-<br/>
+<p>Email:<br>
+  <input type="email" name="email"  style="width:280px" ng-model="email" required>
+  <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+  <span ng-show="myForm.email.$error.required">Email is required.</span>
+  </span>
+</p>
+  
 
-<tr style="padding: 18px"> <td style="padding-bottom:20px;">Email </td> <td style="padding: 2px;padding-bottom:20px;"><input class="" type="text" name="email"  placeholder="Email" style=" width:200px;"></td></tr>
+  <p>Message:<br>
+  <textarea ng-model="msg" name="msg" rows="4" cols="27"
+                        class="input-no-width rounded shaded left clearboth" id="msg" required>
+</textarea>
+
+  <span style="color:red" ng-show="myForm.msg.$dirty && myForm.msg.$invalid">
+  <span ng-show="myForm.msg.$error.required">Message is required.</span>
+  </span>
+</p>
+  
+<p>
+  <input type="submit"
+  ng-disabled="myForm.phone.$dirty && myForm.phone.$invalid || myForm.email.$dirty && myForm.email.$invalid || myForm.msg.$dirty && myForm.msg.$invalid" class="btn btn-primary" value="Submit">
+</p>
+
+    </form>
+
+    <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.telno = '';
+    $scope.email = '';
+    $scope.msg = '';
+});
+
+</script>
+</div><!-- col-sm-8 -->
+</div><!-- /container -->
 
 
-<tr style="padding: 18px"> <td style="padding-bottom:20px;">Message</td> <td style="padding: 2px;padding-bottom:20px;"> <textarea   class="" name="msg" id=""  placeholder="Message"></textarea></td></tr>
 
-
- 
-
-<tr  style="padding: 10px"><td style="padding-right:20px;"><input type="reset" name="reset" style="width:100px"/></td><td><input type="submit" name="submit" value="Submit"  style="width:100px"/></td></tr>
-
-</table> 
-</form>
-
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 <div id="secure_area_message" align="center"></div>
 
 
@@ -166,47 +209,80 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 {% endif %}
 
 
-<script type='text/javascript'>
+ <script type="text/javascript">
 
-//F
-//form validation
+          function addToPhonebook(reload)
+{
+//do the search
+//start the ajax
+var myform = $('#phonebook_area_form');
+var disabled = myform.find(':input:disabled').removeAttr('disabled');
+ // serialize the form
+var serialized = myform.serialize();
+
+ // re-disabled the set of inputs that you previously enabled
+disabled.attr('disabled','disabled')
+
+    $.ajax({
+      //this is the php file that processes the data and send mail
+      url: "/Doct/addcontact/",
+
+      //GET method is used
+      type: "POST",
+
+      //pass the data
+      data:serialized,
+
+      //Do not cache the page
+      cache: false,
+
+             beforeSend: function(){
+            $('#loading').show();
+            },
+             complete: function(){
+             $('#loading').hide();
+            },
+
+
+      //success
+        success: function (html) {
+        $('#secure_area_message').html(html)  
+        },
+            error : function ()
+            {
+
+            }
+
+
+    });
+}
+
+   
+
+  //form validation
   $(document).ready(function(){
-    $("#changeloginform_form").validate({
+    $("#phonebook_area_form").validate({
+
     rules:{
+     
 
-          username:
-            {
-            required:true,
-            minlength:3,
-            maxlength:20,
-            },
-            password:
-            {
-            required:true,
-            minlength:5,
-            maxlength:30,
-            },
+      },
         
-    },
-          messages: {
-      username: {
-        required: "Please provide a username",
-        minlength: "Please provide a Valid username",
-        maxlength:"Please provide a Valid username",
-      },
-      password: {
-        required: "Please provide a password",
-         minlength: "Please provide a Valid password",
-         maxlength:"Please provide a Valid password",
-      },
+      messages: {
+      
     },
 
+    submitHandler: function(form) {
+    addToPhonebook();
+    }
+
     });
-    });
+
+});
 
 
-
-</script>
+          </script>
+ 
 <div>
 
 </div>

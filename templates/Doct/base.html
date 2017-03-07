@@ -15,6 +15,15 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
 
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> 
+ 
+    <!-- JS ===================== -->
+    <!-- load angular -->
+    <script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
+    <script src="app.js"></script>
+
+
+
 
 	<title>Consult a Doctor- {% block title %} {% endblock %}</title>
 		<!-- JavaScript -->
@@ -24,7 +33,9 @@
 		<script type='text/javascript' src="{% static 'js/jquery.form-validation.js' %}"></script>
 
 		<link href="{% static 'css/element.css' %}" rel="stylesheet">
+    <link href="{% static 'css/chat.css' %}" rel="stylesheet">
 		<script src="{% static 'js/my_js.js' %}"></script>
+
 		 <center>
 
      {% block navbar %}
@@ -38,7 +49,10 @@
 <body>
 
 <center>
+
 <div>
+{% include "Doct/notifications.html" %}
+
 
 {% block body_block %}	
 
@@ -79,7 +93,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	$("#ambform").hide();
+
 	
     $('#purpose').on('change', function() {
       if ( this.value == '1')

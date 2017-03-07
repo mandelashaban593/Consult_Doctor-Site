@@ -119,15 +119,43 @@
   <th width="75"><strong> Payment Id</strong></th> <td>{{sickdiog.gender}}</td>
   <th><span style="font-weight: bold;">Doctor's message</span></th> <td>{{sickdiog.fup}}</td>
   <th><span style="font-weight: bold;">Staff pic</span></th> 
-  <form action="/Doct/sendreply/" id="changesicknessform_form" method="post">
+
+   <div class="container">
+<div class="col-sm-8 col-sm-offset-2">
+    <!-- PAGE HEADER -->
+    <!-- FORM -->
+    <!-- pass in the variable if our form is valid or invalid -->
+    <form ng-app="myApp" action="/Doct/sendreply/" method="post" ng-controller="validateCtrl" name="myForm" novalidate>
 {% csrf_token %}
-  <tr><td></td><td><input type="text" name="gender" id="gender" value="{{sickdiog.gender}}"/></td></tr> 
+<p>Payment Id:<br>
+  <input type="text" name="gender"  style="width:280px" ng-model="gender" required>
+  <span style="color:red" ng-show="myForm.gender.$dirty && myForm.gender.$invalid">
+  <span ng-show="myForm.gender.$error.required">Payment Id is required.</span>
+  </span>
+</p>
+  
+ <input type="hidden" name="role"  id="dname" value="patient"/> 
+   <input type="hidden" name="page"  id="dname" value="0"/> 
+  
+<p>
+  <input type="submit"
+  ng-disabled="myForm.gender.$dirty && myForm.gender.$invalid" class="btn btn-primary" value="Submit">
+</p>
 
-  <tr><th width="75"><strong>Reply</strong></th> <td><textarea class="message" name="reply" id="message" cols="30" rows="10" placeholder="Message"></textarea></td></tr>
+    </form>
 
-  <tr><td><input type="reset" name="reset" style="width:100px"/></td> <td><input type="submit" name="submit" value="Submit"  style="width:100px"/></td></td></tr> 
+    <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.telno = '';
+});
+</script>
+</div><!-- col-sm-8 -->
+</div><!-- /container -->
 
-  </form>
+
+
+
   </tr> 
 
    </table></td></tr></table>  {% else %}<table  style="left:0px"><tr><h1 align="left"><b>Sickness Details</b></h1></tr><tr ><th  style="padding: 18px">Doctor</th><th  style="padding: 18px">Sickness</th><th  style="padding: 18px">Doctor's response</th><th style="padding: 18px"></th> <th style="padding: 18px"></th></tr> {% for pdiog in pdiog %}<tr><td><img src="{% static 'img/images4.jpg' %}" alt="pat" width="30px" height="30px"/>{{pdiog.dname}}</td><td  style="width: 300px">{{pdiog.compill}}</td><td  style="width: 300px">{{pdiog.diognosis}}</td><td style="width: 300px"><a href="/Doct/sendreply/{{pdiog.gender}}/" >Reply</a></td></tr>{% endfor %}  {% endif %}</table></td><td style="padding: 18px;">{% include "Doct/expillness.html" %} </td></tr></table>

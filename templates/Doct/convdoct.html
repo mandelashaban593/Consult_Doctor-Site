@@ -8,44 +8,49 @@
 
 <nav class="cf">
   <ul class="topmenu">
-     <li><a href="/Doct/" title="Logout">Home</a>
+    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
+    -->
+    <li><!-- <a href="/Doct/" title=" Home">Home</a> --></li>
+
+      <li><a href="/Doct/" title="Logout">Home</a>
         <ul class="submenu">
-              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+             <!--  <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
                     <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
                     
                     </ul>
         
     </li>
-   
-   
- 
+    
+    <li><a href="/Doct/diogform/">Diognise</a>
+      <ul class="submenu">
+             <!--  <li><a href="view_payments.php" title="View Taxi Details">View Payments</a></li>
+          <li><a href="edit_payments.php" title="Update Taxi Details">Update Payments</a></li>                <li><a href="delete_payments.php" title="Delete Taxi Details">Delete Payments</a></li>        -->    
+                    </ul>
+
+        </li>
+    <li><a href="/Doct/ind_illness/">Particular Patient Illness Detail</a>
+        <ul class="submenu">
+           <!--    <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+    <li><a href="/Doct/view_illness2/">View illness Details</a>
+        <ul class="submenu">
+            <!--   <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+        
+    </li>
+
      <li><a href="/Doct/doctor_receipt/">Print reciept</a>
           <ul class="submenu">
-            <!--   <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
+              <!-- <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
               <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
                     
                     </ul>
          </li>
-
-
-          <li><a href="#">View Your Diognosis</a>
-        <ul class="submenu">
-              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
-
-
-          <li><a href="/Doct/ind_illness/">Individual  Sickness Detail</a>
-        <ul class="submenu">
-              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
+    
 
     <li>
         <form action="/Doct/doctConv/" style=" height:35px;border: 0px; background-color: #3399FF;" id="changesicknessform_form" method="post">
@@ -119,38 +124,72 @@
 {% endfor %}  
 
 
-<form action="/Doct/sendrep/" style="width: 200px; border: 0px;" id="converse_area_form" method="post">
+<form action="/Doct/sendrep/" style="width: 200px; border: 0px;"  ng-controller="validateCtrl" name="myForm" novalidate class="form-style-6" id="changesicknessform_form" method="post">
 {% csrf_token %}
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dtelno" value="0754307471" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><textarea name="dmsg" id="dname" style="width: 200px;  padding-bottom: 7px"  ></textarea></td></tr>
+<tr><td style="width: 100px; padding-bottom: 7px"><textarea name="dmsg" id="dname" ng-model="dmsg" required style="width: 200px;  padding-bottom: 7px"  ></textarea>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
+<span style="color:red" ng-show="myForm.dmsg.$dirty && myForm.dmsg.$invalid">
+  <span ng-show="myForm.dmsg.$error.required">Mobile Number is required.</span></td></tr>
+
+
+<tr><td style="width: 100px; padding-bottom: 7px"><input  ng-disabled="myForm.telno.$dirty && myForm.telno.$invalid" class="btn btn-primary"  type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"></form>
+
+    <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.dmsg = '';
+});
+</script>
+
 
 
 {% else %}
 
 
 
-<tr><td><form action="/Doct/sendtext/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post"></td></tr>
+
+    <div class="container"  style="margin-left: 200px">
+<div class="col-sm-8 col-sm-offset-2">
+    <!-- PAGE HEADER -->
+    <!-- FORM -->
+    <!-- pass in the variable if our form is valid or invalid -->
+    <form ng-app="myApp" action="/Doct/sendrep/" method="post" ng-controller="validateCtrl" name="myForm" novalidate class="form-style-6">
+    <h1>Converse</h1>
 {% csrf_token %}
-<tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
-<tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
+<input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
+<input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
+<p>
+  <input type="text" name="dmsg"  style="" ng-model="dmsg" required>
+  <span style="color:red" ng-show="myForm.dmsg.$dirty && myForm.dmsg.$invalid">
+  <span ng-show="myForm.dmsg.$error.required">Message is required.</span>
+  </span>
+</p>
+  
+  
+<p>
+  <input type="submit"
+  ng-disabled="myForm.dmsg.$dirty && myForm.dmsg.$invalid" class="btn btn-primary" value="Converse">
+</p>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="text" name="pmsg" style="width: 200px;  padding-bottom: 7px"    id="dname"/></td></tr>
+    </form>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
-
-<tr><td style="width: 100px; padding-bottom: 7px"></form></td></tr>
+    <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.dmsg = '';
+});
+</script>
+</div><!-- col-sm-8 -->
+</div><!-- /container -->
 
 
 
@@ -364,74 +403,6 @@ $(document).ready(function(){
 
 
 </script>
-
-
-
-<script type="text/javascript">  
-
-
-
-          function retDoctConverse(reload)
-{
-//do the search
-//start the ajax
-var myform = $('#converse_area_form');
-var disabled = myform.find(':input:disabled').removeAttr('disabled');
- // serialize the form
-var serialized = myform.serialize();
-
- // re-disabled the set of inputs that you previously enabled
-disabled.attr('disabled','disabled')
-
-    $.ajax({
-      //this is the php file that processes the data and send mail
-      url: "{% url 'ajDoctconv_list' %}",
-
-      //GET method is used
-      type: "POST",
-
-      //pass the data
-      data:serialized,
-
-      //Do not cache the page
-      cache: false,
-
-             beforeSend: function(){
-            $('#loading').show();
-            },
-             complete: function(){
-             $('#loading').hide();
-             setTimeout(retrieveConverse, 5000);
-            },
-
-
-      //success
-        success: function (html) {
-        $('#secure_area_message').html(html)  
-        },
-            error : function ()
-            {
-
-            }
-
-
-    });
-}
-
-   
-
-    retDoctConverse();
-  
-
-
-      
-
-
-
-</script>
-
-
-
 
 {% endblock %}
 

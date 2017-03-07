@@ -141,7 +141,7 @@
 
 <table style="position: absolute; left: 500px ">
 
-<tr><td style="width: 200px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
+<tr><td style="width: 200px"><h1  class="form-style-6">Converse</h1></td></tr>
 <tr><td style="width: 200px"><a href="#">
 {{dname}}(Doctor)
 <br/>
@@ -158,25 +158,35 @@
 {% endfor %}  
 
 
-<form action="/Doct/sendtext/" class="chat_window"  style="width: 200px; border: 0px;" id="show_live_support live_support" method="post">
+<form action="/Doct/sendtext/"   method="post"  ng-app="myApp"  ng-controller="validateCtrl" name="myForm" class="form-style-6" novalidate>
 {% csrf_token %}
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dtelno" value="0754307471" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="text" name="pmsg" style="width: 200px;  padding-bottom: 7px"    id="dname"/></td></tr>
+<tr><td style="width: 100px; padding-bottom: 3px"><input type="text"  ng-model="pmsg" name="pmsg" style="width: 200px"    id="dname" required/>
+<span style="color:red" ng-show="myForm.pmsg.$dirty && myForm.pmsg.$invalid">
+  <span ng-show="myForm.pmsg.$error.required">Message is required.</span></td></tr>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 7px"><input ng-disabled="myForm.pmsg.$dirty && myForm.pmsg.$invalid" type="submit" name="submit" value="Converse" class="btn btn-primary"  /></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"></form>
+
+  <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.pmsg  = '';
+});
+</script>
 
 
 {% else %}
 
 
 
-<tr><td><form action="/Doct/sendtext/"  class="chat_window" style="width: 200px; border: 0px;" id="show_live_support live_support" method="post"></td></tr>
+<tr><td><form action="/Doct/sendtext/"   method="post"  ng-app="myApp"  ng-controller="validateCtrl" name="myForm" class="form-style-6" novalidate></td></tr>
 {% csrf_token %}
 <tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
 <tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
@@ -185,12 +195,22 @@
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
 
-<tr><td"><input type="text" name="pmsg" style="width: 200px;  padding-bottom: 7px"    id="dname"/></td></tr></td></tr>
+<tr><td"><input type="text" name="pmsg"  ng-model="pmsg"  style="width: 200px;  padding-bottom: 7px"    id="dname" required/>
+ <span style="color:red" ng-show="myForm.pmsg.$dirty && myForm.pmsg.$invalid">
+  <span ng-show="myForm.pmsg.$error.required">Message is required.</span></td></tr></td></tr>
+  
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
+<tr><td style="width: 100px; padding-bottom: 7px"><input id="send" ng-disabled="myForm.pmsg.$dirty && myForm.pmsg.$invalid"  type="submit" name="submit" value="Converse"  class="btn btn-primary" style="width: 100px; border: 0px;" /></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"></form></td></tr>
 
+
+  <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.pmsg  = '';
+});
+</script>
 
 
 {% endif %}

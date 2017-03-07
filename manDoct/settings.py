@@ -253,6 +253,7 @@ STATIC_URL = BASE_URL + 'static/'
 
 LOCALHOST = False
 
+AJAX_TEMPLATE_DIR = BASE_DIR + 'templates/Doct/'
 
 try:
     from local_settings import *

@@ -1,7 +1,18 @@
+html {
+    overflow-y: scroll;
+    overflow-x: hidden; /* I do NOT want hz scroll */
+}
+body {
+    overflow-y: initial; /* avoid the double scroll */
+}
+
+
 body{
 	margin: 10;
-	padding: 0;
+	
+
 	font-family: 'BenchNine', sans-serif;
+	padding-top:30px;
 }
 li{
 	list-style: none;
@@ -834,7 +845,7 @@ font-size: 18px;
 
 }
 nav{
-	background: #CCCCCC;
+	background: #428bca;
 	height:2.3em;
 	align:center;
 	}
@@ -846,7 +857,7 @@ ul, li{
 	float:left;
 	}
 ul{
-	background: #3399FF;
+	background: #428bca;
 	height:2em;
 	width:100%;
 	}
@@ -861,7 +872,7 @@ li a{
 	text-decoration:none;
 	}
 li a:hover, .topmenu > li:hover > a{
-	background: #666666;
+	background: #428bca;
 	height:2em;
 	padding-top:.3em;
 	position:relative;
@@ -967,3 +978,82 @@ div { height: 50%; height: 50%; position: fixed; }
 
 
 
+
+.form-style-6{
+    font: 95% Arial, Helvetica, sans-serif;
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 5px;
+ 
+
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+    
+}
+
+.form-style-6 input[type="text"]:focus,
+.form-style-6 input[type="email"]:focus,
+.form-style-6 textarea:focus,
+.form-style-6 select:focus
+
+{
+    box-shadow: 0 0 5px #43D1AF;
+    padding: 3%;
+    border: 1px solid #43D1AF;
+}
+
+
+.form-style-6 input[type="text"],
+.form-style-6 input[type="email"],
+.form-style-6 textarea,
+.form-style-6 select
+{
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 4%;
+    border: 1px solid #ccc;
+    padding: 3%;
+    color: #555;
+    font: 95% Arial, Helvetica, sans-serif;
+}
+
+
+.form-style-6 h1{
+    background:#428bca;;
+    padding: 20px 0;
+    font-size: 140%;
+    font-weight: 300;
+    text-align: center;
+    margin: -16px -16px 16px -16px;
+}
+
+
+
+.form-style-8 textarea{
+    resize:none;
+    overflow: hidden;
+}
+
+
+
+
+.container_sick{
+    font: 95% Arial, Helvetica, sans-serif;
+    max-width: 500px;
+    margin: 10px auto;
+    padding: 16px;
+    width: 1900px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+    
+}

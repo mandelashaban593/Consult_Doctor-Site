@@ -1,27 +1,43 @@
-<div id="" style="margin-left: 300px">
-<fieldset class="first">
-<h3> Log In </h3>
 
-<form  action="/Doct/login/"  method="POST">
+
+    <div class="container">
+<div class="col-sm-8 col-sm-offset-2">
+    <!-- PAGE HEADER -->
+    <!-- FORM -->
+    <!-- pass in the variable if our form is valid or invalid -->
+    <form ng-app="myApp" action="/Doct/login/"  class="form-style-6" method="post" ng-controller="validateCtrl" name="myForm" novalidate>
 {% csrf_token %}
+<h1>Converse</h1>
 
-<table>
+<p>Telephone:<br>
+  <input type="text" name="telno"  style="width:280px" ng-model="telno"  Placeholder="Phonenumber" required>
+  <span style="color:red" ng-show="myForm.telno.$dirty && myForm.telno.$invalid">
+  <span ng-show="myForm.telno.$error.required">Mobile Number is required.</span>
+  </span>
+</p>
+  
+  <p>Password:<br>
+  <input type="password" name="password"  style="width:280px" ng-model="password" required>
+  <span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+  <span ng-show="myForm.password.$error.required">Mobile Number is required.</span>
+  </span>
+</p>
 
-<tr  style="padding: 10px"><td style="padding-bottom:10px;">
-<label class="labelone" for="username" required>Telephone:</label></td>
-<td style="padding-bottom:10px;">
-<input name="telno" type="user" type="text"/><br/></td></tr>
-<br/>
-<tr  style="padding: 30px; padding-bottom:20px">
-<td style="padding-bottom:10px;"><label for="telno">Password:</label></td>
-<td style="padding-bottom:10px;"><input  name="password" type="password"  /></td>
-</tr>
+  <input type="submit"
+  ng-disabled="myForm.telno.$dirty && myForm.telno.$invalid ||
+  myForm.password.$dirty && myForm.password.$invalid" class="btn btn-primary" value="Submit">
+</p>
 
+    </form>
 
-<tr  style="padding: 10px"><td style="padding-right:20px;"><input class="btn" name="submit" type="reset" value="Clear Form" /></td><td><input class="btn" name="submit" type="submit" value="Log In" /></td></tr>
-</table>
+    <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.telno = '';
+    $scope.password = '';
+});
+</script>
+</div><!-- col-sm-8 -->
+</div><!-- /container -->
 
-</form>
-
-</fieldset>
 

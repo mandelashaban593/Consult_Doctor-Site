@@ -1,5 +1,5 @@
 from django import forms
-from Doct.models import Page, UserProfile, Topup, Register, Illness, Diognosis,Contact,converse,convPersonFrien,Messages
+from Doct.models import Page, UserProfile, Topup, Register, Illness, Diognosis,Contact,converse,convPersonFrien,Messages,Contact
 from django.contrib.auth.models import User
 
 
@@ -150,3 +150,5 @@ class MessagesForm(forms.ModelForm):
     class Meta:
         model = Messages
         fields = ['person_phone','friend_phone','msg']
+
+

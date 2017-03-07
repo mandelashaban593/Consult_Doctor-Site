@@ -186,7 +186,7 @@
 <tr><td style="width: 200px">{{pdiog.telno}}</td></tr>
 
 
-{% if pdiog.dname %} 
+{% if pdiog.email %} 
 
 <tr><td  style="width: 200px">{{pdiog.illness}}  </td></tr>
 
@@ -207,7 +207,7 @@
 <div id="div4">
 <table>
 
- <tr><td style="margin-top: 0px; right:0px">{% include "Doct/expillness.html" %}</td>
+ <tr><td style="margin-top: 0px; right:0px"> {% include "Doct/expillness.html" %} </td>
 
 {% else %}
 
@@ -239,7 +239,7 @@
 
 {% endif %}
 <tr><td style="margin-top: 0px"> {% include "Doct/expillness2.html" %}</td></tr>
-<tr><td style="margin-top: 0px"> {% include "Doct/ambulance.html" %}</td></tr>
+<tr><td id="ambulance"> {% include "Doct/ambulance.html" %}</td></tr>
 </table>
 
 

@@ -47,7 +47,7 @@ urlpatterns = patterns('',
 		url(r'^enterpay/$', views.enterpay, name='enterpay'),
 		url(r'^restricted/', views.restricted, name='restricted'),
 		url(r'^signout/$', views.user_logout, name='logout'),
-		url(r'^editdiog/(?P<diog_id>\d+)/$', views.editdiog, name='editdiog'),
+		url(r'^editdiog/(?P<diog_id>\d+)/(?P<ill_id>\d+)/$', views.editdiog, name='editdiog'),
 		url(r'^edited_diog/$', views.edited_diog, name='edited_diog'),
 		url(r'^user_log/$', views.user_log, name='user_log'),
 		url(r'^AddIllDet/$', views.AddIllDet, name='AddIllDet'),
@@ -55,7 +55,7 @@ urlpatterns = patterns('',
 		url(r'^team/$', views.our_team, name='team'),
 		url(r'^follup/$', views.follup, name='follup'),
 		url(r'^repmsg/$', views.repmsg, name='repmsg'),
-		
+
 		url(r'^sendmessage/$', views.sendmessage, name='sendmessage'),
 		url(r'^converse/$', views.patientConverse, name='converse'),
 
@@ -85,8 +85,10 @@ urlpatterns = patterns('',
                            'Doct.views.ajDoctconv_list', name='ajDoctconv_list'),
 
 		url(r'^ambulance/$', views.ambulance, name='ambulance'),
+
+		url(r'^addcontact/$', views.addcontact, name='addcontact'),
+
+		url(r'^dashboard/$', 'doct_admin.views.dashboard', name='dashboard'),
 		
 
 		)  # New!
-
-

@@ -10,6 +10,7 @@ body {
   font-family: 'Roboto', Arial, sans-serif;
   font-weight: 300;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.0004);
+  overflow-y: visible;
 }
 h1,
 h2,

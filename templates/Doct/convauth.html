@@ -1,12 +1,7 @@
 
 
 
-    <div class="container">
-<div class="col-sm-8 col-sm-offset-2">
-    <!-- PAGE HEADER -->
-    <!-- FORM -->
-    <!-- pass in the variable if our form is valid or invalid -->
-    <form ng-app="myApp" class="form-style-6" action="/Doct/convbaddy/" method="post" ng-controller="validateCtrl" name="myForm" novalidate>
+    <form ng-app="myApp" class="form-style-6" action="/Doct/convbaddy/" method="post" ng-controller="validateCtrl" name="myForm" style="margin-left:450px" novalidate>
 {% csrf_token %}
 
 <h1>Converse</h1>
@@ -40,6 +35,4 @@ app.controller('validateCtrl', function($scope) {
     $scope.password = '';
 });
 </script>
-</div><!-- col-sm-8 -->
-</div><!-- /container -->
 

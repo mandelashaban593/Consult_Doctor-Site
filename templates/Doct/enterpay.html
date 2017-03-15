@@ -9,7 +9,7 @@
     <h1>Log In</h1>
 {% csrf_token %}
 <p>Mobile Number:<br>
-  <input type="text" name="telno"  style="width:280px" ng-model="telno" required>
+  <input type="text" name="telno"  style="width:280px" ng-model="telno" required="True">
   <span style="color:red" ng-show="myForm.telno.$dirty && myForm.telno.$invalid">
   <span ng-show="myForm.telno.$error.required">Mobile Number is required.</span>
   </span>

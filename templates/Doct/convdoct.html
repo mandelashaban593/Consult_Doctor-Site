@@ -89,12 +89,9 @@
 
 {% block body_block %}
 
-      <div id="content">
-     {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
- return false;
- </script>
- {% endif %}
 
+<style type="text/css"></style>
+<div id="content">
 
  {% include "Doct/notifications.html" %} 
 
@@ -103,9 +100,11 @@
 {% endif %}
 
 
+
+
 {% if qconvs %}
 
-<table style="position: absolute; left: 500px ">
+<table  style="position: absolute; left: 500px;overflow-y: scroll "  class="chat_box">
 
 <tr><td style="width: 200px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
 <tr><td style="width: 200px"><a href="#">
@@ -124,7 +123,8 @@
 {% endfor %}  
 
 
-<form action="/Doct/sendrep/" style="width: 200px; border: 0px;"  ng-controller="validateCtrl" name="myForm" novalidate class="form-style-6" id="changesicknessform_form" method="post">
+<form action="/Doct/sendrep/" style="height:35px;margin-left: 400px; border:
+  0px; width:60px;"  ng-controller="validateCtrl" name="myForm" novalidate class="form-style-6" id="changesicknessform_form" method="post">
 {% csrf_token %}
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/></td></tr>
@@ -155,12 +155,9 @@ app.controller('validateCtrl', function($scope) {
 
 
 
-    <div class="container"  style="margin-left: 200px">
-<div class="col-sm-8 col-sm-offset-2">
-    <!-- PAGE HEADER -->
-    <!-- FORM -->
-    <!-- pass in the variable if our form is valid or invalid -->
-    <form ng-app="myApp" action="/Doct/sendrep/" method="post" ng-controller="validateCtrl" name="myForm" novalidate class="form-style-6">
+
+    <form ng-app="myApp" action="/Doct/sendrep/" method="post" ng-controller="validateCtrl" name="myForm" novalidate class="form-style-6" style="height:35px;margin-left: 400px; border:
+  0px; width:60px;">
     <h1>Converse</h1>
 {% csrf_token %}
 <input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
@@ -188,8 +185,7 @@ app.controller('validateCtrl', function($scope) {
     $scope.dmsg = '';
 });
 </script>
-</div><!-- col-sm-8 -->
-</div><!-- /container -->
+
 
 
 

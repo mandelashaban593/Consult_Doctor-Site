@@ -194,6 +194,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'Doct',
     'doct_admin',
+    'djangoChat',
 
 )
 

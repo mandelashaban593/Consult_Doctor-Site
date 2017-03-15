@@ -146,23 +146,31 @@
 
 <div id="div2" >
 
-<table>
-<tr><td style="margin-right:700px;width: 200px;font-size: 12px">
 
- <form action="/Doct/converse/" style=" height:35px;border: 0px;  width:60px;" id="changesicknessform_form" method="post">
+<table style="margin-top:120px; ">
+
 {% csrf_token %}
-<tr><td style="width: 200px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
-<tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px">Peter(Doctor)</td></tr>
+<tr><td style="width: 200px"></td></tr>
+<tr style="border: 0px; padding-bottom: 7px;"><td style="width: 100px; padding-bottom: 7px">Peter(Doctor)</td></tr>
+
+
+
+</table>
+
+
+
+<form action="/Doct/converse/" style="height:35px;border: 0px; margin-top: 20px; background-color: #3399FF" id="changesicknessform_form" method="post">
+{% csrf_token %}
 
 <input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; " id="dname"/>
 
-<tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="0754307471"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
+<input type="hidden" name="dtelno" value="0754307471" style="width: 200px; border: 0px; " id="dname"/>
+
+<tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
 
 </form>
 
-</td></tr>
 
-</table>
 
 </div>
 
@@ -171,7 +179,7 @@
 
 <div id="div3" >
 
-<table  style="margin-right: 1000px">
+<table  style="margin-right: 1000px;word-wrap: normal;">
 
 {% if pdiogs %}
 
@@ -188,10 +196,10 @@
 
 {% if pdiog.email %} 
 
-<tr><td  style="width: 200px">{{pdiog.illness}}  </td></tr>
+<tr><td  style="width: 200px; word-wrap: break-word;">{{pdiog.illness}}  </td></tr>
 
 {{pdiog.diognosis}} {% else %} 
-<p>Pay 3,000 to Mob Phone<br> 0754307471 for seeing<br>doctor's response 
+<p>Pay 30,000 to Mob Phone<br> 0754307471 for seeing<br>doctor's response 
 </p>
 {% endif %}
 
@@ -239,7 +247,7 @@
 
 {% endif %}
 <tr><td style="margin-top: 0px"> {% include "Doct/expillness2.html" %}</td></tr>
-<tr><td id="ambulance"> {% include "Doct/ambulance.html" %}</td></tr>
+<tr  ><td style='display:none; padding: 18px' id="ambulance"> {% include "Doct/ambulance.html" %}</td></tr>
 </table>
 
 

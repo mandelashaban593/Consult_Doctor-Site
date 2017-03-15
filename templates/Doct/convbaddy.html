@@ -58,7 +58,7 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 		</strong>
 {% endif %}
 
-<div id="content">
+<div id="">
 
 {% if log %}
 
@@ -83,105 +83,11 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript"></script>
-<script type='text/javascript' src="{% static 'js/jquery.form-validation.js' %}"></script>
-
-<script type="text/javascript">
-   
-
-$(document).ready(function(){
-    $("#changepayform_form").validate({
-    rules:{
-
-            telno:
-            {
-            required:true,
-            digits: true,
-            maxlength:20,
-            },
-            amount:
-            {
-            required:true,
-            digits: true,
-            maxlength:10,
-            },
-    },
-          messages: {
-       
-        telno: {
-        required: "Telephone number is required",
-        digits: "Enter the valid Telephone number",
-        maxlength:"Please provide valid phone number",
-      },
-      amount: {
-      required: "Please provide Consultation amount",
-      digits: "Enter the valid Consultation amount",
-      maxlength:"Please provide valid Consultation amount",
-      },
-    
-    
-    },
-
-  
-
-    });
-    });
-
-</script>
-
-
-
-<!-- <div id="signup">Click
-<a href="/Doct/register/"><strong style="font-size:28px;font-weight:20px;">Sign Up</strong></a>
-
-</div> -->
-
 </div>
 
 {% endif %}
 </div>
 
-<script type='text/javascript'>
-
-//F
-//form validation
-  $(document).ready(function(){
-    $("#changeloginform_form").validate({
-    rules:{
-
-          username:
-            {
-            required:true,
-            minlength:3,
-            maxlength:20,
-            },
-            password:
-            {
-            required:true,
-            minlength:5,
-            maxlength:30,
-            },
-        
-    },
-          messages: {
-      username: {
-        required: "Please provide a username",
-        minlength: "Please provide a Valid username",
-        maxlength:"Please provide a Valid username",
-      },
-      password: {
-        required: "Please provide a password",
-         minlength: "Please provide a Valid password",
-         maxlength:"Please provide a Valid password",
-      },
-    },
-
-    });
-    });
-
-
-
-</script>
 <div>
 
 

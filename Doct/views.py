@@ -585,6 +585,7 @@ def illness(request):
 		illness = request.POST['illness']
 		page = request.POST['page']
 		ptelno = request.POST['telno']
+		pname = request.POST['pname']
 		dtelno = '0754307471'
 		dname = 'peter'
 		amount =  3000
@@ -614,7 +615,7 @@ def illness(request):
 		# send_illness_sms_notification(request,
   #            msg)
 		illness_delivered_email(request, msg)
-		return render_to_response('Doct/illdecsuccess.html', { 'pay_id':pay_id,'ptelno':ptelno,'gender':gender, 'pdiogs':pdiogs, 'qconvs':qconvs, 'dname':dname, 'dtelno':dtelno}, context)
+		return render_to_response('Doct/illdecsuccess.html', { 'pay_id':pay_id,'ptelno':ptelno,'gender':gender, 'pdiogs':pdiogs, 'qconvs':qconvs, 'dname':dname, 'dtelno':dtelno,'pname':pname}, context)
 
 
       
@@ -794,6 +795,7 @@ def Converse(request):
        
 	        
 	        qconvs = converse.objects.filter(telno=ptelno, phonedoctor=dtelno).order_by("-id")[:5]
+	        qconvs = reversed(qconvs)
 
 
 
@@ -1576,7 +1578,7 @@ def enterpay(request):
 			ill_more = True
 
 			 # return HttpResponse(response)
-			return render_to_response('Doct/index.html', {'ptelno':telno,'pdiogs':pdiogs,'patlog':patlog,'reg':reg, 'ill_more':ill_more, 'qconvs':qconvs}, context)
+			return render_to_response('Doct/patientH.html', {'ptelno':telno,'pdiogs':pdiogs,'patlog':patlog,'reg':reg, 'ill_more':ill_more, 'qconvs':qconvs}, context)
 
 
 	else:
@@ -1722,7 +1724,7 @@ def sendrep(request):
 			msg = converse(dmsg=dmsg,telno=ptelno,phonedoctor=dtelno)
 			msg.save()
 			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('-id')[:5]
-
+			qconvs = reversed(qconvs)
 			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno}, context)
 		except Exception, e:
 			msg2 = "No doctor message messages for this chat"
@@ -1755,7 +1757,8 @@ def ajDoctconv_list(request):
 
 				msg = converse(dmsg=dmsg,telno=ptelno,phonedoctor=dtelno)
 				msg.save()
-			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('id')[:5]
+			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('-id')[:5]
+			qconvs = reversed(qconvs)
 			html = render_to_string(
         	template, {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno})
 
@@ -1786,7 +1789,8 @@ def dviewmsg(request):
 	if request.method == 'POST':
 		ptelno=request.POST.get('telno', False)
 
-		qconvs=converse.objects.filter(telno=ptelno).order_by('id')[:5]
+		qconvs=converse.objects.filter(telno=ptelno).order_by('-id')[:5]
+		qconvs = reversed(qconvs)
 		
 		replyD = True
 

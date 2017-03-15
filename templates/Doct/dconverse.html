@@ -99,16 +99,23 @@
 {% endblock %}
 
 {% block body_block %}
+<style type="text/css">
+#content {
+overflow-y: scroll;
 
-      <div id="content">
+height: 100%;
+width:100%;
+};
+</style>
+      <div id="">
   
-<h1 style="color: #337ab7; font-size: 18px;margin-left: 400px;font-weight: bold;">Converse</h1>
+<h1 style="color: #337ab7; font-size: 18px;margin-left: 450px;font-weight: bold;">Converse</h1>
 {% for pmem in pmem %}
 
 
 
 
-  <form action="/Doct/dviewmsg/" id="chat-form" style=" height:35px;margin-left: 400px; border:
+  <form action="/Doct/dviewmsg/" id="chat-form" style=" height:35px;margin-left: 450px; border:
   0px; width:60px;" id="changesicknessform_form" method="post">
 {% csrf_token %}
 <input type="hidden" name="telno" value="{{pmem.mem_phone}}" style="width: 200px; border: 0px; " id="dname"/>

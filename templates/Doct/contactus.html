@@ -99,7 +99,7 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 		<br />
 {% endif %}
 
-<div id="content">
+<div id="">
 
 {% if signup %}
 
@@ -120,17 +120,11 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 {%  else %}
 
-<h2 style="color: #42B3E5; margin-left: 460px;">contact us</h2>
-<p></p>
 
 {% include "Doct/notifications.html" %}
 
-    <div class="container">
-<div class="col-sm-8 col-sm-offset-2">
-    <!-- PAGE HEADER -->
-    <!-- FORM -->
-    <!-- pass in the variable if our form is valid or invalid -->
-    <form ng-app="myApp" action="/Doct/addcontact/" ng-controller="validateCtrl" name="myForm" novalidate>
+    <form ng-app="myApp" action="/Doct/addcontact/" ng-controller="validateCtrl" name="myForm"   novalidate class="form-style-6" style="margin-left: 450px;">
+    <h1>Contact Us</h1>
 {% csrf_token %}
 <p>Phonenumber:<br>
   <input type="text" name="telno"  style="width:280px" ng-model="phone" required>
@@ -173,8 +167,7 @@ app.controller('validateCtrl', function($scope) {
 });
 
 </script>
-</div><!-- col-sm-8 -->
-</div><!-- /container -->
+
 
 
 
@@ -189,17 +182,6 @@ app.controller('validateCtrl', function($scope) {
 <div id="secure_area_message" align="center"></div>
 
 
-
-<div class="col-md-5 contact-info text-left">
-<h3>contact information</h3>
-<div class="info-detail">
-<ul><li><i class="fa fa-calendar"></i><span>Monday - Friday:</span> 9:30 AM to 6:30 PM</li></ul>
-<ul><li><i class="fa fa-map-marker"></i><span>Address:</span> 123 Kireka Street , Kampala, Uganda</li></ul>
-<ul><li><i class="fa fa-phone"></i><span>Phone:</span> +256754307471</li></ul>
-<ul><li><i class="fa fa-fax"></i><span>Fax:</span> +256786031444</li></ul>
-<ul><li><i class="fa fa-envelope"></i><span>Email:</span> daddyshaban593@gmail.com</li></ul>
-  </div>
-</div>
 
 
 

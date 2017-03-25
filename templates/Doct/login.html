@@ -1,36 +1,45 @@
 
 
-    <form ng-app="myApp" action="/Doct/login/"  class="form-style-6" method="post" ng-controller="validateCtrl" name="myForm" novalidate style="margin-left: 450px">
+{% load staticfiles %}
+
+<div style="visibility:visible;position:relative;top: 10px;
+    right: 34px" id="paypalformContainer" align="center">
+
+<form id="signup" action="/Doct/login/"  method="POST" style=" ">
 {% csrf_token %}
-<h1>Converse</h1>
+        <div class="header">
+        <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
+            <h3>Log In</h3>
+          
+            
+        </div>
+        
+        <div class="sep"></div>
 
-<p>Telephone:<br>
-  <input type="text" name="telno"  style="width:280px" ng-model="telno"  Placeholder="Phonenumber" required>
-  <span style="color:red" ng-show="myForm.telno.$dirty && myForm.telno.$invalid">
-  <span ng-show="myForm.telno.$error.required">Mobile Number is required.</span>
-  </span>
-</p>
-  
-  <p>Password:<br>
-  <input type="password" name="password"  style="width:280px" ng-model="password" required>
-  <span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
-  <span ng-show="myForm.password.$error.required">Mobile Number is required.</span>
-  </span>
-</p>
+        <div class="inputs">
 
-  <input type="submit"
-  ng-disabled="myForm.telno.$dirty && myForm.telno.$invalid ||
-  myForm.password.$dirty && myForm.password.$invalid" class="btn btn-primary" value="Submit">
-</p>
+
+            <p style="padding: 7px">Phonenumber:<br>
+            <input type="text" name="telno" id="pname" autofocus/>
+
+              </p>
+
+               <p style=' padding: 7px' id='business'>Password:<br>
+               <input type="password" name="password" id="pname" autofocus/>
+
+               </p>
+
+            <p style="padding: 7px">
+
+
+            <input type="submit" id="submit"  placeholder="Enter Message" value="Login" name="SUBMIT" required>
+           
+             </p>
+
+        
+        </div>
 
     </form>
 
-    <script>
-var app = angular.module('myApp', []);
-app.controller('validateCtrl', function($scope) {
-    $scope.telno = '';
-    $scope.password = '';
-});
-</script>
-
+    </div>
 

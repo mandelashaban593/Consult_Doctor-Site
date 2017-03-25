@@ -1,37 +1,42 @@
 
 
-    <div class="container" style="width:1200px" >
-<div class="col-sm-8 col-sm-offset-2">
-    <!-- PAGE HEADER -->
-    <!-- FORM -->
-    <!-- pass in the variable if our form is valid or invalid -->
-    <form ng-app="myApp" action="/Doct/enterpay/" method="post" ng-controller="validateCtrl" name="myForm" novalidate class="form-style-6">
-    <h1>Log In</h1>
+
+
+
+
+<form id="signup" action="/Doct/enterpay/"  method="POST" style=" position:absolute; 
+    left: 400px;
+    display:inline-block;
+    z-index:10;margin-top:25px;">
 {% csrf_token %}
-<p>Mobile Number:<br>
-  <input type="text" name="telno"  style="width:280px" ng-model="telno" required="True">
-  <span style="color:red" ng-show="myForm.telno.$dirty && myForm.telno.$invalid">
-  <span ng-show="myForm.telno.$error.required">Mobile Number is required.</span>
-  </span>
-</p>
-  
- <input type="hidden" name="role"  id="dname" value="patient"/> 
-   <input type="hidden" name="page"  id="dname" value="0"/> 
-  
-<p>
-  <input type="submit"
-  ng-disabled="myForm.telno.$dirty && myForm.telno.$invalid" class="btn btn-primary" value="Submit">
-</p>
+        <div class="header">
+        
+            <h3>Log In</h3>
+          
+            
+        </div>
+        
+        <div class="sep"></div>
+
+        <div class="inputs">
+
+            <p>Mobile Number:<br>
+        
+            <input type="telno" placeholder="Phonenumber" name="telno"  autofocus  style="width:260px;height:30px;padding: 7px;" />
+            </p>
+
+            
+            <input type="hidden" name="role"  id="dname" value="patient"/> 
+             <input type="hidden" name="page"  id="dname" value="0"/> 
+           
+
+            <p>
+
+            <input type="submit" id="submit"  placeholder="Enter Message" value="Log in" name="SUBMIT" required>
+           
+             </p>
+
+        
+        </div>
 
     </form>
-
-    <script>
-var app = angular.module('myApp', []);
-app.controller('validateCtrl', function($scope) {
-    $scope.telno = '';
-});
-</script>
-</div><!-- col-sm-8 -->
-</div><!-- /container -->
-
-

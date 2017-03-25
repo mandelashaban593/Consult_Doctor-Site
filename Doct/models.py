@@ -92,6 +92,7 @@ class Diognosis(models.Model):
     amt = models.CharField(blank=False, max_length=30) 
     doctortelno = models.CharField(blank=False, max_length=30) 
     illness = models.CharField(blank=False, max_length=700)
+    comp_signs =  models.CharField(blank=False, max_length=700) 
     ill_id  =  models.CharField(blank=False, max_length=30) 
 
     @models.permalink
@@ -111,8 +112,9 @@ class Illness(models.Model):
     email = models.CharField(blank=False, max_length=40)
     pname = models.CharField(blank=False, max_length=50)
     sname = models.CharField(blank=False, max_length=50)
-    gender = models.CharField(blank=False, max_length=30)
-    illness = models.CharField(blank=False, max_length=700)
+    gender = models.CharField(blank=False, max_length=30) # gender is the payment Id
+    illness = models.CharField(blank=False, max_length=700)  
+    comp_signs =  models.CharField(blank=False, max_length=700) 
     kin = models.CharField(blank=False, max_length=30)
     kintelno = models.CharField(blank=False, max_length=20)
     username = models.CharField(blank=False, max_length=20)
@@ -1117,3 +1119,24 @@ class Ambulance(models.Model):
     place = models.CharField(blank=True, max_length=100,  default=False)
     phone = models.CharField(blank=True, max_length=20,  default=False)
 
+
+
+
+
+
+class Orderdrugs(models.Model):
+
+    # user = models.OneToOneField(User)
+    telno = models.CharField(blank=True, max_length=20,  default=False)
+    location = models.CharField(blank=True,max_length=50,  default=False)
+    msg = models.CharField(blank=False, max_length=20,  default=False)
+    when = models.DateTimeField(auto_now_add=True)
+
+
+class Labtests(models.Model):
+
+    # user = models.OneToOneField(User)
+    telno = models.CharField(blank=True, max_length=20,  default=False)
+    location = models.CharField(blank=True,max_length=500,  default=False)
+    msg = models.CharField(blank=False, max_length=20,  default=False)
+    when = models.DateTimeField(auto_now_add=True)

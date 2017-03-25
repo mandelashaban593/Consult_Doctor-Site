@@ -5,43 +5,34 @@ link for the popup
 
 http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
-{% block navbar %}
-<div id = "navigation">
 
-<nav class="cf">
-  <ul class="topmenu">
-    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
-    -->
-     <li><a href="/Doct/" title="Logout">Home</a>
-        <ul class="submenu">
-            <!--   <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
-   
- 
-
-
-     <li><a href="/Doct/convbaddy/">Converse</a>
-        <ul class="submenu">
-              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
-
-     
-  
-</nav>
-
+{% block nav_bar %}
+<div class="header">
+<div class="wrap">
+<div class="logo"><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpeg' %}"  style="width:40px" alt="" />Online Doctor(Medical) Consulation</a></div>
+   <div class="con-right">
+      <div class="grid1-l-img">
+        <img src="{% static 'images/contact.png' %}" alt="">
+      </div>
+      <div class="grid1-l-desc">
+        <p>Contact : +256754307471</p>
+      </div>
+      <div class="clear"></div>
+  </div>
+    <div class="clear"></div>
+     </div>
 </div>
+<div class="header-bottom">
+      <div class="wrap">
+        <ul id="nav">
+                <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
+                <li><a class="hsubs" href="/Doct/convbaddy/">Converse</li>
+                
+               
+        </ul>
 
-
-
-
+       </div>
+</div>
 
 {% endblock %}
 

@@ -77,11 +77,12 @@ jQuery.browser = {};
     <ul class="nav nav-list">
 
 
-            <li>
-            <a href="/Doct/dashboard/"><i class="icon-dashboard"></i>Dashboard</a>
-            </li>
+
 
              {% if super_admin %}
+                         <li>
+            <a href="/Doct/dashboard2/"><i class="icon-dashboard"></i>Dashboard</a>
+            </li>
 
             <li id="link-title">
                 <a>Manage Users</a>
@@ -133,6 +134,14 @@ jQuery.browser = {};
             </a>
             </li>
 
+            {% else %}
+
+                        <li>
+            <a href="/Doct/dashboard/"><i class="icon-dashboard"></i>Dashboard</a>
+            </li>
+            
+
+
 
             {% endif %}
 
@@ -152,11 +161,6 @@ jQuery.browser = {};
             <li>
             <a href="/Doct/view_illness2/">View illness Details
             </a>
-            </li>
-
-            <li>
-                <a href="/Doct/doctor_receipt/">Print reciept</a>
-                
             </li>
             
 

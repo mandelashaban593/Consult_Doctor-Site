@@ -1,112 +1,82 @@
 {% load staticfiles %}
-{{illmsg}}
+<div style="visibility:hidden; position:relative;top:-40px;left: 90px;" id="ccformContainer">
+
+{% include "Doct/ambulance.html" %}
+
+</div>
 
 
-    <!-- PAGE HEADER -->
-    <!-- FORM -->
-    <!-- pass in the variable if our form is valid or invalid -->
-    <form ng-app="myApp"  id="illness" class="form-style-6" action="/Doct/illness/" method="post" ng-controller="validateCtrl" name="myForm" novalidate>
+<div style="visibility:visible;position:relative;top:-40px;left: 320px;" id="paypalformContainer" align="center">
+
+<form id="signup" action="/Doct/illness/"  method="POST" style=" ">
 {% csrf_token %}
+        <div class="header">
+        <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
+            <h3>Consult Doctor</h3>
+          
+            
+        </div>
+        
+        <div class="sep"></div>
 
-<img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" /><h1>Consult Doctor</h1>
-
-
-<p>Sickness Complicated ?:<br>
-
-<select id='purpose' ng-model="purpose" required="True">
-<option value="None">Select option</option>
-<option value="0">No</option>
-<option value="1">Yes</option>
-
-</select>
-  <span style="color:red" ng-show="myForm.purpose.$dirty && myForm.purpose.$invalid">
-  <span ng-show="myForm.purpose.$error.required">An option is required.</span>
-  </span>
-</p>
-  
-  <p id="cond_options" >Sickness Condition:<br>
-
-  <select name="illness"  ng-model="illness" required="True" style="width: 160px;">{% include "Doct/cond_options.html" %}
-</select>
-  <span style="color:red" ng-show="myForm.illness.$dirty && myForm.illness.$invalid">
-  <span ng-show="myForm.illness.$error.required">Sickness condition is required.</span>
-  </span>
-</p>
-
- <p style='display:none; padding: 18px' id='business'>Explain sickness Condition:<br>
-
- <input type='text' class='text' name='illness'  ng-model="illness"  Placeholder="sickness Condition" value size='20' />
-
-  <span style="color:red" ng-show="myForm.illness.$dirty && myForm.illness.$invalid">
-  <span ng-show="myForm.illness.$error.required">sickness Condition is required.</span>
-  </span>
-</p>
+        <div class="inputs">
 
 
- <p>
-You need an ambulance ?:<br>
+            <p style="padding: 7px">Disease  signs (Condition):<br>
 
-<select name="amb" id="ambulance" ng-model="amb" required="True">
-<option value="">Select option</option>
-<option value="0">No</option>
-<option value="1">Yes</option>
-</select>
-  <span style="color:red" ng-show="myForm.amb.$dirty && myForm.amb.$invalid">
-  <span ng-show="myForm.amb.$error.required">Ambulance option is required.</span>
-  </span>
-</p>
+             <select name="comp_signs"  required="True" style="width: 160px;" autofocus>{% include "Doct/cond_options.html" %}
+              </select>
+              </p>
 
- <p>
-Patient Name:<br>
+               <p style=' padding: 7px' id='business'>Explain Disease signs:<br>
+               <textarea type='text' class='text' name='illness' rows="3" cols="38"  Placeholder="Disease signs" value size='20'  autofocus></textarea>
 
-<input type="text" name="pname" ng-model="pname" Placeholder="names" id="pname"/>
-  <span style="color:red" ng-show="myForm.pname.$dirty && myForm.pname.$invalid">
-  <span ng-show="myForm.pname.$error.required">Patient Name is required.</span>
-  </span>
-</p>
+               </p>
 
- <p>
-Patient Age:<br>
-
-<input type="text" name="page" ng-model="page" Placeholder="Patient Age" id="page"/>
-  <span style="color:red" ng-show="myForm.page.$dirty && myForm.page.$invalid">
-  <span ng-show="myForm.page.$error.required">Patient Age is required.</span>
-  </span>
-</p>
+                <p style="padding: 7px">
+                You need an ambulance ?:<br>
+                <input value="1" type="radio" name="amb" onClick="displayForm(this)"></input>Yes
+                <br>
+                <input value="0" type="radio" name="amb" onClick="displayForm2(this)"></input>No
 
 
- <p>
-Mobile Number:<br>
-<input type="text" name="telno"  id="telno" ng-model="telno" Placeholder="Mobile Number"/>
-  <span style="color:red" ng-show="myForm.telno.$dirty && myForm.telno.$invalid">
-  <span ng-show="myForm.page.$error.required">Mobile Number is required.</span>
-  </span>
-</p>
+               </p>
 
-  <input type="submit"
-  ng-disabled="myForm.illness.$dirty && myForm.illness.$invalid ||
-  myForm.amb.$dirty && myForm.amb.$invalid ||
-  myForm.pname.$dirty && myForm.pname.$invalid  ||
-  myForm.page.$dirty && myForm.page.$invalid ||
-  myForm.telno.$dirty && myForm.telno.$invalid" class="btn btn-primary" value="Submit">
-</p>
+                <p style="padding: 7px"> Gender:<br>
+                 <select type="text" name="gender" Placeholder="Patient Age" id="page" autofocus>
+                 <option value="Male">Male</option>
+                 <option value="Female">Female</option>
+
+                 </select>
+              
+                </p>
+
+                 <p style="padding: 7px"> Patient Name:<br>
+                <input type="text" name="pname" id="pname" autofocus/>
+                </p>
+
+                <input type="hidden" name="telno"  id="telno" ng-model="telno" Placeholder="Mobile Number" value="{{ptelno}}"/>
+
+                <input type="hidden" name="role"  id="dname" value="patient"/> 
+                <input type="hidden" name="page"  id="dname" value="0"/> 
+           
+
+            <p style="padding: 7px">
+
+
+            <input type="submit" id="submit"  placeholder="Enter Message" value="Submit" name="SUBMIT" required>
+           
+             </p>
+
+        
+        </div>
 
     </form>
 
-    <script>
-var app = angular.module('myApp', []);
-app.controller('validateCtrl', function($scope) {
-    $scope.illness = '';
-    $scope.amb= '';
-    $scope.pname= '';
-    $scope.page = '';
-    $scope.telno = '';
-});
-</script>
+    </div>
 
 
 
 
-<div id="secure_area_message" align="center"></div>
 
 

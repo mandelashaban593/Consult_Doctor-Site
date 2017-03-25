@@ -5,84 +5,47 @@ link for the popup
 
 http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
-{% block navbar %}
-<div id = "navigation">
-
-<nav class="cf">
-  <ul class="topmenu">
-    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
-    -->
-
-     <li><a href="/Doct/" title="Logout">Home</a>
-        <ul class="submenu">
-            <!--   <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
+{% block nav_bar %}
+<div class="header">
+<div class="wrap">
+<div class="logo"><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpeg' %}"  style="width:40px" alt="" />Online Doctor(Medical) Consulation</a></div>
+   <div class="con-right">
+      <div class="grid1-l-img">
+        <img src="{% static 'images/contact.png' %}" alt="">
+      </div>
+      <div class="grid1-l-desc">
+        <p>Contact : +256754307471</p>
+      </div>
+      <div class="clear"></div>
+  </div>
+    <div class="clear"></div>
+     </div>
+</div>
+<div class="header-bottom">
+      <div class="wrap">
+        <ul id="nav">
+                <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
+                <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
+                <li><a class="hsubs" href="/Doct/team/">Our Team</a>
+                 <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
+                <li><a href="/Doct/contact/">Contact Us</a></li>
+                <li><a href="/Doct/how_it_works/">How it works</a></li>
+                <li><a href="/Doct/convbaddy/">Converse</a></li>
+                <li><a href="/Doct/whyus/">Why Us</a></li>
+                    <ul class="subs">
+                        <li><a href="#">Hotels</a></li>
+                        <li><a href="#">Restaurants</a></li>
+                        <li><a href="#">Beach Resorts</a></li>
                     </ul>
+                </li>
+               
+        </ul>
 
-    </li>
-
-    
-    <li><a href="/Doct/about/">About Us</a>
-        <ul class="submenu">
-              <!-- <a href="/Doct/diogform/">Diognise</a> -->
-          <!-- <li><a href="edit_employee.php" title="Update Staff Details">Update </a></li>                 <li><a href="delete_employee.php" title="Delete Staff Details">Delete </a></li>  -->          
-                    </ul>
-    </li>
-    <li><a href="/Doct/contact/">Contact Us</a>
-      <ul class="submenu">
-        <!--       <li><a href="view_taxi.php" title="View Taxi Details">View </a></li>
-          <li><a href="edit_taxi.php" title="Update Taxi Details">Update </a></li>                <li><a href="delete_taxi.php" title="Delete Taxi Details">Delete </a></li>    -->        
-                    </ul>
-    </li>
-
-    <li><a href="/Doct/team/">Our Team</a>
-      <ul class="submenu">
-            <!--   <li><a href="view_taxi.php" title="View Taxi Details">View </a></li>
-          <li><a href="edit_taxi.php" title="Update Taxi Details">Update </a></li>                <li><a href="delete_taxi.php" title="Delete Taxi Details">Delete </a></li>   -->         
-                    </ul>
-
-  
-
-
-    <li><a href="/Doct/login/">Doctor/Admin Log In</a>
-          <ul class="submenu">
-            <!--   <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
-              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
-                    
-                    </ul>
-         </li>
-
-    <li><a href="/Doct/how_it_works/">How it works</a>
-          <ul class="submenu">
-              <!-- <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
-              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
-                    
-                    </ul>
-         </li>
-<li><a href="/Doct/" title="Logout">Logout</a>
-        <ul class="submenu">
-            <!--   <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
-
-
-    </ul>
- 
-     
-  
-</nav>
-
+       </div>
 </div>
 
-
-
-
-
 {% endblock %}
+
 
 
 {% block body_block %}
@@ -120,53 +83,53 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 {%  else %}
 
+<style>
+
+</style>
+
+
+
 
 {% include "Doct/notifications.html" %}
 
-    <form ng-app="myApp" action="/Doct/addcontact/" ng-controller="validateCtrl" name="myForm"   novalidate class="form-style-6" style="margin-left: 450px;">
-    <h1>Contact Us</h1>
+  
+
+
+
+
+
+
+ <form id="signup" action="/Doct/addcontact/" method="POST" style="margin-left: 340px;margin-top:25px;">
 {% csrf_token %}
-<p>Phonenumber:<br>
-  <input type="text" name="telno"  style="width:280px" ng-model="phone" required>
-  <span style="color:red" ng-show="myForm.telno.$dirty && myForm.telno.$invalid">
-  <span ng-show="myForm.telno.$error.required">Phonenumber is required.</span>
-  </span>
-</p>
+        <div class="header">
+        
+            <h3>Contact Us</h3>
+          
+            
+        </div>
+        
+        <div class="sep"></div>
 
-<p>Email:<br>
-  <input type="email" name="email"  style="width:280px" ng-model="email" required>
-  <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
-  <span ng-show="myForm.email.$error.required">Email is required.</span>
-  </span>
-</p>
-  
+        <div class="inputs">
+        
+            <input type="Phonenumber" placeholder="Phonenumber" name="telno" required autofocus  style="width:260px;height:30px;padding: 7px;" /> <br/><br/>
 
-  <p>Message:<br>
-  <textarea ng-model="msg" name="msg" rows="4" cols="27"
-                        class="input-no-width rounded shaded left clearboth" id="msg" required>
-</textarea>
+            <input type="email" placeholder="e-mail" style="width:260px;height:30px;padding: 7px;" autofocus /> <br/>
+        
+            <textarea type="msg" placeholder="Message"  rows="6" cols="38" name="msg"></textarea> <br/>
 
-  <span style="color:red" ng-show="myForm.msg.$dirty && myForm.msg.$invalid">
-  <span ng-show="myForm.msg.$error.required">Message is required.</span>
-  </span>
-</p>
-  
-<p>
-  <input type="submit"
-  ng-disabled="myForm.phone.$dirty && myForm.phone.$invalid || myForm.email.$dirty && myForm.email.$invalid || myForm.msg.$dirty && myForm.msg.$invalid" class="btn btn-primary" value="Submit">
-</p>
+            <input type="submit" id="submit"  placeholder="Enter Message" value="submit" name="SUBMIT" required>
+           
+            
+
+        
+        </div>
 
     </form>
 
-    <script>
-var app = angular.module('myApp', []);
-app.controller('validateCtrl', function($scope) {
-    $scope.telno = '';
-    $scope.email = '';
-    $scope.msg = '';
-});
 
-</script>
+
+
 
 
 
@@ -191,79 +154,6 @@ app.controller('validateCtrl', function($scope) {
 {% endif %}
 
 
- <script type="text/javascript">
-
-          function addToPhonebook(reload)
-{
-//do the search
-//start the ajax
-var myform = $('#phonebook_area_form');
-var disabled = myform.find(':input:disabled').removeAttr('disabled');
- // serialize the form
-var serialized = myform.serialize();
-
- // re-disabled the set of inputs that you previously enabled
-disabled.attr('disabled','disabled')
-
-    $.ajax({
-      //this is the php file that processes the data and send mail
-      url: "/Doct/addcontact/",
-
-      //GET method is used
-      type: "POST",
-
-      //pass the data
-      data:serialized,
-
-      //Do not cache the page
-      cache: false,
-
-             beforeSend: function(){
-            $('#loading').show();
-            },
-             complete: function(){
-             $('#loading').hide();
-            },
-
-
-      //success
-        success: function (html) {
-        $('#secure_area_message').html(html)  
-        },
-            error : function ()
-            {
-
-            }
-
-
-    });
-}
-
-   
-
-  //form validation
-  $(document).ready(function(){
-    $("#phonebook_area_form").validate({
-
-    rules:{
-     
-
-      },
-        
-      messages: {
-      
-    },
-
-    submitHandler: function(form) {
-    addToPhonebook();
-    }
-
-    });
-
-});
-
-
-          </script>
  
 <div>
 

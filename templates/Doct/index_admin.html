@@ -31,19 +31,27 @@ Es-doctor Stats
                   <tbody>
                   <tr>
                       <td>#</td>
-                      <td>User Count</td>
-                      <td>{{admin_data.user_count}}</td>
+                      <td>Diognised Patient Count</td>
+                      <td>{{diog_count}}</td>
                     </tr>
                     <tr>
                       <td>#</td>
-                      <td>Verified User Count</td>
-                      <td>{{admin_data.verified_user_count}}</td>
+                      <td>Undiognised  Patient Count</td>
+                      <td>{{undiog_count}}</td>
                     </tr>
                     <tr>
                       <td>#</td>
-                      <td>Blocked User Count</td>
-                      <td>{{admin_data.blocked_user_count}}</td>
+                      <td>Doctor count</td>
+                      <td>{{doctor_count}}</td>
                     </tr>
+
+                     <tr>
+                      <td>#</td>
+                      <td>Logged in User count </td>
+                      <td>{{doctor_count}}</td>
+                    </tr>
+
+
                     {% for country in countries %}
                      <tr>
                       <td>#</td>

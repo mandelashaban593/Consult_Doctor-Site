@@ -1,143 +1,356 @@
-{% extends 'Doct/base.html' %}
-
-{% load staticfiles %}
-
-{% block navbar %}
-
-<div id = "navigation">
-
-<nav class="cf">
-  <ul class="topmenu">
-    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <!-- 
+        The codes are free, but we require linking to our web site.
+        Why to Link?
+        A true story: one girl didn't set a link and had no decent date for two years, and another guy set a link and got a top ranking in Google! 
+        Where to Put the Link?
+        home, about, credits... or in a good page that you want
+        THANK YOU MY FRIEND!
     -->
+    <title>chat room - Bootdey.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
 
 
-          <li><a href="/Doct/" title="Logout">Home</a>
-        <ul class="submenu">
-              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
+
+    <script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
+    <script src="app.js"></script>
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> 
+
+
+
+
+    <style type="text/css">
+        body {
+  padding-top: 0;
+  font-size: 12px;
+  color: #777;
+  background: #f9f9f9;
+  font-family: 'Open Sans',sans-serif;
+  margin-top:20px;
+}
+
+.bg-white {
+  background-color: #fff;
+   margin-left: 410px;
+   width:100%;
+}
+
+.friend-list {
+  list-style: none;
+margin-left: -40px;
+}
+
+.friend-list li {
+  border-bottom: 1px solid #eee;
+}
+
+.friend-list li a img {
+  float: left;
+  width: 45px;
+  height: 45px;
+  margin-right: 0px;
+}
+
+ .friend-list li a {
+  position: relative;
+  display: block;
+  padding: 10px;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
+}
+
+.friend-list li.active a {
+  background-color: #f1f5fc;
+}
+
+.friend-list li a .friend-name, 
+.friend-list li a .friend-name:hover {
+  color: #777;
+}
+
+.friend-list li a .last-message {
+  width: 65%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.friend-list li a .time {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+}
+
+small, .small {
+  font-size: 85%;
+}
+
+.friend-list li a .chat-alert {
+  position: absolute;
+  right: 8px;
+  top: 27px;
+  font-size: 10px;
+  padding: 3px 5px;
+}
+
+.chat-message {
+  padding: 60px 20px 115px;
+}
+
+.chat {
+    list-style: none;
+    margin: 0;
+}
+
+.chat-message{
+    background: #f9f9f9;  
+}
+
+.chat li img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50em;
+  -moz-border-radius: 50em;
+  -webkit-border-radius: 50em;
+}
+
+img {
+  max-width: 100%;
+}
+
+.chat-body {
+  padding-bottom: 20px;
+  margin-left: 700px;
+}
+
+.chat li.left .chat-body {
+  margin-left: 70px;
+  background-color: #fff;
+}
+
+.chat li .chat-body {
+  position: relative;
+  font-size: 11px;
+  padding: 10px;
+  border: 1px solid #f1f5fc;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.chat li .chat-body .header {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f1f5fc;
+}
+
+.chat li .chat-body p {
+  margin: 0;
+}
+
+.chat li.left .chat-body:before {
+  position: absolute;
+  top: 10px;
+  left: -8px;
+  display: inline-block;
+  background: #fff;
+  width: 16px;
+  height: 16px;
+  border-top: 1px solid #f1f5fc;
+  border-left: 1px solid #f1f5fc;
+  content: '';
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+}
+
+.chat li.right .chat-body:before {
+  position: absolute;
+  top: 10px;
+  right: -8px;
+  display: inline-block;
+  background: #fff;
+  width: 16px;
+  height: 16px;
+  border-top: 1px solid #f1f5fc;
+  border-right: 1px solid #f1f5fc;
+  content: '';
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+}
+
+.chat li {
+  margin: 15px 0;
+}
+
+.chat li.right .chat-body {
+  margin-right: 70px;
+  background-color: #fff;
+}
+
+.chat-box {
+  position: fixed;
+  bottom: 0;
+  left: 444px;
+  right: 0;
+  padding: 15px;
+  border-top: 1px solid #eee;
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  -o-transition: all .5s ease;
+}
+
+.primary-font {
+  color: #3c8dbc;
+}
+
+a:hover, a:active, a:focus {
+  text-decoration: none;
+  outline: 0;
+}
+    </style>
+</head>
+<body>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container bootstrap snippet" style="">
+    <div class="row">
+        <div class="col-md-4 bg-white " style="margin-left: 410px;">
+          
         
-    </li>
-   
-   
- 
-     <li><a href="/Doct/doctor_receipt/">Print reciept</a>
-          <ul class="submenu">
-            <!--   <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
-              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
-                    
-                    </ul>
-         </li>
+        <!--=========================================================-->
+        <!-- selected chat -->
+        <div class="col-md- bg-whit " style="">
+            <div class="chat-message">
+                <ul class="chat">
+                    <li class="left clearfix">
+                        <div class=" row border-bottom padding-sm" style="height: 40px; width:700px;">
+                Member
+            </div>
+            
+            <!-- =============================================================== -->
+            <!-- member list -->
+            <ul class="friend-list">
+             {% for pmem in pmem %}
+
+             {% for diog in  diogs %}
+
+             {% if pmem.mem_phone == diog.telno %}
+
+                <li class="active bounceInDown">
+                   
 
 
-          <li><a href="#">View Your Diognosis</a>
-        <ul class="submenu">
-              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
 
 
-          <li><a href="/Doct/ind_illness/">Individual  Sickness Detail</a>
-        <ul class="submenu">
-              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
-
- 
-
-
-      <li>
-        <form action="/Doct/doctConv/" style=" height:35px;border: 0px; background-color: #3399FF;" id="changesicknessform_form" method="post">
+  <form action="/Doct/dviewmsg/"  id="changesicknessform_form" method="post" style="height: 40px; width:700px;">
 {% csrf_token %}
-<input type="hidden" name="dtelno" value="{{phonedoctor}}" style="width: 200px; border: 0px; " id="dname"/>
+<p>
 
-<tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px; background-color: #3399FF; color: white;" /></td></tr>
-
-</form>
-          <ul class="submenu">
-              <!-- <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
-              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
-                    
-                    </ul>
-         </li>
-
-
-
-
-
-
-
-      <li><a href="/Doct/" title="Logout">Logout</a>
-        <ul class="submenu">
-             <!--  <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul>
-        
-    </li>
-
-
-  
-
-   
-                    
-   </ul>
-</nav>
-
-</div>
-
-
-
-{% endblock %}
-
-{% block body_block %}
-<style type="text/css">
-#content {
-overflow-y: scroll;
-
-height: 100%;
-width:100%;
-};
-</style>
-      <div id="">
-  
-<h1 style="color: #337ab7; font-size: 18px;margin-left: 450px;font-weight: bold;">Converse</h1>
-{% for pmem in pmem %}
-
-
-
-
-  <form action="/Doct/dviewmsg/" id="chat-form" style=" height:35px;margin-left: 450px; border:
-  0px; width:60px;" id="changesicknessform_form" method="post">
-{% csrf_token %}
-<input type="hidden" name="telno" value="{{pmem.mem_phone}}" style="width: 200px; border: 0px; " id="dname"/>
+<input type="hidden" name="telno" value="{{pmem.mem_phone}}" style="width: 200px; border: 0px; " id="dname"/><br/>
+{{diog.illness}}
+</p>
 
 <tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="{{pmem.mem_phone}}"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
 
 </form>
 
 
-{% endfor %}  
 
+                </li>
 
+                {% endif %}
 
-
-
+                {% endfor %} 
+                {% endfor %} 
+                           
+            </ul>
+        </div>
+                            
+                    </li>
+                   
+                    <li class="left clearfix">
+                        <span class="chat-img pull-left">
+                          
+                        </span>
+                        <div class="chat-body clearfix">
+                          
+                        </div>
+                    </li>
+                    <li class="right clearfix">
+                        <span class="chat-img pull-right">
+                          
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                
+                            </div>
+                            <p>
+                              
+                            </p>
+                        </div>
+                    </li>                    
+                    <li class="left clearfix">
+                        <span class="chat-img pull-left">
+                            <img src="http://bootdey.com/img/Content/user_3.jp">
+                        </span>
+                        <div class="chat-body clearfix">
+                         
+                        </div>
+                    </li>
+                    <li class="right clearfix">
+                        <span class="chat-img pull-right">
+                            <img src="http://bootdey.com/img/Content/user_1.jp" >
+                        </span>
+                        <div class="chat-body clearfix">
+                         
+                          
+                        </div>
+                    </li>
+                    <li class="right clearfix">
+                        <span class="chat-img pull-right">
+                            <img src="http://bootdey.com/img/Content/user_1.jp" ">
+                        </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                              
+                            </div>
+                         
+                        </div>
+                    </li>                    
+                </ul>
+            </div>
+            <div class="chat-box bg-white">
+                <div class="input-group">
+                  
+                </div><!-- /input-group --> 
+            </div>            
+        </div>        
+    </div>
 </div>
 
-
-
-{% endblock %}
-
-{% block footer %}
-<p>Posted by Mandela Shaban<br/>Contact Information:<a href="mailto:mandelashaban593@gmail.com">mandelashaban593@gmail.com</a><br/>
-&copy; Consult Doctor : Fast and Cheap Response 2016</p>
-{% endblock %}
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    
+</script>
+</body>
+</html>

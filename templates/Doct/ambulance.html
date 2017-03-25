@@ -1,61 +1,58 @@
 
 
-    <!-- FORM -->
-    <!-- pass in the variable if our form is valid or invalid -->
-    <form ng-app="myApp" action="/Doct/ambulance/"  class="form-style-6" method="post" ng-controller="validateCtrl" name="myForm" novalidate>
+
+
+<form id="signup" action="/Doct/ambulance/"  method="POST" style="position:absolute; 
+    left: 400px;
+    display:inline-block;
+    z-index:10;margin-top:25px;">
 {% csrf_token %}
-<h1>Fill Locations</h1>
-<p><a href="/Doct/patientH" title="Logout">Back</a></p>
+        <div class="header">
+        
+            <h3>Order Ambulance</h3>
+          
+            <p><a href="/Doct/patientH" title="Logout">Back</a></p>
+        </div>
+        
+        <div class="sep"></div>
 
-<p>District:<br>
-<select name="districts" id="selectEl" ng-model="districts" required="True">
-<option value="">Select option</option>
-<option value="Kampala">Kampala</option>
-<option value="Wakiso">Wakiso</option>
-</select>
-  <span style="color:red" ng-show="myForm.districts.$dirty && myForm.districts.$invalid">
-  <span ng-show="myForm.districts.$error.required">District is required.</span>
-  </span>
-</p>
+        <div class="inputs">
+
+            <p style="padding: 12px" >Place(e.g District, village):<br>
+      
+
   
-  <p>Place(e.g Banda):<br>
-  <input type="text" name="place"  style="width:280px" ng-model="place" placeholder="Place" required>
-  <span style="color:red" ng-show="myForm.place.$dirty && myForm.place.$invalid">
-  <span ng-show="myForm.place.$error.required">Mobile Number is required.</span>
-  </span>
-</p>
+            <input type='text' class='text' name='place'  Placeholder="Place" size='20'   style="width:280px" autofocus/>
 
- <p>Phone Number:<br>
-  <input type="text" name="phone"  style="width:280px" ng-model="phone" placeholder="Phonenumber" required>
-  <span style="color:red" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
-  <span ng-show="myForm.phone.$error.required">Phone Number is required.</span>
-  </span>
-</p>
 
-<p>Amount:<br>
-  ugx.36,000
-</p>
+            </select>
+            </p>
 
-<p>Receiver Phonenumber:<br>
-  0754307471
-</p>
+            <p style="padding: 12px">Phone number (Condition):<br>
 
-  <input type="submit"
-  ng-disabled="myForm.districts.$dirty && myForm.districts.$invalid ||
-  myForm.place.$dirty && myForm.place.$invalid ||
-  myForm.phone.$dirty && myForm.phone.$invalid " class="btn btn-primary" value="Submit">
-</p>
+            <input type="text" name="phone"  style="width:280px" placeholder="Phonenumber" required size='20'  autofocus>
+
+
+              </p>
+
+               <p style='padding: 12px'>Amount::<br>
+                ugx.15,000
+            
+               </p>
+
+                <p style="padding: 12px">
+                Receiver Phonenumber:<br>
+                0754307471
+
+
+               </p>
+
+            <p style="padding: 12px">
+            <input type="submit" id="submit" value="Submit" name="SUBMIT" required>
+           
+             </p>
+
+        
+        </div>
 
     </form>
-
-    <script>
-var app = angular.module('myApp', []);
-app.controller('validateCtrl', function($scope) {
-    $scope.districts = '';
-    $scope.place = '';
-    $scope.phone = '';
-});
-</script>
-
-
-

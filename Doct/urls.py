@@ -41,6 +41,7 @@ urlpatterns = patterns('',
 		url(r'^receipt/$', views.receipt, name='receipt'),
 		url(r'^index_receipt/$', views.index_receipt, name='index_receipt'),
 		url(r'^doctor_receipt/$', views.doctor_receipt, name='doctor_receipt'),
+		url(r'^whyus/$', views.whyus, name='whyus'),
 		url(r'^about/$', views.about, name='about'),
 		url(r'^contact/$', views.contact, name='contact'),
 		url(r'^regdoctor/$', views.regdoctor, name='regdoctor'),
@@ -85,10 +86,14 @@ urlpatterns = patterns('',
                            'Doct.views.ajDoctconv_list', name='ajDoctconv_list'),
 
 		url(r'^ambulance/$', views.ambulance, name='ambulance'),
+		url(r'^orderdrugs/$', views.orderdrugs, name='orderdrugs'),
+		url(r'^labtests/$', views.labtests, name='labtests'),
 
 		url(r'^addcontact/$', views.addcontact, name='addcontact'),
 
 		url(r'^dashboard/$', 'doct_admin.views.dashboard', name='dashboard'),
+		url(r'^dashboard2/$', 'doct_admin.views.dashboard2', name='dashboard2'),
+		url(r'^test/$', 'Doct.views.test', name='test'),
 		
 
 		)  # New!

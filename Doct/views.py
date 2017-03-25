@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, render
 from Doct.decorators import ajax_required, login_required
 from django.http import HttpResponse
 
-from Doct.models import Page, UserProfile, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
+from Doct.models import Page, UserProfile, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages,Labtests
 
 from Doct.forms import  UserForm,DiognosisForm
 from Doct.forms import PageForm, TopupForm, PatientForm, IllnessForm,DoctorForm,AddIllDetForm,ContactForm, LoginForm,patientConverseForm,doctorConverseForm, MessagesForm
@@ -26,7 +26,7 @@ from Doct.utils import check_illness,mailer,success_message, error_message
 from Doct.sms import send_illness_sms_notification
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from Doct.models import Transaction, Rate, Country, Charge,Ambulance
+from Doct.models import Transaction, Rate, Country, Charge,Ambulance,Orderdrugs
 from Doct.utils import COUNTRY_CHOICES, NETWORK_CHOICES
 
 # Create your views here.
@@ -444,12 +444,13 @@ def user_login(request):
 				print "Role 2 %s "  % (r.role)
 
 				doctlog=True
-				diog = Diognosis.objects.all()
+				diog = Diognosis.objects.all().order_by("-id")
 				convmem = convMembers.objects.filter(phonedoctor=username)
 				if convmem:
 					phonedoctor=username
 					print phonedoctor
-				paginator = Paginator(diog, settings.PAGNATION_LIMIT)
+				
+				paginator = Paginator(diog, settings.PAGNATION_LIMIT2)
 				page = request.GET.get('page')
 				try:
 					diog = paginator.page(page)
@@ -586,6 +587,7 @@ def illness(request):
 		page = request.POST['page']
 		ptelno = request.POST['telno']
 		pname = request.POST['pname']
+		comp_signs = request.POST['comp_signs']
 		dtelno = '0754307471'
 		dname = 'peter'
 		amount =  3000
@@ -593,12 +595,12 @@ def illness(request):
 		enterpay.save()
 		pay_id = enterpay.id
 		gender = pay_id
-		ill_det=Illness(gender=gender, illness=illness, page=page,kintelno=ptelno)
+		ill_det=Illness(gender=gender,comp_signs=comp_signs, illness=illness, page=page,pname=pname,kintelno=ptelno,doctortelno=dtelno, amt=amount)
 		ill_det.save()
 		gender = ill_det.gender	
 		ill_id = ill_det.id	
 		amb = request.POST['amb']
-		diog=Diognosis(page=page,ill_id=ill_id, diognosis=illness,amb=amb,telno=ptelno, doctortelno=dtelno, illness=illness)
+		diog=Diognosis(page=page,ill_id=ill_id,comp_signs=comp_signs, gender='0', diognosis=illness,amb=amb,telno=ptelno, doctortelno=dtelno, illness=illness)
 		diog.save()
 		pdiogs = Diognosis.objects.filter(id=diog.id).order_by("id")[:10]
 		qconvs = converse.objects.filter(telno=ptelno).order_by("id")[:10]
@@ -726,12 +728,13 @@ def doctConv(request):
 
 		try:
 			pmem = convMembers.objects.all()
+			diogs = Diognosis.objects.all()
 		except Exception, e:
 			pass
 
 	chatmsg = True
 	staf = True
-	return render_to_response('Doct/dconverse.html', { 'dname':dname,'dtelno':dtelno,'pmem':pmem,'chat':chatmsg,'staf':staf}, context)
+	return render_to_response('Doct/dconverse.html', { 'dname':dname,'dtelno':dtelno,'pmem':pmem,'chat':chatmsg,'staf':staf, 'diogs':diogs}, context)
 			
 
         	   
@@ -1118,16 +1121,30 @@ def ind_illness(request):
 	staf = False
 	if request.POST:
 		username = request.POST['username']
-		ill = get_object_or_404(Illness.objects.filter(kintelno=username))
+		ill = Diognosis.objects.filter(telno=username).order_by('-id')
+
+		paginator = Paginator(ill, settings.PAGNATION_LIMIT)
+		page = request.GET.get('page')
+		try:
+			ill = paginator.page(page)
+		except PageNotAnInteger:
+			ill = paginator.page(1)
+			# If page is not an integer, deliver first page.
+		except EmptyPage:
+			# If page is out of range (e.g. 9999), deliver last page of results.
+			ill = paginator.page(paginator.num_pages)
+
 		if len(ill) > 1:
 			ind_ill = True
+			staf = True
 			msg = "Illness records"
-			return render_to_response('Doct/doctorH.html', {'ill':ill, 'ind_ill':ind_ill, 'msg':msg}, context)
-		else:
-			ind_illrecs = True
-			msg = "Illness records"
-			return render_to_response('Doct/doctorH.html', {'ill':ill, 'ind_illrecs':ind_illrecs, 'msg':msg}, context)
+			return render_to_response('Doct/viewind_ill.html', {'ill':ill, 'ind_ill':ind_ill, 'msg':msg,'staf':staf}, context)
 		
+		ind_illrecs = True
+		staf = True
+		msg = "Illness records"
+		return render_to_response('Doct/viewind_ill.html', {'ill':ill, 'ind_illrecs':ind_illrecs, 'msg':msg,'staf':staf}, context)
+	
 	else:
 		msg = "No Illness record"
 		indill_auth = True
@@ -1504,6 +1521,14 @@ def about(request):
 	
 	return render_to_response('Doct/about.html', {}, context)
 
+
+def whyus(request):
+	# Like before, obtain the context for the user's hrequest.
+	context = RequestContext(request)
+	
+	return render_to_response('Doct/whyus.html', {}, context)
+
+
 def contact(request):
 	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)
@@ -1734,6 +1759,49 @@ def sendrep(request):
 
 		
 		
+
+def sendrep2(request):
+	# Like before, obtain the context for the user's hrequest.
+	context = RequestContext(request)
+	msg = ''
+	msg2 = ''
+	reply = True
+	qconvs = ''
+	dtelno = ''
+	ptelno = ''
+	pmsg = ''
+	import json as simplejson
+
+	print "Mesaage  0"
+
+	# If the request is a HTTP POST, try to pull out the relevant information.
+	if request.method == 'GET':
+		dmsg=request.GET.get('dmsg', False)
+		ptelno=request.GET.get('telno', False)
+		dtelno=request.GET.get('dtelno', False)
+		try:
+			msg = converse(dmsg=dmsg,telno=ptelno,phonedoctor=dtelno)
+			msg.save()
+
+			print "Mesaage  1", msg.dmsg
+		
+
+
+			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('-id')[:5]
+			qconvs = reversed(qconvs)
+
+			html = render_to_string( 'Doct/convdoct.html', {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno})
+			
+			return HttpResponse(html)
+	        
+	        
+
+		except Exception, e:
+			msg2 = "No doctor message messages for this chat"
+			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno}, context)
+	else:
+		pass
+
 
 def ajDoctconv_list(request):
 	# Like before, obtain the context for the user's hrequest.
@@ -2060,3 +2128,102 @@ def addcontact(request):
 
 
     return render_to_response('Doct/contactus.html', {}, context)
+
+
+
+def orderdrugs(request):
+    
+    response = False
+    post_values = {}
+    context = RequestContext(request)
+
+    if request.POST:
+        post_values = request.POST.copy()
+        telno = post_values['telno']
+        location = post_values['location']
+        msg = post_values['msg']
+        print "Message %s " %  msg
+        
+    	cont=Orderdrugs(telno=telno,location=location, msg=msg)
+    	cont.save()
+    	response = True
+
+    	if cont:
+    		messages.success(request, "Your have been Successfully ordered for drugs")
+            
+            
+        else:
+        	messages.success(request, "Error occured while ordering for drugs")
+          
+
+
+    return render_to_response('Doct/orderdrugs.html', {}, context)
+
+
+
+
+def labtests(request):
+    
+    response = False
+    post_values = {}
+    context = RequestContext(request)
+
+    if request.POST:
+        post_values = request.POST.copy()
+        telno = post_values['telno']
+        location = post_values['location']
+        msg = post_values['msg']
+        print "Message %s " %  msg
+        
+    	cont=Labtests(telno=telno,location=location, msg=msg)
+    	cont.save()
+    	response = True
+
+    	if cont:
+    		messages.success(request, "You have been Successfully ordered for Lab tests")
+            
+            
+        else:
+        	messages.success(request, "Error occured while ordering for Lab tests")
+          
+
+
+    return render_to_response('Doct/labtests.html', {}, context)
+
+
+
+
+
+def test(request):
+    template = settings.AJAX_TEMPLATE_DIR + 'addcontact.html'
+    response = False
+    post_values = {}
+    context = RequestContext(request)
+    cont = None
+    if request.GET:
+        post_values = request.GET.copy()
+        telno = post_values['fname']
+        email = post_values['lname']
+        msg = post_values['msg'] = 0
+        print "Contact view reached" 
+        
+    	cont=Contact(telno=telno,email=email, msg=msg)
+    	cont.save()
+    	response = True
+    	cont = Contact.objects.get(id=cont.id)
+
+    	if cont:
+    		messages.success(request, "Your have Successfully tested")
+            
+            
+        else:
+        	messages.success(request, "Error occured while testing")
+
+        return HttpResponse(
+        json.dumps(post_values),
+        content_type="application/json"
+	    )
+          
+
+
+    return render_to_response('Doct/test.html', {'cont':cont}, context)

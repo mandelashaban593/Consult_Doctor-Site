@@ -307,6 +307,8 @@ def patients(request, name=''):
     page_title = 'verified users'
     admin= True
     super_admin= True
+
+    user_list = Illness.objects.all()
     
     if name == 'blocked':
         pretitle = 'Blocked Users'
@@ -315,13 +317,14 @@ def patients(request, name=''):
     elif name == 'top':
         pretitle = 'Blocked Users'
         page_title = 'Blocked Users'
-        user_list = Illness.objects.filter(account_blocked=False)
+        user_list = Illness.objects.all()
     elif name == 'search':
         pretitle = 'User Search'
         page_title = 'User Search'
         user_list = Illness.objects.filter()
     else:
-        return HttpResponseRedirect(reverse('custom_404'))
+        print "Nothing"
+      
 
     user_list = user_list.filter().order_by('-id')
     # search query
@@ -393,7 +396,7 @@ def dashboard(request):
     context = RequestContext(request)
 
     doctlog=True
-    diog = Diognosis.objects.all()
+    diog = Diognosis.objects.all().order_by("-id")
 
     paginator = Paginator(diog, settings.PAGNATION_LIMIT)
     page = request.GET.get('page')
@@ -411,4 +414,34 @@ def dashboard(request):
   
     return render_to_response('Doct/index_staff.html', {'diogs':diog,'staf':staf, 'doctlog':doctlog}, context)
 
-   
+
+
+def dashboard2(request):
+    context = RequestContext(request)
+
+    doctlog=True
+    diog = Illness.objects.all().order_by("-id")
+    diog_count = Illness.objects.all().order_by("-id").count()
+    undiog_count = Diognosis.objects.filter(gender='0').count()
+    doctor_count = Register.objects.filter(role='doctor').count()
+    
+
+
+    paginator = Paginator(diog, settings.PAGNATION_LIMIT)
+    page = request.GET.get('page')
+    try:
+        diog = paginator.page(page)
+    except PageNotAnInteger:
+        diog = paginator.page(1)
+        # If page is not an integer, deliver first page.
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        diog = paginator.page(paginator.num_pages)
+
+    
+    super_admin = True
+        
+  
+    return render_to_response('Doct/index_admin.html', {'diogs':diog,'super_admin':super_admin, 'doctlog':doctlog,'diog_count':diog_count,'undiog_count':undiog_count,'doctor_count':doctor_count}, context)
+
+

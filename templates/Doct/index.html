@@ -5,46 +5,7 @@ link for the popup
 
 http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
-{% block nav_bar %}
-<div class="header">
-<div class="wrap">
-<div class="logo"><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpeg' %}"  style="width:40px" alt="" />Online Doctor(Medical) Consulation</a></div>
-   <div class="con-right">
-      <div class="grid1-l-img">
-        <img src="{% static 'images/contact.png' %}" alt="">
-      </div>
-      <div class="grid1-l-desc">
-        <p>Contact : +256754307471</p>
-      </div>
-      <div class="clear"></div>
-  </div>
-    <div class="clear"></div>
-     </div>
-</div>
-<div class="header-bottom">
-      <div class="wrap">
-        <ul id="nav">
-                <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
-                <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
-                <li><a class="hsubs" href="/Doct/team/">Our Team</a>
-                 <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
-                <li><a href="/Doct/contact/">Contact Us</a></li>
-                <li><a href="/Doct/how_it_works/">How it works</a></li>
-                <li><a href="/Doct/convbaddy/">Converse</a></li>
-                <li><a href="/Doct/whyus/">Why Us</a></li>
-                    <ul class="subs">
-                        <li><a href="#">Hotels</a></li>
-                        <li><a href="#">Restaurants</a></li>
-                        <li><a href="#">Beach Resorts</a></li>
-                    </ul>
-                </li>
-               
-        </ul>
 
-       </div>
-</div>
-
-{% endblock %}
 
 
   
@@ -88,11 +49,22 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
   {% endblock %}
 
+<style type="text/css">
 
-   
+
+
+
+
+
+</style>
+
+
+
+
+
+
 
 {% include "Doct/enterpay.html" %} 
-
 
 
 
@@ -112,26 +84,28 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 
 
+
   {% block body_images %} 
 
                 
 
 
-                <div class="header_bottom_right_images">
           <div id="slideshow">
         <ul class="slides">
-            <li><img style="width:770px;" src="{% static 'img/opolot-jude-3.jpg' %}" alt="Marsa Alam underawter close up" /></li>
-              <li><img style="width:770px;" src="{% static 'img/doctorWom.jpg' %}" alt="Turrimetta Beach - Dawn" /></li>
-              <li><img style="width:770px;" src="{% static 'img/images.jpg' %}"  alt="Power Station" /></li>
-              <li><img style="width:770px;" src="{% static 'img/doctor2.jpg' %}"  alt="Colors of Nature" /></li>
+            <li><img src="{% static 'img/opolot-jude-3.jpg' %}" alt="Marsa Alam underawter close up" /></li>
+              <li><img  src="{% static 'img/doctorWom.jpg' %}" alt="Turrimetta Beach - Dawn" /></li>
+              <li><img  src="{% static 'img/images.jpg' %}"  alt="Power Station" /></li>
+              <li><img  src="{% static 'img/doctor2.jpg' %}"  alt="Colors of Nature" /></li>
           </ul>
           <span class="arrow previous"></span>
           <span class="arrow next"></span>
-</div>
+
 	
 
 
  {% endblock %} 
+
+
 
 
 
@@ -141,55 +115,28 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
         <div class="banner-left"  style="position:absolute;
     top:125px;
-    right: 950px;">
+    right: 1000px;">
             <div class="con-text">
               <div class="grid1-img">
-                <img src="{% static 'images/glass.png' %}" alt="">
+                <img src="{% static 'img/doctor2.jpg' %}"  style="width:500px;" alt="">
               </div>
-              <div class="grid1-desc">
-                <p>Medicine Cup</p>
-                
-
-
-
-              </div>
-              <div class="clear"></div>
+           
+            
           </div>
           <div class="con-text">
               <div class="grid1-img">
-                <img src="{% static 'images/medic.jpeg' %}"   style="width:15px; height:10px" alt="">
+                <img src="{% static 'img/doctorWom.jpg' %}" style="width:700px;"  alt="">
               </div>
-              <div class="grid1-desc">
-                <p>Flights</p>
-              </div>
+            
               <div class="clear"></div>
           </div>
-  <div class="con-text">
-      <div class="grid1-img">
-        <img src="{% static 'images/group.png' %}" alt="">
-      </div>
-      <div class="grid1-desc">
-        <p>Things to do</p>
-      </div>
-      <div class="clear"></div>
-  </div>
-  <div class="con-text">
-      <div class="grid1-img">
-        <img src="{% static 'images/key.png' %}" alt="">
-      </div>
-      <div class="grid1-desc">
-        <p>Unlocking your Disease</p>
-      </div>
-      <div class="clear"></div>
-  </div>
-   <div class="clear"></div>
-</div>
+  
 {% endblock %}
 
 
 
    {% block bottom_content %}
-
+   
      <div class="content>
         <div class="wrap">
           <div class="wrapper">
@@ -239,18 +186,18 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
                                 <div class="padding">
                                     <h4>This Week's Top 10</h4>
                                     <ul class="list list-pad">
-                                        <li class="list-bg"><span>1.</span><a href="#">formas humanitatis pe</a></li>
-                                        <li class="list-bg1"><span>2.</span><a href="#">congue nihil imperdiet</a></li>
-                                        <li class="list-bg"><span>3.</span><a href="#">Aadipisicing elit sed do</a></li>
-                                        <li class="list-bg1"><span>4.</span><a href="#">luptatum zzril  </a></li>
-                                        <li class="list-bg"><span>5.</span><a href="#">Claritas est etiam</a></li>
-                                        <li class="list-bg1"><span>6.</span><a href="#">claritatem insitam;</a></li>
-                                        <li class="list-bg"><span>7.</span><a href="#">velit esse molestie consequa</a></li>
-                                        <li class="list-bg1"><span>8.</span><a href="#">nostrud exerci tation ulla</a></li>
-                                        <li class="list-bg"><span>9.</span><a href="#">demonstraverunt lectores</a></li>
-                                        <li class="list-bg1"><span>10.</span><a href="#">dolore te feu</a></li>
+                                        <li class="list-bg"><span>1.</span><a href="#">New maternity benefit law may cut jobs for women; 66 per cent startups</a></li>
+                                        <li class="list-bg1"><span>2.</span><a href="#">Weight-loss drug shows potential to treat opioid abuse</a></li>
+                                        <li class="list-bg"><span>3.</span><a href="#">Treatments need to address 'cue reactivity'</a></li>
+                                        <li class="list-bg1"><span>4.</span><a href="#">Lorcaserin reduced opioid use and cue reactivity  </a></li>
+                                        <li class="list-bg"><span>5.</span><a href="#">How do alcohol and caffeine affect A-fib?</a></li>
+                                        <li class="list-bg1"><span>6.</span><a href="#"> Aggression disorder linked to greater risk of substance abuse </a></li>
+                                        <li class="list-bg"><span>7.</span><a href="#">Hangover memories more likely with a family history of drinking problems </a></li>
+                                        <li class="list-bg1"><span>8.</span><a href="#">Given the choice, patients will reach for cannabis over prescribed opioids </a></li>
+                                        <li class="list-bg"><span>9.</span><a href="#">Review confirms link between drug use and poor dental health</a></li>
+                                        <li class="list-bg1"><span>10.</span><a href="#">Component of marijuana may help treat anxiety and substance abuse disorders </a></li>
                                     </ul>
-                                    <a href="#" class="link1">See all hotels</a>
+                                    <a href="#" class="link1">See all headlines</a>
                                 </div>
                             <div class="padding1">
                                     <h4>Our Best Places</h4>
@@ -259,21 +206,24 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
                                       <img src="{% static 'images/pic3.jpg' %}" alt=""/>
                                     </div>
                                       <div class="bot-desc">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                        <p>Time and again, our clients report that Best Doctors more than pays for itself. Organizations save dollars, worry and even lives. Which is why we now serve more members in every industry. </p>
                                       </div>
                                     <div class="clear"></div>
                                     <div class="bot-img">
                                       <img src="{% static 'images/dot2.jpeg' %}" alt=""/>
                                      </div>
                                       <div class="bot-desc">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                        <p>Best Doctors creates a collaborative environment where doctors work together to improve outcomes. We do this by creating a report that not only supports the member, but also the treating team, which supports decision making and helps ensure better outcomes.
+                                      </p>
+
+
                                      </div>
                                     <div class="clear"></div>
                                     <div class="bot-img">
                                       <img src="{% static 'images/index12.jpeg' %}" alt=""/>
                                     </div>
                                       <div class="bot-desc">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                        <p>After seeing almost a dozen different doctors, Samuel was frustrated by his increasing pain levels, lack of mobility and the absence of any clear answers regarding her condition, so he contacted Doctors through us, he then got the clear answers to his condition from us</p>
                                     </div>
                                       <div class="clear"></div>
                                     </div>
@@ -285,12 +235,7 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
                                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
                                      </div>
                                     <div class="clear"></div>
-                                    <div class="bot-img">
-                                      <img src="{% static 'images/pic10.jpg' %}" alt=""/>
-                                    </div>
-                                      <div class="bot-desc1">
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
-                                      </div>
+                                    
                                     <div class="clear"></div>
                                     <div class="bot-img">
                                       <img src="{% static 'images/dfriend.jpeg' %}" alt=""/>
@@ -317,9 +262,10 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 <div class="fo0ter-boottom">
 <div class="wrap">  
   <div class="copy">
-    <p>Your Company Name &copy; 2013 All rights Reserved | Design by <a href="http://w3layouts.com">W3Layouts</a> &nbsp;&nbsp;&nbsp;Photos by <a href="http://www.freegreatpicture.com/">Freegreatpicture</a></p>
+    <p style="margin-left: 300px;">Your Company Name &copy; 2013 All rights Reserved | Design by <a href="http://w3layouts.com">W3Layouts</a> &nbsp;&nbsp;&nbsp;Photos by <a href="http://www.freegreatpicture.com/">Freegreatpicture</a></p>
   </div>
  </div>
+</div>
 </div>
 
 

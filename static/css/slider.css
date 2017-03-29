@@ -10,13 +10,11 @@
 	background-color:#F5F5F5;
 	height:421px;
 	position:relative;
-	width:270px;
+	width:670px;
 	box-shadow: 0 0 5px #aaa;
 	-webkit-box-shadow: 0 0 5px #aaa;
 	-moz-box-shadow: 0 0 5px #aaa;
 	-o-box-shadow: 0 0 5px #aaa;
-	margin-left: 700px;
-	margin-top: 0px;
 }
 #slideshow ul{
 	height:400px;

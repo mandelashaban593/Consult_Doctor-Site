@@ -1,12 +1,25 @@
-{% extends 'Doct/base.html' %}
-{% load staticfiles %}
-<!-- 
-link for the popup
 
-http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+<head>
+<title>Free Easy-Trip Website Template | About :: w3layouts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="{% static 'css/slider.css' %}" rel="stylesheet" type="text/css" media="all"/>
+<style type="text/css">
+  
+  html{
+  width: 100%;
+  height: 100%;
+}
 
-{% block nav_bar %}
-<div class="header">
+
+</style>
+</head>
+<body>
+<div class="header" style="width: 2000px; ">
 <div class="wrap">
 <div class="logo"><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpeg' %}"  style="width:40px" alt="" />Online Doctor(Medical) Consulation</a></div>
    <div class="con-right">
@@ -27,10 +40,31 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
                 <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
                 <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
                 <li><a class="hsubs" href="/Doct/team/">Our Team</a>
+                <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
                  <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
                 <li><a href="/Doct/contact/">Contact Us</a></li>
                 <li><a href="/Doct/how_it_works/">How it works</a></li>
-                <li><a href="/Doct/convbaddy/">Converse</a></li>
+
+                {% if qconvs or ill_more %}
+            
+                 <li><form action="/Doct/converse/" style="height:35px;border: 0px; background-color: #3399FF" id="changesicknessform_form" method="post">
+                {% csrf_token %}
+
+                <input type="hidden" name="username" value="{{username}}" style="width: 200px; border: 0px; " id="dname"/>
+
+                <input type="hidden" name="dusername" value="0754307471" style="width: 200px; border: 0px; " id="dname"/>
+
+                <tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
+
+                </form>
+                <ul class="submenu">
+                      <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                            <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul> </li>
+
+                    {% endif %}
+
                 <li><a href="/Doct/whyus/">Why Us</a></li>
                     <ul class="subs">
                         <li><a href="#">Hotels</a></li>
@@ -38,175 +72,41 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
                         <li><a href="#">Beach Resorts</a></li>
                     </ul>
                 </li>
+                {% if user.is_authenticated %}
+
+                <li><a href="/Doct/logout/">Logout</a></li>
+
+                {% endif %}
                
         </ul>
 
        </div>
 </div>
 
-{% endblock %}
 
 
+<div class="content">
+  <div class="wrap">
+   <div class="about">
+    <h3 style="margin-left: 380px;">How It Works</h3>
+    <img src="{% static 'images/medic.jpeg' %}" style="height:250px; width:900px; margin-left: 100px;" alt=""/>
+    <p>1. Register into the system with the right information and confirmation message will be sent either to your Email or via the web immediately after you have registered
+   </p>
 
+    <p>2. Use your username and password  for you to access the home page</p>
 
-
-
-
-{% block body_block %}
-
-
-{% if msg %}
-{{msg}}
-{% endif %}
-
-{% if registered %}
-		<strong>
-		<script>alert("You have successfully registered")</script>
-		</strong>
-		<br />
-{% endif %}
-
-<div id="content">
-
-{% if signup %}
-
-{% include "Doct/signup.html" %}
-
-{% elif log  %}
-
-{% include "Doct/login.html" %}
-
-{% elif u_log  %}
-
-{% include "Doct/u_log.html" %}
-
-
-{% elif recfm  %}
-
-{% include "Doct/index_rform.html" %}
-
-{%  else %}
-
-<h1 style="font-size:20px; " align="center">How It Works</h1>
-<aside style="margin-left: 40px;height:400px; background-color: white">
-<p><strong style="font-size:18px;">1. Login using  your Phonenumber and you will be automatically registered and then you will fill in your sickness condition and you will automatically get access to the home page and see a message that will tell you to pay 30, 000  uganda shillings for seeing the doctors response</strong>.</p>
-<p><strong style="font-size:18px;">2. Send the money to Mobile Number 0754307471 of the doctor so that the doctor  diognises and prescribe for you medicine via the website </strong>.</p>
-
-<p><strong style="font-size:18px;">3. The doctor will get in touch with you via the converse link(chat) platform  for a week, After that you will definitely be asked to make another payment for you again to get in touch with the doctor.  </strong>.</p>
-
-
-</aside>
-
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript"></script>
-<script type='text/javascript' src="{% static 'js/jquery.form-validation.js' %}"></script>
-
-<script type="text/javascript">
-   
-
-$(document).ready(function(){
-    $("#changepayform_form").validate({
-    rules:{
-
-            telno:
-            {
-            required:true,
-            digits: true,
-            maxlength:20,
-            },
-            amount:
-            {
-            required:true,
-            digits: true,
-            maxlength:10,
-            },
-    },
-          messages: {
-       
-        telno: {
-        required: "Telephone number is required",
-        digits: "Enter the valid Telephone number",
-        maxlength:"Please provide valid phone number",
-      },
-      amount: {
-      required: "Please provide Consultation amount",
-      digits: "Enter the valid Consultation amount",
-      maxlength:"Please provide valid Consultation amount",
-      },
-    
-    
-    },
-
-  
-
-    });
-    });
-
-</script>
-</fieldset>
-<!-- <div id="signup">Click
-<a href="/Doct/register/"><strong style="font-size:28px;font-weight:20px;">Sign Up</strong></a>
-
-</div> -->
-
+    <p>We offer other service like, attending to a patient who 
+    needs further help </p>
+    <p>3. Note that you can only get  your prescription details after you have paid <br/>consultation fee of ugx 20,000 to the specified mobile money number 256754307471.</p>
+  </div>
+  </div>
+  </div>
+<div class="footer-bottom" style="width: 2000px; ">
+<div class="wrap">  
+  <div class="copy">
+    <p style="text-align: left;">ES - DOCTOR&copy; 2017 All rights Reserved | Design by <a href="http://w3layouts.com">Mandela Shaban</a> &nbsp;&nbsp;&nbsp;Photos by <a href="http://www.freegreatpicture.com/">Freegreatpicture</a></p>
+  </div>
+ </div>
 </div>
-
-{% endif %}
-</div>
-
-<script type='text/javascript'>
-
-//F
-//form validation
-  $(document).ready(function(){
-    $("#changeloginform_form").validate({
-    rules:{
-
-          username:
-            {
-            required:true,
-            minlength:3,
-            maxlength:20,
-            },
-            password:
-            {
-            required:true,
-            minlength:5,
-            maxlength:30,
-            },
-        
-    },
-          messages: {
-      username: {
-        required: "Please provide a username",
-        minlength: "Please provide a Valid username",
-        maxlength:"Please provide a Valid username",
-      },
-      password: {
-        required: "Please provide a password",
-         minlength: "Please provide a Valid password",
-         maxlength:"Please provide a Valid password",
-      },
-    },
-
-    });
-    });
-
-
-
-</script>
-<div>
-
-</div>
-
-
-
-{% endblock %}
-
-
-		
-
-
-
-
-	
+</body>
+</html>

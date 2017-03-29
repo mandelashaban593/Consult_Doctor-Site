@@ -90,10 +90,14 @@ class Diognosis(models.Model):
     fup =  models.CharField(blank=False, max_length=700)
     reply =  models.CharField(blank=False, max_length=700)
     amt = models.CharField(blank=False, max_length=30) 
-    doctortelno = models.CharField(blank=False, max_length=30) 
+    doctorusername = models.CharField(blank=False, max_length=30) 
     illness = models.CharField(blank=False, max_length=700)
     comp_signs =  models.CharField(blank=False, max_length=700) 
-    ill_id  =  models.CharField(blank=False, max_length=30) 
+    ill_id  =  models.CharField(blank=False, max_length=30)
+    username = models.CharField(blank=False, max_length=20)
+    when  =  models.DateTimeField(default=datetime.now, blank=True)
+    dtelno = models.CharField(blank=False, max_length=20)
+    demail = models.CharField(blank=False, max_length=40)
 
     @models.permalink
     def edit_diognosis(self):
@@ -105,6 +109,7 @@ class Enterpay(models.Model):
     amount = models.DecimalField(
         default=0.0, decimal_places=2, max_digits=10)
     added = models.DateTimeField(default=datetime.now, blank=True)
+    dname = models.CharField(blank=False, max_length=40)
 
 
 class Illness(models.Model):
@@ -121,8 +126,12 @@ class Illness(models.Model):
     page = models.IntegerField(blank=False)
     amb =  models.CharField(blank=False,max_length=5,  default=False)
     amt = models.CharField(blank=False,max_length=5,  default=False)
-    doctortelno = models.CharField(blank=False, max_length=20)
+    doctorusername = models.CharField(blank=False, max_length=20)
     location = models.CharField(blank=False, max_length=700)
+    when  =  models.DateTimeField(default=datetime.now, blank=True)
+    dtelno = models.CharField(blank=False, max_length=20)
+    dname = models.CharField(blank=False, max_length=40)
+    demail = models.CharField(blank=False, max_length=40)
 
     def get_names(self):
         '''
@@ -157,20 +166,20 @@ class Conddrugs(models.Model):
     
     
 class converse(models.Model):
-	telno = models.CharField(blank=True, max_length=20)
-	phonedoctor = models.CharField(blank=True, max_length=20)
+	username = models.CharField(blank=True, max_length=20)
+	dusername  = models.CharField(blank=True, max_length=20)
 	dmsg = models.CharField(blank=True, max_length=700)
 	pmsg = models.CharField(blank=True, max_length=700)
 	illness = models.CharField(blank=True, max_length=700)
 
 
 class convMembers(models.Model):
-	mem_phone = models.CharField(blank=True, max_length=20)
-	phonedoctor = models.CharField(blank=True, max_length=20)
+	mem_username = models.CharField(blank=True, max_length=20)
+	dusername  = models.CharField(blank=True, max_length=20)
 
 
 class convReg(models.Model):
-	mem_phone = models.CharField(blank=True, max_length=20)
+	mem_username  = models.CharField(blank=True, max_length=20)
 	names= models.CharField(blank=True, max_length=300, default=False)
 
 
@@ -178,17 +187,18 @@ class convReg(models.Model):
 
 
 class Messages(models.Model):
-	person_phone = models.CharField(blank=True, max_length=20)
+	password_phone = models.CharField(blank=True, max_length=20)
 	msg = models.CharField(blank=True, max_length=700)
-	friend_phone = models.CharField(blank=True, max_length=20)
+	password_phone = models.CharField(blank=True, max_length=20)
 	
 
 
 
 
 class convPersonFrien(models.Model):
-	person_phone = models.CharField(blank=True, max_length=20)
-	friend_phone = models.CharField(blank=True, max_length=20)
+	person_password = models.CharField(max_length=30)
+	friend_password = models.CharField(max_length=30)
+ 
 	
 	
 # chating app
@@ -1027,6 +1037,7 @@ def current_rate():
 class Register(models.Model):
 
     # user = models.OneToOneField(User)
+    user = models.OneToOneField(User)
     fname = models.CharField(blank=True, max_length=20,  default=False)
     sname = models.CharField(blank=True, max_length=30,  default=False)
     page = models.IntegerField(blank=True)
@@ -1055,6 +1066,9 @@ class Register(models.Model):
         except UnicodeEncodeError:
             pass
         return text
+
+    def __unicode__(self):
+        return self.user.username
 
 
 
@@ -1118,6 +1132,7 @@ class Ambulance(models.Model):
     districts = models.CharField(max_length=1000, blank=True, null=True)
     place = models.CharField(blank=True, max_length=100,  default=False)
     phone = models.CharField(blank=True, max_length=20,  default=False)
+
 
 
 

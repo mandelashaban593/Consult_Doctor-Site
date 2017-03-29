@@ -4,30 +4,29 @@
 
 <form id="signup" action="/Doct/illness/"  method="POST" style=" ">
 {% csrf_token %}
-        <div class="header">
+       <form id="signup" action="/Doct/illness/"  method="POST" style=" ">
+{% csrf_token %}
+       
         <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
             <h3>Consult Doctor</h3>
           
-            
-        </div>
+ 
         
-        <div class="sep"></div>
-
-        <div class="inputs">
+      
 
 
-            <p style="padding: 7px">Disease  signs (Condition):<br>
+            <p style="padding: 4px">Disease  signs (Condition):<br>
 
              <select name="comp_signs"  required="True" style="width: 160px;" autofocus>{% include "Doct/cond_options.html" %}
               </select>
               </p>
 
-               <p style=' padding: 7px' id='business'>Explain Disease signs:<br>
+               <p style=' padding: 4px' id='business'>Explain Disease signs:<br>
                <textarea type='text' class='text' name='illness' rows="3" cols="38"  Placeholder="Disease signs" value size='20'  autofocus></textarea>
 
                </p>
 
-                <p style="padding: 7px">
+                <p style="padding: 4px">
                 You need an ambulance ?:<br>
                 <input value="1" type="radio" name="amb" onClick="displayForm(this)"></input>Yes
                 <br>
@@ -36,7 +35,7 @@
 
                </p>
 
-                <p style="padding: 7px"> Gender:<br>
+                <p style="padding: 4px"> Gender:<br>
                  <select type="text" name="gender" Placeholder="Patient Age" id="page" autofocus>
                  <option value="Male">Male</option>
                  <option value="Female">Female</option>
@@ -49,7 +48,26 @@
                 <input type="text" name="pname" id="pname" autofocus/>
                 </p>
 
-                <input type="hidden" name="telno"  id="telno" ng-model="telno" Placeholder="Mobile Number" value="{{ptelno}}"/>
+`                <p style="padding: 7px"> Phonenumber:<br>    
+                 <input type="telno" name="telno"  id="password"  Placeholder="Mobile Number" />
+                 </p>
+
+
+                <p style="padding: 7px"> Doctor:<br>
+                 <select type="text" name="dname" Placeholder="Patient Age" id="page" autofocus>
+                 <option value="Peter">Choose A Doctor</option>
+                 <option value="Peter">Peter(General Doctor)</option>
+                 <option value="John">John(General Doctor)</option>
+                 <option value="Anguda">Anguda(Physicians)</option>
+
+                 </select>
+              
+                </p>
+
+
+
+                <input type="hidden" name="username"  id="username"   value="{{username}}"/>
+                 <input type="hidden" name="password"  id="password" value="{{password}"/>
 
                 <input type="hidden" name="role"  id="dname" value="patient"/> 
                 <input type="hidden" name="page"  id="dname" value="0"/> 
@@ -61,9 +79,6 @@
             <input type="submit" id="submit"  placeholder="Enter Message" value="Submit" name="SUBMIT" required>
            
              </p>
-
-        
-        </div>
 
     </form>
 

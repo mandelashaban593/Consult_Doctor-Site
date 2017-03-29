@@ -1,17 +1,9 @@
-<!doctype html>
-{% load static %}
-<html>
-    <head>
-        <title>Facebook Style Popup Design</title>
+{% extends 'Doct/base.html' %}
+{% load staticfiles %}
 
-    <script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
-    <script src="app.js"></script>
 
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
 
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> 
-  
+{% block body_block %}
 
         
         <style type="text/css">
@@ -266,9 +258,9 @@
                                         <table>
                                      {% for qconv in qconvs %}
 
-                                    <tr><td style="width: 200px;background: #add8e6;">{{qconv.dtelno}}</td></tr>
+                                    <tr><td style="width: 200px;background: #add8e6;">{{qconv.dusername}}</td></tr>
                                     <tr><td  style="width: 200px;background: #add8e6;">{{qconv.dmsg}}</td></tr>
-                                    <tr style=""><td  style="width:200px;background: #90ee90;">{{qconv.telno}}</td></tr>
+                                    <tr style=""><td  style="width:200px;background: #90ee90;">{{qconv.username}}</td></tr>
                                     <tr style=""><td  style="width:200px;padding-bottom: 7px;background: #90ee90;">{{qconv.pmsg}}</td></tr>
 
                                     {% endfor %}   
@@ -286,8 +278,8 @@
                     <div class="portlet-footer" style="height:35px;margin-left: 0px; border:0px; width:0px;">
                         <form action="/Doct/sendtext/" style="height:35px;margin-left: 0px; border:0px; width:40px;"  ng-controller="validateCtrl" name="myForm" novalidate class="form-style-6" id="changesicknessform_form" method="post" >
                         {% csrf_token %}
-                        <input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
-                        <input type="hidden" name="dtelno" value="0754307471" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
+                        <input type="hidden" name="username" value="{{username}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
+                        <input type="hidden" name="dusername" value="Peter" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
 
                             <div class="form-group" style="margin-left: 0px">
                                 <textarea class="form-control" ng-model="pmsg" name="pmsg"  placeholder="Enter message..."   style="margin-left:0px;width:200px; border: 0px; padding-bottom: 7px" rows="3"> </textarea>
@@ -317,8 +309,8 @@
                         
 
                         {% csrf_token %}
-                        <input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
-                        <input type="hidden"  name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
+                        <input type="hidden" name="username" value="{{username}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
+                        <input type="hidden"  name="dusername" value="{{dusername}}" style="width: 200px; border: 0px; padding-bottom: 7px"    id="dname"/>
 
                             
                                 <textarea class="form-control" name="pmsg"  ng-model="pmsg" placeholder="Enter message..."  style="margin-left:0px;width:200px; border: 0px; padding-bottom: 7px" rows="3"  > </textarea>
@@ -352,5 +344,5 @@
         <!-- /.col-md-4 -->
     </div>
 </div>                
-    </body>
-</html>
+ {% endblock %}
+

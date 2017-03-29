@@ -167,7 +167,7 @@ jQuery.browser = {};
             <li>
               <form action="/Doct/doctConv/" style=" height:35px;border: 0px; " id="changesicknessform_form" method="post">
             {% csrf_token %}
-            <input type="hidden" name="dtelno" value="{{phonedoctor}}" style="width: 200px; border: 0px; " id="dname"/>
+            <input type="hidden" name="dusername" value="{{username}}" style="width: 200px; border: 0px; " id="dname"/>
 
             <tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"   /></td></tr>
 
@@ -265,7 +265,7 @@ jQuery.browser = {};
 
 
         <li class="">
-            <a href="/Doct/"><i class="icon-signout"></i>Logout
+            <a href="/Doct/logout/"><i class="icon-signout"></i>Logout
             </a>
             </li>
 
@@ -329,7 +329,7 @@ jQuery.browser = {};
 
 
 
-<script src="{{STATIC_URL}}admin/dashboard/scripts/theme.js"></script>
+<script src="{{STATIC_URL}}/js/theme.js"></script>
 
 
 </body>

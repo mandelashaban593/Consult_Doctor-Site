@@ -2,46 +2,7 @@
 
 {% load staticfiles %}
 
-{% block nav_bar %}
-<div class="header">
-<div class="wrap">
-<div class="logo"><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpeg' %}"  style="width:40px" alt="" />Online Doctor(Medical) Consulation</a></div>
-   <div class="con-right">
-      <div class="grid1-l-img">
-        <img src="{% static 'images/contact.png' %}" alt="">
-      </div>
-      <div class="grid1-l-desc">
-        <p>Contact : +256754307471</p>
-      </div>
-      <div class="clear"></div>
-  </div>
-    <div class="clear"></div>
-     </div>
-</div>
-<div class="header-bottom">
-      <div class="wrap">
-        <ul id="nav">
-                <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
-                <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
-                <li><a class="hsubs" href="/Doct/team/">Our Team</a>
-                 <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
-                <li><a href="/Doct/contact/">Contact Us</a></li>
-                <li><a href="/Doct/how_it_works/">How it works</a></li>
-                <li><a href="/Doct/convbaddy/">Converse</a></li>
-                <li><a href="/Doct/whyus/">Why Us</a></li>
-                    <ul class="subs">
-                        <li><a href="#">Hotels</a></li>
-                        <li><a href="#">Restaurants</a></li>
-                        <li><a href="#">Beach Resorts</a></li>
-                    </ul>
-                </li>
-               
-        </ul>
 
-       </div>
-</div>
-
-{% endblock %}
 
 {% block body_block %}
 
@@ -64,7 +25,7 @@
 <table style="">
 
 <tr><td style="width: 0px"><h1 style=""></h1></td></tr>
-<tr><td style="width: 200px"><a href="/Doct/patientConverse/{{qconv.dtelno}}/{{qconv.telno}}/">
+<tr><td style="width: 200px"><a href="/Doct/patientConverse/{{qconv.dusername}}/{{qconv.username}}/">
 {{dname}}(Doctor)
 <br/>
 
@@ -74,9 +35,9 @@
 
 {% for qconv in qconvs %}
 
-<tr><td style="width: 200px">{{qconv.dtelno}}</td></tr>
+<tr><td style="width: 200px">{{qconv.dusername}}</td></tr>
 <tr><td  style="width: 200px">{{qconv.dmsg}}</td></tr>
-<tr style=""><td  style="width:200px;">{{qconv.telno}}</td></tr>
+<tr style=""><td  style="width:200px;">{{qconv.username}}</td></tr>
 <tr style=""><td  style="width:200px;padding-bottom: 7px">{{qconv.pmsg}}</td></tr>
 
 
@@ -117,9 +78,9 @@
 <form action="/Doct/converse/" style="height:35px;border: 0px; margin-top: 20px; background-color: #3399FF" id="changesicknessform_form" method="post">
 {% csrf_token %}
 
-<input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; " id="dname"/>
+<input type="hidden" name="username" value="{{username}}" style="width: 200px; border: 0px; " id="dname"/>
 
-<input type="hidden" name="dtelno" value="0754307471" style="width: 200px; border: 0px; " id="dname"/>
+<input type="hidden" name="dusername" value="0754307471" style="width: 200px; border: 0px; " id="dname"/>
 
 <tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
 
@@ -132,10 +93,15 @@
 
 
 
+
+{% if user.authenticated %}
+
 <div class="divdash">
 <div id="div3" >
 
+
 <table  style="margin-right: 1000px;word-wrap: normal;">
+
 
 {% if pdiogs %}
 
@@ -147,7 +113,7 @@
 
 {% for pdiog in pdiogs %}
 
-<tr><td style="width: 200px">{{pdiog.telno}}</td></tr>
+<tr><td style="width: 200px">{{pdiog.username}}</td></tr>
 
 
 {% if pdiog.email %} 
@@ -165,13 +131,12 @@
 </div>
 </div>
   
+  {% endif %}
 
 
-<div class="divdash">
-<div id="div4">
-<table>
 
- <tr><td style="margin-top: 0px; right:0px"> {% include "Doct/expillness.html" %} </td>
+
+{% include "Doct/expillness.html" %} 
 
 {% else %}
 
@@ -189,11 +154,6 @@
 
 
 
-</table>
-</div>
-
-
-<table>
 {% if amb_msg %}
 
 <tr><td style="margin-top: 0px"> <h1 style="color:green;margin-left:200px" align="center">{{amb_msg}}<br/> After Sending  Fee of  Ugx.20,000  to 0754307471 First</h1></td></tr>
@@ -201,7 +161,7 @@
 {% endif %}
 <tr><td style="margin-top: 0px"> {% include "Doct/expillness2.html" %}</td></tr>
 
-</table>
+
 
 
 

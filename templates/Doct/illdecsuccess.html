@@ -2,46 +2,7 @@
 
 {% load staticfiles %}
 
-{% block nav_bar %}
-<div class="header">
-<div class="wrap">
-<div class="logo"><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpeg' %}"  style="width:40px" alt="" />Online Doctor(Medical) Consulation</a></div>
-   <div class="con-right">
-      <div class="grid1-l-img">
-        <img src="{% static 'images/contact.png' %}" alt="">
-      </div>
-      <div class="grid1-l-desc">
-        <p>Contact : +256754307471</p>
-      </div>
-      <div class="clear"></div>
-  </div>
-    <div class="clear"></div>
-     </div>
-</div>
-<div class="header-bottom">
-      <div class="wrap">
-        <ul id="nav">
-                <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
-                <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
-                <li><a class="hsubs" href="/Doct/team/">Our Team</a>
-                 <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
-                <li><a href="/Doct/contact/">Contact Us</a></li>
-                <li><a href="/Doct/how_it_works/">How it works</a></li>
-                <li><a href="/Doct/convbaddy/">Converse</a></li>
-                <li><a href="/Doct/whyus/">Why Us</a></li>
-                    <ul class="subs">
-                        <li><a href="#">Hotels</a></li>
-                        <li><a href="#">Restaurants</a></li>
-                        <li><a href="#">Beach Resorts</a></li>
-                    </ul>
-                </li>
-               
-        </ul>
 
-       </div>
-</div>
-
-{% endblock %}
 
 
 
@@ -88,9 +49,9 @@
 
 <form action="/Doct/sendtext/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post">
 {% csrf_token %}
-<input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; "    id="dname"/>
+<input type="hidden" name="password" value="{{password}}" style="width: 200px; border: 0px; "    id="dname"/>
 
-<input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; "    id="dname"/>
+<input type="hidden" name="dpassword" value="{{dpassword}}" style="width: 200px; border: 0px; "    id="dname"/>
 
 <tr><td style="width: 100px;"><input type="text" name="pmsg"  style="width: 200px;"   id="dname"/></td></tr>
 
@@ -123,9 +84,9 @@
 <tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
 <tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
 
-<tr><td style="width: 100px; padding-bottom: 3px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 3px"  readonly="readonly"  id="dname"/></td></tr>
+<tr><td style="width: 100px; padding-bottom: 3px"><input type="hidden" name="password" value="{{password}}" style="width: 200px; border: 0px; padding-bottom: 3px"  readonly="readonly"  id="dname"/></td></tr>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
+<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dpassword" value="{{dpassword}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
 
@@ -139,7 +100,7 @@
 
 
 
-<table style="margin-right: 1000px">
+<table style="margin-right: 1000px; width: 1300px;">
 
 {% if pdiogs %}
 
@@ -151,15 +112,16 @@
 
 {% for pdiog in pdiogs %}
 
-<tr><td style="width: 200px">{{pdiog.telno}}</td></tr>
+<tr><td style="width: 200px">{{pdiog.username}}</td></tr>
 
-{% if pdiog.gender %} 
+{% if pdiog.demail %} 
 
 <tr><td  style="width: 200px">{{pdiog.illness}}  </td></tr>
+<tr><td  style="width: 200px">{{pdiog.comp_signs}}  </td></tr>
 {% endif %}
 
-<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.dname  %} {{pdiog.diognosis}} {% else %} </td> </tr>
-<p>Pay 3,000 to Mob Phone<br> 0754307471 for seeing<br>doctor's response
+<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.demail  %} {{pdiog.diognosis}} {% else %} </td> </tr>
+<tr style=""><td  style="width:800px;padding-bottom: 7px; color: green; font-weight: bold;">Pay 20,000 to Mob Phone<br> 0754307471 for seeing<br>doctor's response</td> </tr>
 {% endif %}
 
 {% endfor %}  
@@ -179,16 +141,12 @@
 
 <form id="signup" action="/Doct/illness/"  method="POST" align="center">
 {% csrf_token %}
-        <div class="header">
+        
         <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
             <h3>Consult Doctor</h3>
-          
-            
-        </div>
-        
-        <div class="sep"></div>
 
-        <div class="inputs">
+        
+       
 
 
             <p style="padding: 7px">Disease  signs (Condition):<br>
@@ -224,7 +182,18 @@
                 <input type="text" name="pname" id="pname" autofocus/>
                 </p>
 
-                <input type="hidden" name="telno"  id="telno" ng-model="telno" Placeholder="Mobile Number" value="{{ptelno}}"/>
+                  <p style="padding: 7px"> Doctor:<br>
+                 <select type="text" name="dname" Placeholder="Patient Age" id="page" autofocus>
+                 <option value="Peter">Choose A Doctor</option>
+                 <option value="Peter">Peter(General Doctor)</option>
+                 <option value="John">John(General Doctor)</option>
+                 <option value="Anguda">Anguda(Physicians)</option>
+
+                 </select>
+              
+                </p>
+
+                <input type="hidden" name="password"  id="telno"  Placeholder="Mobile Number" value="{{password}}"/>
 
                 <input type="hidden" name="role"  id="dname" value="patient"/> 
                 <input type="hidden" name="page"  id="dname" value="0"/> 
@@ -238,7 +207,7 @@
              </p>
 
         
-        </div>
+  
 
     </form>
 

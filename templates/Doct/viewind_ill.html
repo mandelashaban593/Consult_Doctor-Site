@@ -43,9 +43,7 @@ Remit Dashboard
 
 {% include "Doct/ind_ill.html" %}
 
-{% elif ind_ill %}
 
-{% include "Doct/viewind_ill.html" %}
 
 {% elif endp %}
 
@@ -112,7 +110,7 @@ Remit Dashboard
           <thead>
           
           <tr>
-            <th># <a href="#">{{ill.telno}}</a></th>
+            <th># <a href="#">{{ill.username}}</a></th>
             <th></th>
           </tr>
           </thead>
@@ -125,7 +123,7 @@ Remit Dashboard
 
            <tr>
             <td>illness Detail</td>
-            <td>{{ ill.diognosis}}</td>
+            <td>{{ ill.illness}}</td>
           </tr>
 
           
@@ -165,7 +163,7 @@ Remit Dashboard
           <thead>
           
          <tr>
-            <th># <a href="#">{{ill.telno}}</a></th>
+            <th># <a href="#">{{ill.username}}</a></th>
             <th></th>
           </tr>
           </thead>
@@ -178,7 +176,7 @@ Remit Dashboard
 
            <tr>
             <td>illness Detail</td>
-            <td>{{ ill.diognosis}}</td>
+            <td>{{ ill.illness}}</td>
           </tr>
 
           <tr>

@@ -15,6 +15,7 @@ from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import doct_admin.utils as admin_utils
 from doct_admin.utils import log_action, store_login_info
+from django.db.models import Q
 
 
 def home(request):
@@ -251,7 +252,7 @@ def create_stuff_user(request, is_customer_care=False):
             user.save()
             user.is_staff = True
 
-            reg = Register(fname=request.POST['fname'], sname=request.POST['sname'],
+            reg = Register(user=user,fname=request.POST['fname'], sname=request.POST['sname'],
             	page=request.POST['page'],gender=request.POST['gender'],telno=request.POST['telno'],
             	username=request.POST['username'],password=request.POST['password'],email=request.POST['email'],
             	street=request.POST['street'],specialty=request.POST['specialty'],profile_pic=request.POST['profile_pic'], role=request.POST['role'])
@@ -269,14 +270,15 @@ def create_stuff_user(request, is_customer_care=False):
 def stuff_users(request, name=False):
     '''fetch stuff '''
     context = RequestContext(request)
+    pretitle = None
     
     user_list = Register.objects.filter(role="doctor")  # (is_staff=True)
     debug(user_list, 'stuff')
     user_list = user_list.filter().order_by('-id')
     # search query
     if 'q' in request.GET:
-        pretitle += ' | %s' % request.GET['q']
-        page_title += ' | %s' % request.GET['q']
+        pretitle = request.GET['q']
+        page_title =  request.GET['q']
         user_list = user_list.filter(
             Q(username__icontains='' + request.GET['q'] + ''))
     paginator = Paginator(user_list, settings.PAGNATION_LIMIT)
@@ -332,7 +334,7 @@ def patients(request, name=''):
         pretitle += ' | %s' % request.GET['q']
         page_title += ' | %s' % request.GET['q']
         user_list = user_list.filter(
-            Q(pname__icontains='' + request.GET['q'] + '') | Q(sname__icontains='' + request.GET['q'] + ''))
+            Q(username__icontains='' + request.GET['q'] + '')  )
 
     paginator = Paginator(user_list, settings.PAGNATION_LIMIT)
     page = request.GET.get('page')

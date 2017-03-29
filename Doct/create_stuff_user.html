@@ -17,13 +17,14 @@
 
 {% block content %}
 
+  {% include "Doct/notifications.html" %}
 
 <section class="module">
       <div class="module-head">
         <b>Create A Staff User</b> <small><i>With great power comes great responsibility , don't be careless!! </i></small>
       </div><!--/.module-head-->
       <div class="module-body">
-  {% include "Doct/notifications.html" %}
+
       <div id='signup_form_response'>
 {% include "form-error.html" %}
 </div>

@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from Doct.models import Page, UserProfile, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages,Labtests
 
 from Doct.forms import  UserForm,DiognosisForm
-from Doct.forms import PageForm, TopupForm, PatientForm, IllnessForm,DoctorForm,AddIllDetForm,ContactForm, LoginForm,patientConverseForm,doctorConverseForm, MessagesForm
+from Doct.forms import PageForm, TopupForm, PatientForm, IllnessForm,DoctorForm,AddIllDetForm,ContactForm, LoginForm,patientConverseForm,doctorConverseForm, MessagesForm,UserProfileForm
 from django.contrib.auth.models import  User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
@@ -47,7 +47,7 @@ def dashboard_stats(request):
 
 	r = None
 	try:
-		r = Register.objects.get(password=password, telno=username)
+		r = Register.objects.get(password=password, username=username)
 	except Exception, e:
 		print "Invalid Username Or Password", e
 	data = {'boss_man': False}
@@ -387,9 +387,9 @@ def add_page(request, category_name_url):
 		form = PageForm()
 
 	return render_to_response( 'Doct/add_page.html',
-{'category_name_url': category_name_url,
-'category_name': category_name, 'form': form},
-context)
+	{'category_name_url': category_name_url,
+	'category_name': category_name, 'form': form},
+	context)
 
 
 
@@ -418,37 +418,50 @@ def user_login(request):
 		# Gather the username and password provided by the user.
 		# This information is obtained from the login form.
 		password = request.POST.get('password', None)
-		telno = request.POST['telno']
+		username = request.POST['username']
 		r = None	
 		data.update({'admin_data': dashboard_stats(request)})
 
-		print "Telephone No %s "  % (telno) 
+		print "Username %s "  % (username) 
 		print "Password %s "  % (password)
-		
-
+		diog = Illness.objects.all().order_by("-id")
+		diog_count = Illness.objects.all().order_by("-id").count()
+		undiog_count = Diognosis.objects.filter(gender='0').count()
+		doctor_count = Register.objects.filter(role='doctor').count()
+	    
+	    
 	
-		r = get_object_or_404(Register.objects.filter(password=password, telno=telno))
+		r = get_object_or_404(Register.objects.filter(password=password, username=username))
 		
 
 		if r:
-			print "Telephone No 1 %s "  % (telno) 
+			print "Username 1 %s "  % (username) 
 			print "Password 1 %s "  % (password)
 			print "Role 1 %s "  % (r.role)
 			if r.role=='patient':
 				patlog=True
-				return render_to_response('Doct/patientH.html', {'patlog':patlog}, context)
+				user = authenticate(username=username, password=password)
+				if user is not None:
+					if user.is_active:
+						login(request, user)
+
+						return render_to_response('Doct/patientH.html', {'patlog':patlog}, context)
 			elif r.role =='doctor':
 
-				print "Telephone No 2 %s "  % (telno) 
+				print "Uername 2 %s "  % (username) 
 				print "Password 2 %s "  % (password)
 				print "Role 2 %s "  % (r.role)
 
 				doctlog=True
-				diog = Diognosis.objects.all().order_by("-id")
-				convmem = convMembers.objects.filter(phonedoctor=username)
+				try:
+					diogs = Diognosis.objects.filter(doctorusername=username).order_by("-id")
+					convmem = convMembers.objects.filter(mem_username=username)
+				except Exception, e:
+					print 'Error, retrieving diog or convmem ', e
+
 				if convmem:
-					phonedoctor=username
-					print phonedoctor
+					username=username
+					print username
 				
 				paginator = Paginator(diog, settings.PAGNATION_LIMIT2)
 				page = request.GET.get('page')
@@ -462,36 +475,47 @@ def user_login(request):
 					diog = paginator.page(paginator.num_pages)
 
 				staf=True
-			        
-			  
-				return render_to_response('Doct/index_staff.html', {'diogs':diog,'data':data ,'staf':staf, 'phonedoctor':phonedoctor,'doctlog':doctlog}, context)
+				user = authenticate(username=username, password=password)
+				if user is not None:
+					if user.is_active:
+						login(request, user)
+						return render_to_response('Doct/index_staff.html', {'diogs':diogs,'data':data , 'staf':staf, 'username':username,'doctlog':doctlog}, context)
+			        			
 			elif r.role =='admin':
-				print "Telephone No 3 %s "  % (telno) 
+				print "Username 3 %s "  % (username) 
 				print "Password 3 %s "  % (password)
 				print "Role 3 %s "  % (r.role)
 
 				super_admin = True
 				staf=True
-				return render_to_response('Doct/index_admin.html', {'staf':staf, 'super_admin':super_admin, 'data':data}, context)
-				
+				user = authenticate(username=username, password=password)
+				if user is not None:
+					if user.is_active:
+						login(request, user)
+						
+						return render_to_response('Doct/index_admin.html', {'staf':staf, 'super_admin':super_admin, 'data':data,'diog_count':diog_count, 'diog':diog,'undiog_count':undiog_count,'doctor_count':doctor_count,}, context)
+						
 			else:
 				return render_to_response('Doct/index.html', {}, context)
 		else:
-			 messages.error(request,
+			messages.error(request,
                                     "Incorrect username or password"
                                     )
-			 response = True
+			response = True
+
 			 # return HttpResponse(response)
-			 return render_to_response('Doct/index.html', {'response':response}, context)
+			return render_to_response('Doct/index.html', {'response':response}, context)
 
+			 
+			 
 
-	else:
-	# No context variables to pass to the template system, hence the
-	# blank dictionary object ...
+	elif request.method == 'GET':
 		log = True
 		return render_to_response('Doct/index.html', {'log':log}, context)
-
-
+		
+	
+		
+		
 
 def user_log(request):
 		context = RequestContext(request)
@@ -581,34 +605,65 @@ def illness(request):
     
     context = RequestContext(request)
     post_values = {}
+    password = None
+    dname = None
+    pdiog = None
     if request.POST:
-		Fpost_values = request.POST.copy()
-		illness = request.POST['illness']
-		page = request.POST['page']
-		ptelno = request.POST['telno']
-		pname = request.POST['pname']
+		post_values = request.POST.copy()
+		
+		dname = request.POST['dname']
+
 		comp_signs = request.POST['comp_signs']
-		dtelno = '0754307471'
+		illness = request.POST['illness']
+		amb = request.POST['amb']
+		gender = request.POST['gender']
+		pname = request.POST['pname']
+		username = request.POST['username']
+		password = request.POST['password']
+		role= request.POST['role']
+		ptelno = request.POST['telno']
+		dname = request.POST['dname']
+
+		print 'Patient User name %s ' % username
+
+
+		if dname == 'Peter':
+			dtelno = '+256754307471'
+		if dname == 'John':
+			dtelno = '+256786031444'
+		if dname == 'Anguda':
+			dtelno = '+25678603111'
+
+		print "Doctor name %s " % (dname)
+
+		comp_signs = request.POST['comp_signs']
+		dpassword = '0754307471'
+		dusername = '0754307471'
 		dname = 'peter'
 		amount =  3000
-		enterpay= Enterpay(telno=dtelno,amount=amount)
+		enterpay= Enterpay(telno=dusername,amount=amount)
 		enterpay.save()
 		pay_id = enterpay.id
 		gender = pay_id
-		ill_det=Illness(gender=gender,comp_signs=comp_signs, illness=illness, page=page,pname=pname,kintelno=ptelno,doctortelno=dtelno, amt=amount)
+		ill_det=Illness(gender=gender,comp_signs=comp_signs, illness=illness, page=0,pname=pname,username=username,dtelno=dtelno, dname=dname,doctorusername=dname,amt=amount)
 		ill_det.save()
 		gender = ill_det.gender	
 		ill_id = ill_det.id	
 		amb = request.POST['amb']
-		diog=Diognosis(page=page,ill_id=ill_id,comp_signs=comp_signs, gender='0', diognosis=illness,amb=amb,telno=ptelno, doctortelno=dtelno, illness=illness)
+		diog=Diognosis(page=0,ill_id=ill_id,comp_signs=comp_signs, gender='0',dtelno = dtelno,  diognosis=illness,amb=amb,username=username, dname=dname,doctorusername=dname, illness=illness)
 		diog.save()
-		pdiogs = Diognosis.objects.filter(id=diog.id).order_by("id")[:10]
-		qconvs = converse.objects.filter(telno=ptelno).order_by("id")[:10]
-		msg = "A patient has just contacted us"	
+		print 'Username %s ' % diog.username
+
+		pdiogs = Diognosis.objects.filter(id=diog.id).distinct().order_by("id")
+		qconvs = converse.objects.filter(username=username,dusername=dname).order_by("id")[:10]
+		msg = "A patient has just contacted us"
+
+		if len(pdiogs) > 1:
+			pdiog = Diognosis.objects.filter(id=diog.id).distinct().order_by("id")[:10]
 		try:
-			mem=convMembers.objects.get(mem_phone=ptelno)	
+			mem=convMembers.objects.get(mem_username=username)	
 		except Exception,e:
-			mem=convMembers(mem_phone = ptelno)
+			mem=convMembers(mem_username = username)
 			mem.save()
 
 		success_message(
@@ -617,7 +672,8 @@ def illness(request):
 		# send_illness_sms_notification(request,
   #            msg)
 		illness_delivered_email(request, msg)
-		return render_to_response('Doct/illdecsuccess.html', { 'pay_id':pay_id,'ptelno':ptelno,'gender':gender, 'pdiogs':pdiogs, 'qconvs':qconvs, 'dname':dname, 'dtelno':dtelno,'pname':pname}, context)
+
+		return render_to_response('Doct/illdecsuccess.html', { 'pay_id':pay_id,'password':password,'gender':gender, 'pdiogs':pdiogs,'pdiog':pdiog, 'qconvs':qconvs, 'dname':diog.username, 'dpassword':dpassword,'pname':pname}, context)
 
 
       
@@ -631,21 +687,21 @@ def patientConverse(request):
 	pdiogs = ''
 	qconv = ''
 	qconvs = ''
-	ptelno=request.POST.get('telno', False)
-	dtelno=request.POST.get('dtelno', False)
+	pusername=request.POST.get('username', False)
+	dusername=request.POST.get('dusername', False)
 
 	pmsg=request.POST.get('pmsg', False)
 	dname = "Peter"
         	
 	if request.POST:
-		pdiogs = Diognosis.objects.filter(telno=ptelno, doctortelno=dtelno)
-		qconv = converse(telno=ptelno, phonedoctor=dtelno,pmsg=pmsg)
+		pdiogs = Diognosis.objects.filter(username=pusername, doctorusername=dusername)
+		qconv = converse(username=pusername, dusername=dusername,pmsg=pmsg)
 		qconv.save()
-		qconvs = converse.objects.filter(telno=ptelno).order_by("-id")[:5]
+		qconvs = converse.objects.filter(username=pusername).order_by("-id")[:5]
 
 
 
-	return render_to_response('Doct/converse.html', { 'dname':dname,'ptelno':ptelno, 'dtelno':dtelno,  'pdiogs':pdiogs,'qconvs':qconvs}, context)
+	return render_to_response('Doct/converse.html', { 'dname':dname,'username':pusername, 'dusername':dusername,  'pdiogs':pdiogs,'qconvs':qconvs}, context)
 
 		
           	
@@ -690,7 +746,7 @@ def ajconv_list(request):
 	template = settings.BASE_DIR + 'templates/Doct/converse.html'
         	
 	if request.POST:
-		pdiogs = Diognosis.objects.filter(telno=ptelno, doctortelno=dtelno)
+		pdiogs = Diognosis.objects.filter(telno=ptelno, doctortelno=dtelno).distinct()
 		if pmsg:
 			qconv = converse(telno=ptelno, phonedoctor=dtelno,pmsg=pmsg)
 			qconv.save()
@@ -717,24 +773,24 @@ def doctConv(request):
 	qconv = ''
 	qconvs = ''
 	pmem = ''
-	dtelno=request.POST.get('dtelno', False)
+	dusername=request.POST.get('dusername', False)
 
 
 	dname = "Peter"
         	
 	if request.POST:
 		post_values = request.POST.copy()
-		print "Telno %s" % dtelno
+		print "Doctor username %s" % dusername
 
 		try:
-			pmem = convMembers.objects.all()
+			pmem = convMembers.objects.all().distinct()
 			diogs = Diognosis.objects.all()
 		except Exception, e:
 			pass
 
 	chatmsg = True
 	staf = True
-	return render_to_response('Doct/dconverse.html', { 'dname':dname,'dtelno':dtelno,'pmem':pmem,'chat':chatmsg,'staf':staf, 'diogs':diogs}, context)
+	return render_to_response('Doct/dconverse.html', { 'dname':dname,'dusername':dusername,'pmem':pmem,'chat':chatmsg,'staf':staf, 'diogs':diogs}, context)
 			
 
         	   
@@ -752,14 +808,14 @@ def Converse(request):
 	pdiogs = ''
 	qconv = ''
 	qconvs = ''
-	ptelno=request.POST.get('telno', False)
-	dtelno=request.POST.get('dtelno', False)
-	request.session['ptelno'] = ptelno
-	request.session['dtelno'] = dtelno
+	pusername=request.POST.get('username', False)
+	dusername=request.POST.get('dusername', False)
+	request.session['pusername'] = pusername
+	request.session['dusername'] = dusername
 	
-	if not dtelno and not ptelno:
-		ptelno=request.session['ptelno'] 
-		dtelno=request.session['dtelno']
+	if not dusername and not pusername:
+		ptelno=request.session['pusername'] 
+		dtelno=request.session['dusername']
 
 	pmsg=request.POST.get('pmsg', False)
 	dname = "Peter"
@@ -771,7 +827,7 @@ def Converse(request):
         	
         	
         	try:
-        		pdiog = Diognosis.objects.filter(telno=ptelno, doctortelno=dtelno)
+        		pdiog = Diognosis.objects.filter(username=pusername, doctorusername=dusername).distinct()
         		if len(pdiog) > 0:
         			pdiogs = pdiog
             
@@ -783,12 +839,12 @@ def Converse(request):
 	        	else:
 	        		pass
 	        except Exception,e:
-	        	diog = Diognosis.objects.get(telno=ptelno, doctortelno=dtelno)
+	        	diog = Diognosis.objects.get(username=pusername, doctorusername=dusername)
 
-	        qconv = converse(telno=ptelno, phonedoctor=dtelno,pmsg=pmsg)
-	        convmem = convMembers(mem_phone=ptelno, phonedoctor=dtelno)
+	        qconv = converse(username=pusername, dusername=dusername,pmsg=pmsg)
+	        convmem = convMembers(mem_username=pusername, dusername=dusername)
 	        try:
-	        	memex = convMembers.objects.get(mem_phone=ptelno)
+	        	memex = convMembers.objects.get(mem_username=pusername)
 	        except Exception, e:
 	        	convmem.save()
 	        	
@@ -797,14 +853,14 @@ def Converse(request):
 	        	qconv.save()
        
 	        
-	        qconvs = converse.objects.filter(telno=ptelno, phonedoctor=dtelno).order_by("-id")[:5]
+	        qconvs = converse.objects.filter(username=pusername, dusername=dusername).order_by("-id")[:5]
 	        qconvs = reversed(qconvs)
 
 
 
  	
     
-	return render_to_response('Doct/converse.html', { 'dname':dname,'pdiog':pdiog,'ptelno':ptelno, 'dtelno':dtelno,  'pdiogs':pdiogs,'qconvs':qconvs}, context)
+	return render_to_response('Doct/converse.html', { 'dname':dname,'pdiog':pdiog,'username':pusername, 'dusername':dusername,  'pdiogs':pdiogs,'qconvs':qconvs}, context)
 	
 
 
@@ -952,7 +1008,7 @@ def doctorConverse(request):
 	        	else:
 	        		pass
 	        except Exception,e:
-	        	diog = Diognosis.objects.get(telno=ptelno, doctortelno=dtelno)
+	        	diog = Diognosis.objects.get(telno=ptelno, doctortelno=dtelno).distinct()
 
 	        form.save()
        
@@ -1087,7 +1143,7 @@ def view_illness2(request):
 	context = RequestContext(request)
 	msg = ''
 	doct_ill = False
-	ill = Illness.objects.all()
+	ill = Illness.objects.filter(doctorusername=request.user.username)
 	paginator = Paginator(ill, settings.PAGNATION_LIMIT)
 	page = request.GET.get('page')
 	try:
@@ -1106,22 +1162,25 @@ def view_illness2(request):
 		return render_to_response('Doct/index_staff.html', {'doctview_ill':doctview_ill, 'ill':ill,'staf':staf}, context)
 	else:
 
+		staf = True
 		msg = "No Illness record"
 		doct_ill = True
 		return render_to_response('Doct/doctorH.html', {'doct_ill':doct_ill, 'ill':ill}, context)
 
+
+	
 
 def ind_illness(request):
 	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)
 	msg = ''
 	ind_ill = False
-	ill = Illness.objects.all().order_by('-id')
+	ill = Illness.objects.all().distinct().order_by('-id')
 	indill_auth = False
 	staf = False
 	if request.POST:
 		username = request.POST['username']
-		ill = Diognosis.objects.filter(telno=username).order_by('-id')
+		ill = Diognosis.objects.filter(username=username).distinct().order_by('-id')
 
 		paginator = Paginator(ill, settings.PAGNATION_LIMIT)
 		page = request.GET.get('page')
@@ -1247,7 +1306,7 @@ def view_diognosis(request):
 	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)
 	msg = ''
-	diogs = Diognosis.objects.all()
+	diogs = Diognosis.objects.all().distinct()
 	if diogs:
 		msg = "Diognosis records"
 		return render_to_response('Doct/view_diog.html', {'diogs':diogs, 'msg':msg}, context)
@@ -1576,7 +1635,7 @@ def enterpay(request):
 		try:
 			r = Register.objects.get(telno=telno)
 		except Exception, e:
-			print "diog doesn't exist", e
+			print "Account  doesn't exist", e
 
 		try:
 			pdiogs = Diognosis.objects.filter(telno=telno)
@@ -1612,6 +1671,209 @@ def enterpay(request):
 	pay=True
 
 	return render_to_response('Doct/payconsult.html', {'pay':pay}, context)	
+
+
+
+
+def enterpay2(request):
+	# Like before, obtain the context for the user's hrequest.
+	context = RequestContext(request)
+	msg = ''
+	msg2 = ''
+	enterpay = False
+	pill = ''
+	r = ''
+	reg = ''
+	pdiog =  ''
+	ill_more = False
+	patlog = False
+	pdiogs = None
+	nodiog = False
+	qconv = None
+	qconvs = None
+	username=  None
+	password = None
+
+	# If the request is a HTTP POST, try to pull out the relevant information.
+	post_values = request.POST.copy()
+	form = LoginForm()
+
+	if request.method == 'POST':
+		# Gather the username and password provided by the user.
+	
+		role = request.POST['role']
+
+		username = request.POST['username']
+		password = request.POST['password']
+
+		print 'Username %s ' % username
+		print 'Password %s ' % password
+
+		form = LoginForm(post_values)
+		user_form = UserForm(data=request.POST)
+
+		try:
+			r = Register.objects.get(password=password)
+		except Exception, e:
+			print "Account  doesn't exist", e
+
+		try:
+			pdiogs = Diognosis.objects.filter(username=username).distinct()
+			for pdiog in pdiogs:
+				print 'Username  %s ' % pdiog.username
+			
+				
+
+		except Exception, e:
+			print "diogs doesn't exist", e
+
+		try:
+			for pdiog in pdiogs:
+				print ' Username ', pdiog.username
+		except Exception, e:
+			print 'No attribute username', e
+				
+
+
+		try:
+
+			pdiog = Diognosis.objects.get(username=username).distinct()
+			print ' Username %s'   % (pdiog.username)
+
+		except Exception, e:
+			print "diog doesn't exist", e
+
+
+
+
+		try:
+			qconvs = converse.objects.filter(username=username).order_by("id")[:5]
+
+			
+		except Exception,e:
+			print 'nothing', e
+
+
+
+
+		if r:
+
+			ill_more = True
+			print "Role %s " % (r.role)
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				if user.is_active:
+					login(request, user)
+					if pdiogs:
+						print ' Patient  Succeess diog login'
+						return render_to_response('Doct/patientsub.html', {'password':password,'nodiog':nodiog,'pdiogs':pdiogs,'pdiog':pdiog,'patlog':patlog,'ill_more':ill_more,'qconvs':qconvs, 'username':username}, context)
+					else:
+						return render_to_response('Doct/patientH.html', {'password':password,'nodiog':nodiog,'pdiogs':pdiogs,'pdiog':pdiog,'patlog':patlog,'ill_more':ill_more,'qconvs':qconvs, 'username':username}, context)
+
+		
+		else:
+			if user_form.is_valid():
+				form.save()
+				u = User(username=username, password=password)
+				u.save()
+			ill_more = True
+
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				if user.is_active:
+					login(request, user)
+					if pdiogs:
+						print 'Patient does not exist diog login '
+						return render_to_response('Doct/patientsub.html', {'password':password,'nodiog':nodiog,'pdiogs':pdiogs,'pdiog':pdiog,'patlog':patlog,'ill_more':ill_more,'qconvs':qconvs, 'username':username}, context)
+					else:
+						return render_to_response('Doct/patientH.html', {'password':password,'nodiog':nodiog,'pdiogs':pdiogs,'pdiog':pdiog,'patlog':patlog,'ill_more':ill_more,'qconvs':qconvs, 'username':username}, context)
+
+		
+				else:
+					return render_to_response('Doct/index.html', {}, context)
+			else:
+				print 'User does not exist'
+
+
+
+	elif request.method == 'GET':
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				if pdiogs:
+					return render_to_response('Doct/patientsub.html', {'password':password,'nodiog':nodiog,'pdiogs':pdiogs,'pdiog':pdiog,'patlog':patlog,'ill_more':ill_more,'qconvs':qconvs, 'username':username}, context)
+				else:
+					return render_to_response('Doct/patientH.html', {'password':password,'nodiog':nodiog,'pdiogs':pdiogs,'pdiog':pdiog,'patlog':patlog,'ill_more':ill_more,'qconvs':qconvs, 'username':username}, context)
+			 
+			
+
+	else:
+		pass
+
+	pay=True
+
+	return render_to_response('Doct/index.html', {'pay':pay}, context)	
+
+
+
+
+def register(request):
+	# Like before, get the request's context.
+	context = RequestContext(request)
+	# A boolean value for telling the template whether the registration was successful.
+	# Set to False initially. Code changes value to True when registration succeeds.
+	registered = False
+
+	# If it's a HTTP POST, we're interested in processing form data.
+	if request.method == 'POST':
+		# Attempt to grab information from the raw form information.
+		# Note that we make use of both UserForm and UserProfileForm.
+		username = request.POST['username']
+		password = request.POST['password']
+		email = request.POST['email']
+		
+		user_form = UserForm(data=request.POST)
+		profile_form = UserProfileForm(data=request.POST)
+	
+		if user_form.is_valid() and profile_form.is_valid():
+			# Save the user's form data to the database.
+			user = user_form.save()
+			# Now we hash the password with the set_password method.
+			# Once hashed, we can update the user object.
+			user.set_password(user.password)
+			user.save()
+			# Now sort out the UserProfile instance.
+			# Since we need to set the user attribute ourselves, we set commit=False.
+			# This delays saving the model until we're ready to avoid integrity problems.
+			profile = profile_form.save(commit=False)
+			profile.user = user
+			rg = Register(user=user,username=username, password=password, email=email, page='0', role="patient")
+			rg.save()
+			print 'Password %s' % rg.password
+			print 'Password %s' % rg.username
+			# Did the user provide a profile picture?
+			# If so, we need to get it from the input form and put it in the UserPro
+			registered = True
+		else:
+			print user_form.errors, profile_form.errors
+			# Not a HTTP POST, so we render our form using two ModelForm instances.
+			# These forms will be blank, ready for user input.
+
+	else:
+		user_form = UserForm()
+		profile_form = UserProfileForm()
+		
+		# Render the template depending on the context.
+	return render_to_response(
+	'Doct/register.html',
+	{'user_form': user_form, 'registered': registered},
+	context)
+
+
+
+
+
 
 
 def editdiog(request,diog_id=1, ill_id=1):
@@ -1739,21 +2001,23 @@ def sendrep(request):
 	dtelno = ''
 	ptelno = ''
 	pmsg = ''
+	staf = False
 
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'POST':
 		dmsg=request.POST.get('dmsg', False)
-		ptelno=request.POST.get('telno', False)
-		dtelno=request.POST.get('dtelno', False)
+		pusername=request.POST.get('pusername', False)
+		dusername=request.POST.get('dusername', False)
+		staf = True
 		try:
-			msg = converse(dmsg=dmsg,telno=ptelno,phonedoctor=dtelno)
+			msg = converse(dmsg=dmsg,username=pusername,dusername=dusername)
 			msg.save()
-			qconvs = converse.objects.filter(telno=ptelno,phonedoctor=dtelno).order_by('-id')[:5]
+			qconvs = converse.objects.filter(username=pusername,dusername=dusername).order_by('-id')[:5]
 			qconvs = reversed(qconvs)
-			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno}, context)
+			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'pusername':pusername, 'dusername':dusername,'staf':staf}, context)
 		except Exception, e:
 			msg2 = "No doctor message messages for this chat"
-			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'ptelno':ptelno, 'dtelno':dtelno}, context)
+			return render_to_response('Doct/convdoct.html', {'qconvs':qconvs, 'pusername':pusername, 'dusername':dusername,'staf':staf}, context)
 	else:
 		pass
 
@@ -1855,15 +2119,15 @@ def dviewmsg(request):
 
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'POST':
-		ptelno=request.POST.get('telno', False)
+		pusername=request.POST.get('mem_username', False)
 
-		qconvs=converse.objects.filter(telno=ptelno).order_by('-id')[:5]
+		qconvs=converse.objects.filter(username=pusername).order_by('-id')[:5]
 		qconvs = reversed(qconvs)
 		
 		replyD = True
-
+		staf = True
 		
-		return render_to_response('Doct/convdoct.html', { 'qconvs':qconvs, 'ptelno':ptelno}, context)
+		return render_to_response('Doct/convdoct.html', { 'qconvs':qconvs, 'pusername':pusername, 'staf':staf}, context)
 		
 	else:
 	# No context variables to pass to the template system, hence the
@@ -1927,13 +2191,13 @@ def restricted(request):
 
 
 
+# Use the login_required() decorator to ensure only those logged in can access the view.
+@login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
-
-
 	# Take the user back to the homepage.
-	return HttpResponseRedirect('/')
+	return HttpResponseRedirect('/Doct/')
 
 
 
@@ -2111,6 +2375,7 @@ def addcontact(request):
         post_values = request.POST.copy()
         telno = post_values['telno']
         email = post_values['email']
+        name = post_values['name']
         msg = post_values['msg']
         print "Message %s " %  msg
         

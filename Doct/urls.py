@@ -12,9 +12,8 @@ urlpatterns = patterns('',
 
 		
 		url(r'^add_page/$', views.add_page, name='add_page'),
-
 		
-		url(r'^register/$', views.p_reg, name='register'),
+		url(r'^register/$', views.register, name='register'),
 		url(r'^send_at/$', views.send_at, name='send_at'),
 		url(r'^airtime_sent_details/$', views.airtime_sent_details, name='airtime_sent_details'),
 		
@@ -45,7 +44,7 @@ urlpatterns = patterns('',
 		url(r'^about/$', views.about, name='about'),
 		url(r'^contact/$', views.contact, name='contact'),
 		url(r'^regdoctor/$', views.regdoctor, name='regdoctor'),
-		url(r'^enterpay/$', views.enterpay, name='enterpay'),
+		url(r'^enterpay/$', views.enterpay2, name='enterpay'),
 		url(r'^restricted/', views.restricted, name='restricted'),
 		url(r'^signout/$', views.user_logout, name='logout'),
 		url(r'^editdiog/(?P<diog_id>\d+)/(?P<ill_id>\d+)/$', views.editdiog, name='editdiog'),
@@ -94,6 +93,7 @@ urlpatterns = patterns('',
 		url(r'^dashboard/$', 'doct_admin.views.dashboard', name='dashboard'),
 		url(r'^dashboard2/$', 'doct_admin.views.dashboard2', name='dashboard2'),
 		url(r'^test/$', 'Doct.views.test', name='test'),
+		url(r'^logout/$', views.user_logout, name='logout'),
 		
 
 		)  # New!

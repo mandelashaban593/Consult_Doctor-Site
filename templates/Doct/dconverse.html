@@ -1,35 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
-    <!--  All snippets are MIT license http://bootdey.com/license -->
-    <!-- 
-        The codes are free, but we require linking to our web site.
-        Why to Link?
-        A true story: one girl didn't set a link and had no decent date for two years, and another guy set a link and got a top ranking in Google! 
-        Where to Put the Link?
-        home, about, credits... or in a good page that you want
-        THANK YOU MY FRIEND!
-    -->
-    <title>chat room - Bootdey.com</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    
+{% extends "Doct/base_site_admin.html" %}
 
 
 
-    <script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
-    <script src="app.js"></script>
-
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
-
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> 
+{% block content %}
 
 
-
-
+  {% include "Doct/notifications.html" %}
     <style type="text/css">
         body {
   padding-top: 0;
@@ -229,23 +205,11 @@ a:hover, a:active, a:focus {
   outline: 0;
 }
     </style>
-</head>
-<body>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container bootstrap snippet" style="">
-    <div class="row">
-        <div class="col-md-4 bg-white " style="margin-left: 410px;">
-          
-        
-        <!--=========================================================-->
-        <!-- selected chat -->
-        <div class="col-md- bg-whit " style="">
-            <div class="chat-message">
-                <ul class="chat">
-                    <li class="left clearfix">
-                        <div class=" row border-bottom padding-sm" style="height: 40px; width:700px;">
-                Member
-            </div>
+
+
+                
+      <div style="height: 1000px; margin-left: 290px;">
+        Member
             
             <!-- =============================================================== -->
             <!-- member list -->
@@ -254,7 +218,7 @@ a:hover, a:active, a:focus {
 
              {% for diog in  diogs %}
 
-             {% if pmem.mem_phone == diog.telno %}
+             {% if pmem.mem_username == diog.username %}
 
                 <li class="active bounceInDown">
                    
@@ -266,11 +230,11 @@ a:hover, a:active, a:focus {
 {% csrf_token %}
 <p>
 
-<input type="hidden" name="telno" value="{{pmem.mem_phone}}" style="width: 200px; border: 0px; " id="dname"/><br/>
+<input type="hidden" name="username" value="{{pmem.mem_username}}" style="width: 200px; border: 0px; " id="dname"/><br/>
 {{diog.illness}}
 </p>
 
-<tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="{{pmem.mem_phone}}"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
+<tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="{{pmem.mem_username}}"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
 
 </form>
 
@@ -286,71 +250,8 @@ a:hover, a:active, a:focus {
             </ul>
         </div>
                             
-                    </li>
-                   
-                    <li class="left clearfix">
-                        <span class="chat-img pull-left">
-                          
-                        </span>
-                        <div class="chat-body clearfix">
-                          
-                        </div>
-                    </li>
-                    <li class="right clearfix">
-                        <span class="chat-img pull-right">
-                          
-                        </span>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                                
-                            </div>
-                            <p>
-                              
-                            </p>
-                        </div>
-                    </li>                    
-                    <li class="left clearfix">
-                        <span class="chat-img pull-left">
-                            <img src="http://bootdey.com/img/Content/user_3.jp">
-                        </span>
-                        <div class="chat-body clearfix">
-                         
-                        </div>
-                    </li>
-                    <li class="right clearfix">
-                        <span class="chat-img pull-right">
-                            <img src="http://bootdey.com/img/Content/user_1.jp" >
-                        </span>
-                        <div class="chat-body clearfix">
-                         
-                          
-                        </div>
-                    </li>
-                    <li class="right clearfix">
-                        <span class="chat-img pull-right">
-                            <img src="http://bootdey.com/img/Content/user_1.jp" ">
-                        </span>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                              
-                            </div>
-                         
-                        </div>
-                    </li>                    
-                </ul>
-            </div>
-            <div class="chat-box bg-white">
-                <div class="input-group">
                   
-                </div><!-- /input-group --> 
-            </div>            
-        </div>        
-    </div>
-</div>
-
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript">
     
-</script>
-</body>
-</html>
+
+
+{% endblock %}

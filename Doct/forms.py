@@ -36,13 +36,24 @@ class PageForm(forms.ModelForm):
 
 
 
+
+
 class UserForm(forms.ModelForm):
-	password = forms.CharField(widget=forms.PasswordInput())
-
-
+	username = forms.CharField(help_text="Username.")
+	email = forms.CharField(help_text="Email.")
+	password = forms.CharField(widget=forms.PasswordInput(), help_text="Password.")
 	class Meta:
 		model = User
-		fields = ('username', 'password')
+		fields = ['username', 'email', 'password']
+
+
+class UserProfileForm(forms.ModelForm):
+	website = forms.URLField(help_text="Please enter your website.", required=False)
+	picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
+	class Meta:
+		model = Register
+		fields = ['username', 'email', 'password']
+
 
 
 
@@ -117,7 +128,7 @@ class LoginForm(forms.ModelForm):
     """
     class Meta:
         model = Register
-        fields = ['telno','role','page']
+        fields = ['username','password','role','page']
 
 
 
@@ -129,7 +140,7 @@ class patientConverseForm (forms.ModelForm):
     """
     class Meta:
         model = converse
-        fields = ['telno','phonedoctor','pmsg']
+        fields = ['username','dusername','pmsg']
 
 
 class doctorConverseForm (forms.ModelForm):
@@ -139,7 +150,7 @@ class doctorConverseForm (forms.ModelForm):
     """
     class Meta:
         model = converse
-        fields = ['telno','phonedoctor','dmsg']
+        fields = ['username','dusername','dmsg']
 
 
 class MessagesForm(forms.ModelForm):
@@ -149,6 +160,6 @@ class MessagesForm(forms.ModelForm):
     """
     class Meta:
         model = Messages
-        fields = ['person_phone','friend_phone','msg']
+        fields = ['password_phone','password_phone','msg']
 
 

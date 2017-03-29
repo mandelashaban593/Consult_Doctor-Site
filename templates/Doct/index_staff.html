@@ -129,7 +129,7 @@ Remit Dashboard
  
            <tr>
             <td>Patient Age</td>
-            <td>{{ diog.page}}</td>
+            <td>{{ diog.gender}}</td>
           </tr>
 
            <tr>
@@ -137,14 +137,20 @@ Remit Dashboard
             <td>{{ diog.amb}}</td>
           </tr>
 
-          {% if diog.compill %}
+          {% if diog.illness %}
 
            <tr>
             <td>Complicated Sickness Condition</td>
-            <td>{{ diog.compill}}</td>
+            <td>{{ diog.illness}}</td>
           </tr>
 
           {% endif %}
+
+
+           <tr>
+            <td>Diognised Signs</td>
+            <td>{{ diog.comp_signs}}</td>
+          </tr>
 
 
           

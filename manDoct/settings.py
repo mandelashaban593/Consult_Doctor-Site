@@ -69,21 +69,30 @@ BASE_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), os.pardir)) + '/'
 
 
+
+
 DATABASES = {
- 'default': {
- 'ENGINE': 'django.db.backends.mysql',
- 'NAME': 'mydoct',
- 'USER': 'root',
- 'PASSWORD': 'mandela',
- 'HOST': 'localhost',   # Or an IP that your DB is hosted on
- 'PORT': '3306',
- }
+    'default': {
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Or path to database file if using sqlite3.
+        'NAME': 'anenyuoe4',
+        # The following settings are not used with sqlite3:
+        'USER': 'dqebbquaa4iba',
+        'PASSWORD': 'WMm8mq1ZYAOn',
+        # Empty for localhost through domain sockets or '127.0.0.1' for
+        # localhost through TCP.
+        'HOST': 'LOCALHOST',
+        'PORT': '',                      # Set to empty string for default.
+        'OPTIONS': {'autocommit': True, },
+    }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['www.es-doctor.com', 'http://es-doctor.com',
-                 'https://es-doctor.com', 'https://es-doctor.com']
+ALLOWED_HOSTS = ['www.doctor-online.com', 'http://doctor-online.com',
+                 'https://doctor-online.com', 'https://doctor-online.com']
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

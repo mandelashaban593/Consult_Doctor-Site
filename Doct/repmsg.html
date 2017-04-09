@@ -1,0 +1,220 @@
+{% extends 'Doct/base.html' %}
+
+{% load staticfiles %}
+
+{% block navbar %}
+
+<div id = "navigation">
+
+<nav class="cf">
+  <ul class="topmenu">
+    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
+    -->
+
+ 
+      <ul class="submenu">
+              <li><a href="view_login.php" title="View Taxi Details">View Login</a></li>
+          <li><a href="edit_login.php" title="Update Taxi Details">Update Login</a></li>                <li><a href="delete_login.php" title="Delete Taxi Details">Delete Login</a></li>           
+                    </ul>
+
+        </li>
+          <li><a href="/Doct/" title="Logout">Home</a>
+        <ul class="submenu">
+              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+        
+    </li>
+   
+   
+ 
+     <li><a href="/Doct/receipt/">Print reciept</a>
+          <ul class="submenu">
+            <!--   <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
+              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li> -->
+                    
+                    </ul>
+         </li>
+
+
+          <li><a href="/Doct/authdiog/">View Your Diognosis</a>
+        <ul class="submenu">
+              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+        
+    </li>
+
+
+     <li><a href="/Doct/repmsg/">Reply message</a>
+        <ul class="submenu">
+              <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+        
+    </li>
+
+      <li><a href="/Doct/" title="Logout">Logout</a>
+        <ul class="submenu">
+             <!--  <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+        
+    </li>
+
+
+  
+
+   
+                    
+   </ul>
+</nav>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block body_block %}
+
+      <div id="">
+     {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
+ return false;
+ </script>
+ {% endif %}
+
+ {% include "Doct/notifications.html" %} 
+
+ 
+
+{% if pay_id %}
+
+{% elif ill_success %}
+<h2>Your have Successfully sent your illness detail</h2>
+{% endif %}
+
+
+{% if entp %}
+{% include "Doct/vp_receipt.html" %}
+
+{% elif diog %}
+
+{% include "Doct/view_diog.html" %}
+
+{% elif expill or ill_more  or payid_success %}
+
+{% if payid_success %}
+<h1>The payment Id {{gender}} already exists, try another id</h1>
+{% endif %}
+
+<table><tr><td style="padding: 18px;"> {% if replyD %}<table><tr><td>
+ <table width="300" border="0" cellpadding="30" style="text-align: center">
+
+  <tr> 
+  <th width="75"><strong> Payment Id</strong></th> <td>{{sickdiog.gender}}</td>
+  <th><span style="font-weight: bold;">Doctor's message</span></th> <td>{{sickdiog.fup}}</td>
+  <th><span style="font-weight: bold;">Staff pic</span></th> 
+
+   <div class="container">
+<div class="col-sm-8 col-sm-offset-2">
+    <!-- PAGE HEADER -->
+    <!-- FORM -->
+    <!-- pass in the variable if our form is valid or invalid -->
+    <form ng-app="myApp" action="/Doct/sendreply/" method="post" ng-controller="validateCtrl" name="myForm" novalidate>
+{% csrf_token %}
+<p>Payment Id:<br>
+  <input type="text" name="gender"  style="width:280px" ng-model="gender" required>
+  <span style="color:red" ng-show="myForm.gender.$dirty && myForm.gender.$invalid">
+  <span ng-show="myForm.gender.$error.required">Payment Id is required.</span>
+  </span>
+</p>
+  
+ <input type="hidden" name="role"  id="dname" value="patient"/> 
+   <input type="hidden" name="page"  id="dname" value="0"/> 
+  
+<p>
+  <input type="submit"
+  ng-disabled="myForm.gender.$dirty && myForm.gender.$invalid" class="btn btn-primary" value="Submit">
+</p>
+
+    </form>
+
+    <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.telno = '';
+});
+</script>
+</div><!-- col-sm-8 -->
+</div><!-- /container -->
+
+
+
+
+  </tr> 
+
+   </table></td></tr></table>  {% else %}<table  style="left:0px"><tr><h1 align="left"><b>Sickness Details</b></h1></tr><tr ><th  style="padding: 18px">Doctor</th><th  style="padding: 18px">Sickness</th><th  style="padding: 18px">Doctor's response</th><th style="padding: 18px"></th> <th style="padding: 18px"></th></tr> {% for pdiog in pdiog %}<tr><td><img src="{% static 'img/images4.jpg' %}" alt="pat" width="30px" height="30px"/>{{pdiog.dname}}</td><td  style="width: 300px">{{pdiog.compill}}</td><td  style="width: 300px">{{pdiog.diognosis}}</td><td style="width: 300px"><a href="/Doct/sendreply/{{pdiog.gender}}/" >Reply</a></td></tr>{% endfor %}  {% endif %}</table></td><td style="padding: 18px;">{% include "Doct/expillness.html" %} </td></tr></table>
+
+
+
+
+{% include "Doct/enterpay.html" %} 
+
+
+{% elif ill_et %}
+
+
+<h1  style="width:60%; height:20%; font-size:17px; ""><a href="/Doct/authdiog/" style="color: white; text-align: center;">View Prescription</a><br /></h1>
+
+
+{% elif ill_success %}
+<h1  style="width:60%; height:20%; font-size:17px; ""><a href="/Doct/authdiog/" style="color: white; text-align: center;">View Prescription</a><br /></h1>
+
+{% include "Doct/ill_det.html" %} 
+
+{% elif authd %}
+{% if msg and msg2 %}
+<h2 style="color:green"> {{ msg2 }} {{ msg }} </h2>
+
+{% endif %}
+
+{% include "Doct/authdiog.html" %}
+
+
+
+{% else  %}
+
+
+
+
+     
+
+
+<h3>Enter Consultation Payment : <strong>Details  below!</strong><br /></h3>
+<br/>
+
+{% if enterpay %}
+
+<h2>Your payment Id is {{pay_id}}, please don't forget it</h2>
+{% endif %}
+
+</div>
+
+
+{% if illness %}You have successfully sent your illness detail And Check Your Diagnosis after 5 minutes {% endif %}
+<p>&nbsp;</p>
+</div>
+
+
+
+{% endblock %}
+
+{% block footer %}
+<p>Posted by Mandela Shaban<br/>Contact Information:<a href="mailto:mandelashaban593@gmail.com">mandelashaban593@gmail.com</a><br/>
+&copy; Consult Doctor : Fast and Cheap Response 2016</p>
+{% endblock %}

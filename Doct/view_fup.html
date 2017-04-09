@@ -1,0 +1,148 @@
+{% extends 'Doct/base.html' %}
+
+{% load staticfiles %}
+
+{% block navbar %}
+
+<div id = "navigation">
+
+<nav class="cf">
+  <ul class="topmenu">
+    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
+    -->
+
+ 
+      <ul class="submenu">
+              <li><a href="view_login.php" title="View Taxi Details">View Login</a></li>
+          <li><a href="edit_login.php" title="Update Taxi Details">Update Login</a></li>                <li><a href="delete_login.php" title="Delete Taxi Details">Delete Login</a></li>           
+                    </ul>
+
+        </li>
+   
+   
+ 
+     <li><a href="/Doct/receipt/">Print reciept</a>
+          <ul class="submenu">
+              <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
+              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li>
+                    
+                    </ul>
+         </li>
+
+
+          <li><a href="/Doct/authdiog/">View Your Diognosis</a>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+
+
+     <li><a href="/Doct/repmsg/">Reply message</a>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+
+
+    <li><a href="/Doct/" title="Logout">Logout</a>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+
+   
+                    
+   </ul>
+</nav>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block body_block %}
+
+      <div id="content">
+     {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
+ return false;
+ </script>
+ {% endif %}
+{% if pay_id %}
+<h2>Your payment Id is {{pay_id}}, please don't forget it</h2>
+
+{% elif ill_success %}
+<h2>Your have Successfully sent your illness detail</h2>
+{% endif %}
+
+
+{% if entp %}
+{% include "Doct/vp_receipt.html" %}
+
+{% elif diog %}
+
+{% include "Doct/view_diog.html" %}
+
+{% elif expill or ill_more  or payid_success %}
+
+{% if payid_success %}
+<h1>The payment Id {{gender}} already exists, try another id</h1>
+{% endif %}
+
+{% include "Doct/expillness.html" %} 
+
+
+{% elif pay %}
+
+{% include "Doct/enterpay.html" %} 
+
+
+{% elif ill_et %}
+
+
+<h1  style="width:60%; height:20%; font-size:17px; ""><a href="/Doct/authdiog/" style="color: white; text-align: center;">View Prescription</a><br /></h1>
+
+
+{% elif ill_success %}
+<h1  style="width:60%; height:20%; font-size:17px; ""><a href="/Doct/authdiog/" style="color: white; text-align: center;">View Prescription</a><br /></h1>
+
+{% include "Doct/ill_det.html" %} 
+
+{% elif authd %}
+{% if msg and msg2 %}
+<h2 style="color:green"> {{ msg2 }} {{ msg }} </h2>
+
+{% endif %}
+
+{% include "Doct/authdiog.html" %}
+
+
+
+{% else  %}
+
+
+
+
+
+
+
+</div>
+
+
+
+
+{% endblock %}
+
+{% block footer %}
+<p>Posted by Mandela Shaban<br/>Contact Information:<a href="mailto:mandelashaban593@gmail.com">mandelashaban593@gmail.com</a><br/>
+&copy; Consult Doctor : Fast and Cheap Response 2016</p>
+{% endblock %}

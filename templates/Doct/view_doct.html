@@ -1,0 +1,194 @@
+{% extends 'Doct/base.html' %}
+
+{% load staticfiles %}
+
+{% block navbar %}
+
+<div id = "navigation">
+
+<nav class="cf">
+  <ul class="topmenu">
+          <li><a href="#">Manage Users</a>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+
+   
+
+
+          <li><a href="/Doct/regdoctor/" >Register a Doctor
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+
+
+          <li><a href="/Doct/delP/">Delete Record</a></li>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+         </li>
+
+       
+         <li><a href="/Doct/admin_pat/">View Patients</a></li>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+      
+      <li><a href="/Doct/admin_doct/">View Doctors</a></li>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+
+        
+    </li>
+
+     <li><a href="/Doct/" title="Logout">Logout</a></li>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+
+        
+    </li>
+
+    
+
+   </ul>
+</nav>
+
+</div>
+
+
+{% endblock %}
+
+
+
+{% block body_block %}
+
+	<div class="imgs">
+
+{% if illness %}You have successfully sent your illness detail And Check Your Diagnosis after 5 minutes {% endif %}
+<p>&nbsp;</p>
+
+
+
+</div>
+
+
+	    <div id="content">
+      {% if p %}
+   
+      {% include "Doct/admin_patientD.html" %}
+
+      {% elif not p %}
+
+       <h2 style="color:green"> {{msg1}}</h2>
+
+       {% elif d %}
+
+        {{msg}} 
+
+      {% include "Doct/admin_doctorD.html" %}
+
+       {% elif not d %}
+       
+       <h2 style="color:green"> {{msg1}} </h2>
+
+      {% endif %}
+
+<h1 style="color: #337ab7; margin-left:400px;font-size: 18px;width:200px;font-weight: bold;">Doctors Records</h1>
+ <table width="300" border="0" cellpadding="30" id="example" class="table table-striped table-bordered" style="text-align: center">
+
+  <tr> 
+  <th width="75"><strong> Photo</strong></th> 
+  <th width="75"><strong> First Name</strong></th> 
+  <th><span style="font-weight: bold;">Second Name</span></th> 
+  <th width="75"><strong>Doctor Age</strong></th> 
+  <th><span style="font-weight: bold;">Gender</span></th> 
+  <th><span style="font-weight: bold;">Telephone No</span></th>
+  <th><span style="font-weight: bold;">Username</span></th> 
+  <th width="75"><strong> Password</strong></th> 
+  <th width="75"><strong>Email</strong></th> 
+  <th width="75"><strong>Street</strong></th> 
+  <th width="75"><strong>City</strong></th> 
+  <th width="75"><strong>State</strong></th> 
+  <th width="75"><strong>Zip Code</strong></th> 
+  <th width="75"><strong>Speciality</strong></th>
+  </tr> 
+{% for d in d %}
+  <tr> 
+  <td><img src="{{d.profile_pic.url}}" alt="checked"  width="50px" height="50px"/></td>
+ 
+  <td>{{d.fname}}</td>
+   <td><a href="#">{{d.sname}}</a></td> 
+   <td>{{d.page}}</td> 
+   <td><a href="#">{{d.gender}}</a></td> 
+   <td>{{d.telno}}</td> 
+   <td><a href="#">{{d.username}}</a></td> 
+   <td>{{d.password}}</td>
+    <td><a href="#">{{d.email}}</a></td>
+    <td><a href="#">{{d.street}}</a></td>
+    <td><a href="#">{{d.city}}</a></td>
+    <td><a href="#">{{d.state}}</a></td>
+
+    <td><a href="#">{{d.zip_code}}</a></td>
+    <td><a href="#">{{d.specialty}}</a></td>
+
+
+   
+    </tr>
+{% endfor %}
+
+   </table>
+
+
+    <div class="pagination">
+<ul>
+  {% if p.has_previous %}
+    <li><a href="?page={{ p.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+    <li class="disabled"><a href="#">&laquo;</a></li>
+  {% endif %}
+
+  {% for num in p.paginator.page_range %}
+    {% ifequal num p.number %}
+      <li class="active"><a href="#">{{ num }}</a></li>
+    {% else %}
+      <li><a href="?page={{ num }}">{{ num }}</a></li>
+    {% endifequal %}
+  {% endfor %}
+
+  {% if p.has_next %}
+    <li><a href="?page={{ p.next_page_number }}">&raquo;</a></li>
+  {% else %}
+    <li class="disabled"><a href="#">&raquo;</a></li>
+  {% endif %}
+</ul>
+
+
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+<p>Posted by Mandela Shaban<br/>Contact Information:<a href="mailto:mandelashaban593@gmail.com">mandelashaban593@gmail.com</a><br/>
+&copy; Consult Doctor : Fast and Cheap Response 2016</p>
+{% endblock %}

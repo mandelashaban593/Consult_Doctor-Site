@@ -1,0 +1,202 @@
+{% extends 'Doct/base.html' %}
+
+{% load staticfiles %}
+
+{% block navbar %}
+
+<div id = "navigation">
+
+<nav class="cf">
+  <ul class="topmenu">
+          <li><a href="#">Manage Users</a>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+
+   
+
+
+          <li><a href="/Doct/regdoctor/" >Register a Doctor
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+
+
+          <li><a href="/Doct/delP/">Delete Record</a></li>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+         </li>
+
+       
+         <li><a href="/Doct/admin_pat/">View Patients</a></li>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+      
+      <li><a href="/Doct/admin_doct/">View Doctors</a></li>
+        <ul class="submenu">
+              <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li>
+                    
+                    </ul>
+        
+    </li>
+
+      <li><a href="/Doct/" title="Logout">Logout</a>
+        <ul class="submenu">
+             <!--  <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                    <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul>
+        
+    </li>
+
+
+
+   </ul>
+</nav>
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+{% block body_block %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}">
+    <script type="text/javascript" language="javascript" src="{% static 'js/dataTables.bootstrap.js' %}"></script>
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function() {
+        $('#example').dataTable();
+      } );
+    </script>
+
+
+	    <div id="content">
+      {% if not p %}
+
+       <h2 style="color:green"> {{msg1}}</h2>
+
+       {% elif d %}
+
+        {{msg}} 
+
+      {% include "Doct/admin_doctorD.html" %}
+
+       {% elif not d %}
+       
+       <h2 style="color:green"> {{msg1}} </h2>
+
+      {% endif %}
+<h1 align="center"  style="color: #337ab7; margin-left:400px;font-size: 18px;width:200px;font-weight: bold;"><b>Patient Records </h1>
+<p>&nbsp;</p>
+ <table width="300" border="0" id="example" class="table table-striped table-bordered"  cellpadding="30" style="text-align: center">
+
+  <tr> 
+  <th width="75"><strong> First Name</strong></th> 
+  <th><span style="font-weight: bold;">Second Name</span></th> 
+  <th><span style="font-weight: bold;">Staff pic</span></th> 
+  <th width="75"><strong> Patient Age</strong></th> 
+  <th><span style="font-weight: bold;">Gender</span></th> 
+  <th><span style="font-weight: bold;">Staff pic</span></th>
+  <th><span style="font-weight: bold;">Telephone Number</span></th> 
+  <th width="75"><strong> Username</strong></th> 
+  <th><span style="font-weight: bold;">Staff pic</span></th>
+  <th><span style="font-weight: bold;">Password</span></th> 
+  <th><span style="font-weight: bold;">Staff pic</span></th>
+  <th width="75"><strong> Email</strong></th> 
+  <th><span style="font-weight: bold;">Staff pic</span></th>
+  <th><span style="font-weight: bold;">Street</span></th> 
+  <th width="75"><strong> City </strong></th> 
+  <th><span style="font-weight: bold;">Staff pic</span></th>
+  <th><span style="font-weight: bold;">State</span></th> 
+  <th><span style="font-weight: bold;">Zip Code</span></th> 
+  <th><span style="font-weight: bold;">Staff pic</span></th>
+  <th width="75"><strong> specialty</strong></th> 
+  <th><span style="font-weight: bold;">Role</span></th> 
+ <th><span style="font-weight: bold;">Staff pic</span></th>
+  </tr> 
+{% for p in p %}
+  <tr> 
+  <td>{{p.fname}}</td>
+   <td><a href="tel:0123456785">{{p.sname}}</a></td> 
+   <td><img src="{% static 'doct.jpg' %}" alt="checked" width="50px" height="50px" /></td>
+   <td>{{p.page}}</td> 
+   <td><a href="tel:0123456785">{{p.gender}}</a></td> 
+   <td><img src="{% static 'pat.jpg' %}" alt="checked"  width="50px" height="50px"/></td>
+   <td>{{p.telno }}</td> <td><a href="tel:0123456785">{{p.username}}</a></td> 
+   <td><img src="{% static 'doct2.jpg' %}" alt="checked" width="50px" height="50px"/></td><td>{{p.password}}</td>
+       <td><img src="{% static 'doct2.jpg' %}" alt="checked"  width="50px" height="50px"/></td>
+    <td><a href="tel:0123456785">{{p.email}}</a></td>
+    <td><img src="{% static 'pat.jpg' %}" alt="checked"  width="50px" height="50px"/></td>
+    <td>{{p.street}}</td>
+    <td><a href="tel:0123456785">{{p.city}}</a></td>
+    <td><img src="{% static 'doct2.jpg' %}" alt="checked"  width="50px" height="50px"/></td>
+    <td>{{p.state}}</td> 
+    <td><a href="tel:0123456785">{{p.zip_code}}</a></td>
+    <td><img src="{% static 'pat.jpg' %}" alt="checked" width="50px" height="50px"/></td>
+    <td>{{p.specialty}}</td>
+    <td><a href="tel:0123456785">{{p.role}}</a></td>
+    <td>   <img src="{% static 'doct.jpg' %}" alt="checked"  width="50px" height="50px" /></td>
+    </tr>
+{% endfor %}
+
+   </table>
+
+  <div class="pagination">
+<ul>
+  {% if p.has_previous %}
+    <li><a href="?page={{ p.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+    <li class="disabled"><a href="#">&laquo;</a></li>
+  {% endif %}
+
+  {% for num in p.paginator.page_range %}
+    {% ifequal num p.number %}
+      <li class="active"><a href="#">{{ num }}</a></li>
+    {% else %}
+      <li><a href="?page={{ num }}">{{ num }}</a></li>
+    {% endifequal %}
+  {% endfor %}
+
+  {% if p.has_next %}
+    <li><a href="?page={{ p.next_page_number }}">&raquo;</a></li>
+  {% else %}
+    <li class="disabled"><a href="#">&raquo;</a></li>
+  {% endif %}
+</ul>
+
+</div>
+
+
+ 
+</div>
+
+
+</div>
+
+	
+{% endblock %}
+
+{% block footer %}
+<p>Posted by Mandela Shaban<br/>Contact Information:<a href="mailto:mandelashaban593@gmail.com">mandelashaban593@gmail.com</a><br/>
+&copy; Consult Doctor : Fast and Cheap Response 2016</p>
+{% endblock %}

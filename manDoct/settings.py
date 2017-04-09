@@ -4,12 +4,50 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 import os
+
+import django.conf.global_settings as DEFAULT_SETTINGS
+LOCALHOST = False
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+
+
+LIVE = 1
+
+ADMINS = (
+    ('Mandela Shaban', 'mandelashaban@gmail.com'),
+)
+
+APP_EMAILS = {
+
+    'info':'mandelashaban@gmail.com',
+
+    }
+
+DEBUG_EMAILS = {
+
+    'mandelashaban@gmail.com' ,
+
+}
+
+BASE_URL = 'https://es-doctor.com/'
+
+
+APP_NAME = 'es-doctor'
+DOMAIN_NAME = 'es-doctor'
+APP_TITLE = 'Es-doctor | Consult a doctor online'
+
+MANAGERS = ADMINS
+
+
 SETTINGS_DIR = os.path.dirname(__file__)
 
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
+
+TEMPLATE_DOCT_PATH = os.path.join(PROJECT_PATH, 'doct_admin/templates/')
+TEMPLATE_DOCT_ADMIN_PATH = os.path.join(PROJECT_PATH, 'doct_admin/templates/admin/')
 
 STATIC_PATH = os.path.join(PROJECT_PATH,'static')
 
@@ -27,21 +65,34 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+BASE_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), os.pardir)) + '/'
+
+
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': DATABASE_PATH,                      # Or path to database file if using sqlite3.
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Or path to database file if using sqlite3.
+        'NAME': 'anenyuoe4',
         # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'USER': 'dqebbquaa4iba',
+        'PASSWORD': 'WMm8mq1ZYAOn',
+        # Empty for localhost through domain sockets or '127.0.0.1' for
+        # localhost through TCP.
+        'HOST': 'LOCALHOST',
         'PORT': '',                      # Set to empty string for default.
+        'OPTIONS': {'autocommit': True, },
     }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.doctor-online.com', 'http://doctor-online.com',
+                 'https://doctor-online.com', 'https://doctor-online.com']
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -69,6 +120,8 @@ USE_TZ = True
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media') # Absolute path to the media directory
+
+MEDIA_URL = BASE_URL + 'static/uploads/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -108,6 +161,7 @@ SECRET_KEY = 'jah)pvlys_%r_($1!9j&f8ris0g!ow*_k4sesbaqy33!^i@+rx'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -132,6 +186,8 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     TEMPLATE_PATH,
+    TEMPLATE_DOCT_PATH,
+    TEMPLATE_DOCT_ADMIN_PATH
 )
 
 INSTALLED_APPS = (
@@ -146,6 +202,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'Doct',
+    'doct_admin',
+    'djangoChat',
+
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -178,3 +237,40 @@ LOGGING = {
         },
     }
 }
+
+TWI_ACCOUNT_SID = ""
+TWI_AUTH_TOKEN=""
+
+APP_EMAILS = {
+    'info':'mandelashaban593@gmail.com',
+    
+
+    }
+
+DISABLE_COMMS = False
+
+
+PAGNATION_LIMIT = 10
+PAGNATION_LIMIT2 = 100
+
+
+
+STATIC_ROOT = BASE_DIR + 'static'
+
+# URL prefix for static files.
+# Example: "http://example.com/static/", "http://static.example.com/"
+STATIC_URL = BASE_URL + 'static/'
+
+LOCALHOST = False
+
+AJAX_TEMPLATE_DIR = BASE_DIR + 'templates/Doct/'
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
+
+
+
+SITE_ID = 1

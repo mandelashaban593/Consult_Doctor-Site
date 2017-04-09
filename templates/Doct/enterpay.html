@@ -1,60 +1,108 @@
-<fieldset width:60%>
-<form action="/Doct/enterpay/" id="changepayform_form" method="post" >
+
+
+
+<div class="example1" align="Center">
+<h3> Doctors available now, consult them... </h3>
+</div>
+<p>&nbsps;</p>
+   <p>&nbsps;</p>
+ <p>&nbsps;</p>
+   <p>&nbsps;</p>
+
+<form id="signup" action="/Doct/enterpay/"  method="POST" style=" position:absolute; 
+    left: 440px;
+    display:inline-block;
+    z-index:10;margin-top:25px width:300px;">
 {% csrf_token %}
-<table style=" border:0px solid black; width:300px; height:300px">
-<tr><td>From Telephone Number </td><td> <input type="text" name="telno"  id="dname"/></td></tr>
-<tr><td> To Telephone Number: </td><th>0754307471</th></tr>
-<tr><td>Amount</td><td> <input type="text" name="amount" id="telno"/></td></tr>
+        
+        
+            <h3>Log In</h3>
+          
+    
 
-<tr><td><input type="reset" name="reset" style="width:100px" /></td> <td><input type="submit" name="submit" value="Submit" style="width:100px"/></td></tr>
-</table>
- 
-</form>
+            <p>Username:<br>
+        
+            <input type="text" placeholder="username" name="username"  autofocus  style="width:260px;height:30px;padding: 7px;" />
+            </p>
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript"></script>
-<script type='text/javascript' src="{% static 'js/jquery.form-validation.js' %}"></script>
+            <p>Password:<br>
+        
+            <input type="password" placeholder="Password" name="password"  autofocus  style="width:260px;height:30px;padding: 7px;" />
+            </p>
 
-<script type="text/javascript">
+            
+            
+            <input type="hidden" name="role"  id="dname" value="patient"/> 
+             <input type="hidden" name="page"  id="dname" value="0"/> 
+           
+
+            <p>
+
+            <input type="submit" id="submit"  placeholder="Enter Message" value="Log in" name="SUBMIT" required>
+           
+             </p>
+
    
 
-$(document).ready(function(){
-    $("#changepayform_form").validate({
-    rules:{
+    </form>
 
-            telno:
-            {
-            required:true,
-            digits: true,
-            maxlength:20,
-            },
-            amount:
-            {
-            required:true,
-            digits: true,
-            maxlength:10,
-            },
-    },
-          messages: {
-       
-        telno: {
-        required: "Telephone number is required",
-        digits: "Enter the valid Telephone number",
-        maxlength:"Please provide valid phone number",
-      },
-      amount: {
-      required: "Please provide Consultation amount",
-      digits: "Enter the valid Consultation amount",
-      maxlength:"Please provide valid Consultation amount",
-      },
-    
-    
-    },
 
-  
 
-    });
-    });
 
-</script>
-</fieldset>
+
+
+    <style style="text/css">
+.example1 {
+ height: 50px;  
+ overflow: hidden;
+ position: relative;
+ left: 400px;
+  width: 900px;
+}
+.example1 h3 {
+ font-size: 3em;
+ color: limegreen;
+ position: absolute;
+  width: 900px;
+
+ height: 100%;
+
+ margin-left:400px;
+ margin-bottom: 300px;
+
+ line-height: 50px;
+ text-align: center;
+ /* Starting position */
+ -moz-transform:translateX(100%);
+ -webkit-transform:translateX(100%);    
+ transform:translateX(100%);
+ /* Apply animation to this element */  
+ -moz-animation: example1 15s linear infinite;
+ -webkit-animation: example1 15s linear infinite;
+ animation: example1 15s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes example1 {
+ 0%   { -moz-transform: translateX(100%); }
+ 100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes example1 {
+ 0%   { -webkit-transform: translateX(100%); }
+ 100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes example1 {
+ 0%   { 
+ -moz-transform: translateX(100%); /* Firefox bug fix */
+ -webkit-transform: translateX(100%); /* Firefox bug fix */
+ transform: translateX(100%);       
+ }
+ 100% { 
+ -moz-transform: translateX(-100%); /* Firefox bug fix */
+ -webkit-transform: translateX(-100%); /* Firefox bug fix */
+ transform: translateX(-100%); 
+ }
+}
+</style>
+
+

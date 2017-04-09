@@ -1,0 +1,182 @@
+{% extends 'Doct/base.html' %}
+
+
+{% load staticfiles %}
+
+{% block navbar %}
+
+<div id = "navigation">
+
+<nav class="cf">
+  <ul class="topmenu">
+    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
+    -->
+
+ 
+      <ul class="submenu">
+              <li><a href="view_login.php" title="View Taxi Details">View Login</a></li>
+          <li><a href="edit_login.php" title="Update Taxi Details">Update Login</a></li>                <li><a href="delete_login.php" title="Delete Taxi Details">Delete Login</a></li>           
+                    </ul>
+
+        </li>
+   
+   
+ 
+     <li><a href="/Doct/receipt/">Print reciept</a>
+          <ul class="submenu">
+                    
+                    </ul>
+         </li>
+
+
+          <li><a href="/Doct/authdiog/">View Your Diognosis</a>
+        <ul class="submenu">
+             
+                    
+                    </ul>
+        
+    </li>
+
+    <li><a href="/Doct/" title="Logout">Logout</a>
+        <ul class="submenu">
+          
+                    
+                    </ul>
+        
+    </li>
+
+   
+                    
+   </ul>
+</nav>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block body_block %}
+
+      <div id="">
+     {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
+ return false;
+ </script>
+ {% endif %}
+{% if pay_id %}
+<h2>Your payment Id is {{pay_id}}, please don't forget it</h2>
+
+{% elif ill_success %}
+<h2>Your have Successfully sent your illness detail</h2>
+{% endif %}
+
+
+{% if entp %}
+{% include "Doct/vp_receipt.html" %}
+
+{% elif diog %}
+
+{% include "Doct/view_diog.html" %}
+
+{% elif expill or ill_more  %}
+
+{% include "Doct/expillness.html" %} 
+
+
+{% elif pay %}
+
+{% include "Doct/enterpay.html" %} 
+
+{% elif rec %}
+
+{% include "Doct/receiptform.html" %} 
+
+{% elif ill_et %}
+
+
+<h1  style="width:60%; height:20%; font-size:17px; ""><a href="/Doct/authdiog/" style="color: white; text-align: center;">View Prescription</a><br /></h1>
+
+
+{% elif ill_success %}
+<h1  style="width:60%; height:20%; font-size:17px; ""><a href="/Doct/authdiog/" style="color: white; text-align: center;">View Prescription</a><br /></h1>
+
+{% include "Doct/ill_det.html" %} 
+
+{% elif authd %}
+{% if msg and msg2 %}
+<h2 style="color:green"> {{ msg2 }} {{ msg }} </h2>
+
+{% endif %}
+
+{% include "Doct/authdiog.html" %}
+
+
+
+{% else  %}
+
+
+
+
+
+    <div class="container" style="width:1200px" >
+<div class="col-sm-8 col-sm-offset-2">
+    <!-- PAGE HEADER -->
+    <!-- FORM -->
+    <!-- pass in the virvariable if our form is valid or invalid -->
+
+
+    <form ng-app="myApp" action="/Doct/receipt/" method="post" ng-controller="validateCtrl" name="myForm" novalidate  class="form-style-6">
+
+    <h1> <strong>View Receipt  here!</strong><br /></h1>
+
+
+{% csrf_token %}
+<p>Payment Id:<br>
+  <input type="text" name="id"  style="width:280px" ng-model="id" required>
+  <span style="color:red" ng-show="myForm.id.$dirty && myForm.id.$invalid">
+  <span ng-show="myForm.id.$error.required">Payment Id is required.</span>
+  </span>
+</p>
+  
+<p>
+  <input type="submit"
+  ng-disabled="myForm.id.$dirty && myForm.id.$invalid" class="btn btn-primary" value="Submit">
+</p>
+
+    </form>
+
+    <script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope) {
+    $scope.id = '';
+});
+</script>
+
+
+
+</div>
+
+{% endif %}
+
+
+
+{% if illness %}You have successfully sent your illness detail And Check Your Diagnosis after 5 minutes {% endif %}
+<p>&nbsp;</p>
+</div>
+
+
+<script type="text/javascript">alert('You have successfully submitted payment Details'); 
+
+return false;
+</script>
+ 
+
+
+ <p>&nbsp;</p>
+
+{% endblock %}
+
+{% block footer %}
+<p>Posted by Mandela Shaban<br/>Contact Information:<a href="mailto:mandelashaban593@gmail.com">mandelashaban593@gmail.com</a><br/>
+&copy; Consult Doctor : Fast and Cheap Response 2016</p>
+{% endblock %}

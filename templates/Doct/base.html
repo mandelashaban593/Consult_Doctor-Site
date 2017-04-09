@@ -1,360 +1,155 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 {% load static %}
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>Ubusina - Responsive HTML5 Template</title>
-	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-<!-- 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css"> -->
-	<!-- <link rel="stylesheet" href="css/style.css"> -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
-
-
-	<title>Consult a Doctor- {% block title %}A room {% endblock %}</title>
-		<!-- JavaScript -->
-		<script src="{% static 'js/jquery_popup.js' %}"></script> <!-- JavaScript -->
-			
-		<link rel="stylesheet" href="{% static 'css/base.css' %}" /> 
-		<script type='text/javascript' src="{% static 'js/jquery.form-validation.js' %}"></script>
-
-		<link href="{% static 'css/element.css' %}" rel="stylesheet">
-		<script src="{% static 'js/my_js.js' %}"></script>
-		 <center>
-
-     {% block navbar %}
-     {% endblock %}
-  
-{% block body_block %}	
-
-	{% endblock %}
-
-
-</center>
+<title>Doctor(Medical)  Consultation Website | Home </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="{% static 'css/slider.css' %}" rel="stylesheet" type="text/css" media="all"/>
+<script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
+    <script src="app.js"></script>
+    
 </head>
 <body>
-	
-	<!-- ====================================================
-	header section -->
-	<header class="top-header">
-		<div class="container">
-			<div class="row">
-				<!-- <div class="col-xs-5 header-logo">
-					
-					<a href="/Doct/"><img src="{% static 'img/logo.png' %}" alt="" class="img-responsive logo" width="50px" height="50px"></a>
-				</div>
- -->
 
-<div class="col-md-7">
-<nav class="navbar navbar-default">
-<div class="container-fluid nav-bar">
-<!-- Brand and toggle get grouped for better mobile display -->
-<div class="navbar-header">
-<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-<span class="sr-only">Toggle navigation</span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-</button>
+{% block nav_bar %}
+<div class="header" style="width: 2000px; ">
+<div class="wrap">
+<div class="logo"  ><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpe' %}"  style="" alt="" />Online Doctor(Medical) Consulation</a></div>
+   <div class="con-right">
+      <div class="grid1-l-img">
+        <img src="{% static 'images/contact.png' %}" alt="">
+      </div>
+      <div class="grid1-l-desc">
+        <p>Contact : +256754307471</p>
+      </div>
+      <div class="clear"></div>
+  </div>
+    <div class="clear"></div>
+     </div>
 </div>
+<div class="header-bottom">
+      <div class="wrap">
+        <ul id="nav">
+                <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
+                <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
+                <li><a class="hsubs" href="/Doct/team/">Our Team</a>
+                {% if not request.user.authenticated  %}
+                <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
 
-<!-- Collect the nav links, forms, and other content for toggling -->
-<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-  
-  <!-- <ul class="nav navbar-nav navbar-right">
-    <li><a class="menu active" href="/Doct/" >Home</a></li>
-    <li><a class="menu" href="#about">about us</a></li>
-    <li><a class="menu" href="#service">our services </a></li>
-    <li><a class="menu" href="#team">our team</a></li>
-    <li><a class="menu" href="#contact"> contact us</a></li>
-    <li><a href="/rango/Expillness/">Explain Sickness</a></li>
-    <li><a href="/rango/enterpay/">Enter Consultation Payment Details</a></li>
-    <li><a class="menu" href="/Doct/doct_view_illness/"> view Illness Detail</a></li>
-    <li><a href="/Doct/diogform/">Diognise</a></li>
-    <li>
-    <a href="/Doct/authindillness/">Particular Patient Illness Detail</a>
-    </li>
-    <li><a href="/Doct/doctor_receipt/">Print reciept</a>
-    </li>
-  </ul> -->
+                <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
+                {% endif %}
 
-</div><!-- /navbar-collapse -->
-</div><!-- / .container-fluid -->
-</nav>
-</div>
-</div>
-</div>
-</header> <!-- end of header area -->
+                <li><a href="/Doct/contact/">Contact Us</a></li>
+                <li><a href="/Doct/how_it_works/">How it works</a></li>
+                {% if ill_more %}
+                <li><a href="/Doct/orderdrugs/">Order Drugs</a></li>
+                <li><a href="/Doct/labtests/">Order Lab Test</a></li>
 
-			
-<section class="slider" id="home">
-<div class="container-fluid">
-<div class="row">
+                {% endif %}
 
-<div id="carouselHacked" class="carousel slide carousel-fade" data-ride="carousel">
-<div class="header-backup"></div>
-<!-- Wrapper for slides -->
-<div class="carousel-inner" role="listbox">
-<div class="item active">
-<img src="{% static 'img/images4.jpg' %}" alt="">
-<div class="carousel-caption">
-<h1>Tax</h1>
-<p>good business consulting service</p>
-<button>learn more</button>
-</div>
-</div>
-<div class="item">
-<img src="{% static 'img/ima5.jpg' %}" alt="">
-<div class="carousel-caption">
-<h1>Financial</h1>
-<p>good business consulting service</p>
-<button>learn more</button>
-</div>
-</div>
-<div class="item">
-<img src="{% static 'img/images3.jpg' %}" alt="">
-<div class="carousel-caption">
-<h1>Consulting</h1>
-<p>good business consulting service</p>
-<button>learn more</button>
-</div>
-</div>
-<div class="item">
-<img src="{% static 'img/images3.jpg' %}" alt="">
-<div class="carousel-caption">
-<h1>Money</h1>
-<p>good business consulting service</p>
-<button>learn more</button>
-</div>
-</div>
-</div>
+                {% if qconvs or ill_more %}
+            
+                 <li><form action="/Doct/converse/" style="height:35px;border: 0px; background-color: #3399FF" id="changesicknessform_form" method="post">
+                {% csrf_token %}
 
-<!-- Controls -->
-<a class="left carousel-control" href="#carouselHacked" role="button" data-slide="prev">
-<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-<span class="sr-only">Previous</span>
-</a>
-<a class="right carousel-control" href="#carouselHacked" role="button" data-slide="next">
-<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-<span class="sr-only">Next</span>
-</a>
-</div>
+                <input type="hidden" name="username" value="{{username}}" style="width: 200px; border: 0px; " id="dname"/>
 
-</div>
-</div>
-			</section><!-- end of slider section -->
+                <input type="hidden" name="dusername" value="0754307471" style="width: 200px; border: 0px; " id="dname"/>
 
+                <tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
 
+                </form>
+                <ul class="submenu">
+                      <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
+                            <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
+                    
+                    </ul> </li>
 
-<section class="about text-center" id="about">
-<div class="container">
-<div class="row">
-<h2>about us</h2>
-<h4>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</h4>
+                    {% endif %}
 
-<div class="col-md-4 col-sm-6">
-<div class="single-about-detail clearfix">
-<div class="about-img">
-<img src="img/about1.jpg" alt="">
-</div>
+                <li><a href="/Doct/whyus/">Why Us</a></li>
+                    <ul class="subs">
+                        <li><a href="#">Hotels</a></li>
+                        <li><a href="#">Restaurants</a></li>
+                        <li><a href="#">Beach Resorts</a></li>
+                    </ul>
+                </li>
+                {% if user.is_authenticated %}
 
-<div class="about-details">
-<div class="pentagon-text">
-	<h1>T</h1>
-</div>
+                <li><a href="/Doct/logout/">Logout</a></li>
 
-<h3>Tax Helping</h3>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.</p>
-</div>
-</div>
-</div>
+                {% endif %}
+               
+        </ul>
 
-<div class="col-md-4 col-sm-6">
-<div class="single-about-detail">
-<div class="about-img">
-<img class="img-responsive" src="img/about2.jpg" alt="">
+       </div>
 </div>
-
-<div class="about-details">
-<div class="pentagon-text">
-	<h1>B</h1>
-</div>
-
-<h3>Business Consulting</h3>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.</p>
-</div>
-</div>
-</div>
-
-
-<div class="col-md-4 col-sm-6">
-<div class="single-about-detail">
-<div class="about-img">
-<img class="img-responsive" src="img/about3.jpg" alt="">
-</div>
-
-<div class="about-details">
-<div class="pentagon-text">
-<h1>F</h1>
-</div>
-
-<h3>Financial Consulting</h3>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.</p>
-</div>
-</div>
-	</div>
-
-</div>
-</div>
-</section>
-<!-- service section starts here -->
-
-
-
-			<!-- team section -->
-
-<section class="team" id="team">
-<div class="container">
-<div class="row" style="height:600px;">
-<div class="team-heading text-center">
-<h2>our team</h2>
-
-<h4>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled</h4>
-</div>
-
-<div class="col-md-2 single-member col-sm-4">
-<div class="person">
-<img class="img-responsive" src="{% static 'img/img/item1.jpg' %}" alt="member-1">
-</div>
-
-<div class="person-detail">
-<div class="arrow-bottom"></div>
-<h3>Mr. Graham</h3>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-							</div>
-						
-</div>
-
-<div class="col-md-2 single-member col-sm-4">
-
-<div class="person-detail">
-<div class="arrow-top"></div>
-<h3>Mr. David</h3>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-</div>
-<div class="person">
-<img class="img-responsive" src="{% static 'img/item2.jpg' %}" alt="member-2">
-</div>
-</div>
-<div class="col-md-2 single-member col-sm-4">
-<div class="person">
-<img class="img-responsive" src="{% static 'img/item3.jpg' %}" alt="member-3">
-</div>
-<div class="person-detail">
-<div class="arrow-bottom"></div>
-<h3>Mr. Hovid</h3>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-</div>
-</div>
-
-<div class="col-md-2 single-member col-sm-4">
-<div class="person-detail">
-<div class="arrow-top"></div>
-<h3>Mr Jasak</h3>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-</div>
-<div class="person">
-<img class="img-responsive" src="{% static 'img/item4.jpg' %}" alt="member-4">
-</div>
-</div>
-
-<div class="col-md-2 single-member col-sm-4">
-<div class="person">
-<img class="img-responsive" src="{% static 'img/item5.jpg' %}" alt="member-5">
-</div>
-
-<div class="person-detail">
-<div class="arrow-bottom"></div>
-<h3>Mr. Joy Ka</h3>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-</div>
-</div>
-
-<div class="col-md-2 single-member col-sm-4">
-
-<div class="person-detail">
-	<div class="arrow-top"></div>
-	<h3>Mr. Mikari</h3>
-	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-</div>
-<div class="person">
-<img class="img-responsive" src="{% static 'img/item6.jpg' %}" alt="member-5">
-</div>
-
-</div>
-</div>
-</div>
-</section><!-- end of team section -->
-
-<!-- map section -->
-<section class="api-map" id="contact">
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-12 map" id="map"></div>
-</div>
-</div>
-</section><!-- end of map section -->
-
-{% block  contact %}
 
 {% endblock %}
-<!-- contact section starts here -->
-
-
-<!-- footer starts here -->
-<footer class="footer clearfix">
-<div class="container">
-<div class="row">
-<div class="col-xs-6 footer-para">
-<p>&copy;freshDesignweb.com All right reserved</p>
-</div>
-
-<div class="col-xs-6 text-right">
-<a href=""><i class="fa fa-facebook"></i></a>
-<a href=""><i class="fa fa-twitter"></i></a>
-<a href=""><i class="fa fa-skype"></i></a>
-</div>
-					</div>
-				</div>
-			</footer>
 
 
 
-	
+{% block sickness_det %}
 
-	<!-- script tags
-	============================================================= -->
-	<script src="{% static 'js/jquery-2.1.1.js' %}"></script>
-<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
-<script src="{% static 'js/gmaps.js' %}"></script>
-<script src="{% static 'js/smoothscroll.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/custom.js' %}"></script>
+{% endblock %}
 
 
-<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/login_effect.js' %}"></script>
+<div class="header-banner">
+<div class="wrap">
+  <div class="banner">
+    <div class="indent">
+                
+                {% block body_block %} 
+
+
+
+                {% block body_images %} 
+
+                {% endblock %}  
+
+
+                {% endblock %}  
+
+                
 
 
 
 
- 
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+         </div>                                   
+
+{% block side_menue %}
+
+{% endblock %}
+
+     
+  </div>
+    <div class="clear"></div>
+      
+        <div class="clear"></div>
+      </div>
+      </div>
+
+
+      {% block bottom_content %}
+
+    
+        {% endblock %}
+
+     </div>
+      </div>
+
+      </div></div>
 
 
 
+      {% block footer %}
+
+
+{% endblock %}
 </body>
 </html>

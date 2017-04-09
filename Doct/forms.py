@@ -1,22 +1,9 @@
 from django import forms
-from Doct.models import Page, Category, UserProfile, Topup, Register, Illness, Diognosis
+from Doct.models import Page, UserProfile, Topup, Register, Illness, Diognosis,Contact,converse,convPersonFrien,Messages,Contact
 from django.contrib.auth.models import User
 
 
 
-class CategoryForm(forms.ModelForm):
-	name=forms.CharField(max_length=128, help_text="Please enter the category name.")
-	views=forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-	likes=forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-
-
-
-	# An initial class to provide additional information on the form
-	class Meta:
-		# Provide an association between the ModelForm and a model
-		model=Category
-
-		fields = "__all__" 
 
 
 class PageForm(forms.ModelForm):
@@ -49,13 +36,24 @@ class PageForm(forms.ModelForm):
 
 
 
+
+
 class UserForm(forms.ModelForm):
-	password = forms.CharField(widget=forms.PasswordInput())
-
-
+	username = forms.CharField(help_text="Username.")
+	email = forms.CharField(help_text="Email.")
+	password = forms.CharField(widget=forms.PasswordInput(), help_text="Password.")
 	class Meta:
 		model = User
-		fields = ('username', 'password')
+		fields = ['username', 'email', 'password']
+
+
+class UserProfileForm(forms.ModelForm):
+	website = forms.URLField(help_text="Please enter your website.", required=False)
+	picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
+	class Meta:
+		model = Register
+		fields = ['username', 'email', 'password']
+
 
 
 
@@ -74,7 +72,7 @@ class PatientForm(forms.ModelForm):
 class DoctorForm(forms.ModelForm):
 	class Meta:
 		model = Register
-		fields = ('fname', 'sname', 'page', 'gender', 'telno','username','password','email', 'street', 'city', 'state', 'zip_code', 'role', 'specialty')
+		fields = ('fname', 'sname', 'page', 'gender', 'telno','username','password','email', 'street', 'city', 'state', 'zip_code', 'role', 'specialty', 'profile_pic')
 
 
 class IllnessForm(forms.ModelForm):
@@ -112,3 +110,56 @@ class AddIllDetForm(forms.ModelForm):
     class Meta:
         model = Illness
         fields = ['gender','kin','kintelno','username','email']
+
+
+class ContactForm(forms.ModelForm):
+
+    """
+    Form for adding  Illness details
+    """
+    class Meta:
+        model = Contact
+        fields = ['telno','email','msg']
+
+class LoginForm(forms.ModelForm):
+
+    """
+    Form for adding  Illness details
+    """
+    class Meta:
+        model = Register
+        fields = ['username','password','role','page']
+
+
+
+
+class patientConverseForm (forms.ModelForm):
+
+    """
+    Form for adding  Illness details
+    """
+    class Meta:
+        model = converse
+        fields = ['username','dusername','pmsg']
+
+
+class doctorConverseForm (forms.ModelForm):
+
+    """
+    Form for adding  Illness details
+    """
+    class Meta:
+        model = converse
+        fields = ['username','dusername','dmsg']
+
+
+class MessagesForm(forms.ModelForm):
+
+    """
+    Form for adding  Illness details
+    """
+    class Meta:
+        model = Messages
+        fields = ['password_phone','password_phone','msg']
+
+

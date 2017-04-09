@@ -5,61 +5,12 @@ link for the popup
 
 http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
-{% block navbar %}
-<div id = "navigation">
-
-<nav class="cf">
-  <ul class="topmenu">
-    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
-    -->
-    <li><a href="/Doct/about/">About Us</a>
-        <ul class="submenu">
-              <!-- <a href="/Doct/diogform/">Diognise</a> -->
-          <li><a href="edit_employee.php" title="Update Staff Details">Update </a></li>                 <li><a href="delete_employee.php" title="Delete Staff Details">Delete </a></li>           
-                    </ul>
-    </li>
-    <li><a href="/Doct/contact/">Contact Us</a>
-      <ul class="submenu">
-              <li><a href="view_taxi.php" title="View Taxi Details">View </a></li>
-          <li><a href="edit_taxi.php" title="Update Taxi Details">Update </a></li>                <li><a href="delete_taxi.php" title="Delete Taxi Details">Delete </a></li>           
-                    </ul>
-    </li>
-
-    <li><a href="/Doct/user_log/"> Log In</a>
-          <ul class="submenu">
-              <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
-              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li>
-                    
-                    </ul>
-         </li>
 
 
 
-    <li><a href="/Doct/login/">Doctor/Admin Log In</a>
-          <ul class="submenu">
-              <li><a href="view_verification.php" title="Verification Details">View Verification</a></li>
-              <li><a href="edit_vcode.php" title="Verification Edit">Edit Verification</a></li>
-                    
-                    </ul>
-         </li>
-
-
- 
-     
   
-</nav>
-
-</div>
-
-
-
-
-
-{% endblock %}
-
 
 {% block body_block %}
-Welcome to Online Doctor Consultation System
 
 {% if msg %}
 {{msg}}
@@ -69,10 +20,9 @@ Welcome to Online Doctor Consultation System
 		<strong>
 		<script>alert("You have successfully registered")</script>
 		</strong>
-		<br />
 {% endif %}
 
-<div id="content">
+
 
 {% if signup %}
 
@@ -89,142 +39,41 @@ Welcome to Online Doctor Consultation System
 
 {% elif recfm  %}
 
-{% include "index_rform.html" %}
+{% include "Doct/index_rform.html" %}
 
 {%  else %}
 
-<fieldset width:60%>
-<form action="/Doct/enterpay/" id="changepayform_form" method="post" >
-{% csrf_token %}
-<table style=" border:0px solid black; width:300px; height:300px">
-<tr><td>From Telephone Number </td><td> <input type="text" name="telno"  id="dname"/></td></tr>
-<tr><td> To Telephone Number: </td><th>0754307471</th></tr>
-<tr><td>Amount</td><td> <input type="text" name="amount" id="telno"/></td></tr>
-
-<tr><td><input type="reset" name="reset" style="width:100px" /></td> <td><input type="submit" name="submit" value="Submit" style="width:100px"/></td></tr>
-</table>
- 
-</form>
+ {% block header %}
 
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript"></script>
-<script type='text/javascript' src="{% static 'js/jquery.form-validation.js' %}"></script>
 
-<script type="text/javascript">
-   
+  {% endblock %}
 
-$(document).ready(function(){
-    $("#changepayform_form").validate({
-    rules:{
+<style type="text/css">
 
-            telno:
-            {
-            required:true,
-            digits: true,
-            maxlength:20,
-            },
-            amount:
-            {
-            required:true,
-            digits: true,
-            maxlength:10,
-            },
-    },
-          messages: {
-       
-        telno: {
-        required: "Telephone number is required",
-        digits: "Enter the valid Telephone number",
-        maxlength:"Please provide valid phone number",
-      },
-      amount: {
-      required: "Please provide Consultation amount",
-      digits: "Enter the valid Consultation amount",
-      maxlength:"Please provide valid Consultation amount",
-      },
-    
-    
-    },
 
-  
 
-    });
-    });
 
-</script>
-</fieldset>
-<!-- <div id="signup">Click
-<a href="/Doct/register/"><strong style="font-size:28px;font-weight:20px;">Sign Up</strong></a>
 
-</div> -->
 
-</div>
+</style>
+
+
+
+
+
+
+
+{% include "Doct/enterpay.html" %} 
+
+
+
 
 {% endif %}
-</div>
-
-<script type='text/javascript'>
-
-//F
-//form validation
-  $(document).ready(function(){
-    $("#changeloginform_form").validate({
-    rules:{
-
-          username:
-            {
-            required:true,
-            minlength:3,
-            maxlength:20,
-            },
-            password:
-            {
-            required:true,
-            minlength:5,
-            maxlength:30,
-            },
-        
-    },
-          messages: {
-      username: {
-        required: "Please provide a username",
-        minlength: "Please provide a Valid username",
-        maxlength:"Please provide a Valid username",
-      },
-      password: {
-        required: "Please provide a password",
-         minlength: "Please provide a Valid password",
-         maxlength:"Please provide a Valid password",
-      },
-    },
-
-    });
-    });
 
 
 
-</script>
-<div>
-
-
-
-
-
-
-
-
-<h4 style="font-size:20px;">How It Works</h4>
-<aside>
-<strong style="font-size:18px;">1. Register into the system with the right information and confirmation message will be sent either to your Email or via the web immediately after you have registered</strong>.<br /><br />
-<strong style="font-size:18px;">2. Use your username and password  for you to access the home page</strong>.<br /><br />
-
-<strong style="font-size:18px;">3. Note that you can only submit your Diognosis details after you have paid consultation fee of ugx 20,000 to the specified mobile money number 256754307471 </strong>.
-
-
-</aside>
-
-</div>
-
+   
 
 
 {% endblock %}
@@ -235,4 +84,189 @@ $(document).ready(function(){
 
 
 
+
+  {% block body_images %} 
+
+                
+
+
+          <div id="slideshow">
+        <ul class="slides">
+            <li><img src="{% static 'img/opolot-jude-3.jpg' %}" alt="Marsa Alam underawter close up" /></li>
+              <li><img  src="{% static 'img/doctorWom.jpg' %}" alt="Turrimetta Beach - Dawn" /></li>
+              <li><img  src="{% static 'img/images.jpg' %}"  alt="Power Station" /></li>
+              <li><img  src="{% static 'img/doctor2.jpg' %}"  alt="Colors of Nature" /></li>
+          </ul>
+          <span class="arrow previous"></span>
+          <span class="arrow next"></span>
+
 	
+
+
+ {% endblock %} 
+
+
+
+
+
+ {% block side_menue %}
+
+
+
+        <div class="banner-left"  style="position:absolute;
+    top:125px;
+    right: 1000px;">
+            <div class="con-text">
+              <div class="grid1-img">
+                <img src="{% static 'img/doctor2.jpg' %}"  style="width:500px;" alt="">
+              </div>
+           
+            
+          </div>
+          <div class="con-text">
+              <div class="grid1-img">
+                <img src="{% static 'img/doctorWom.jpg' %}" style="width:700px;"  alt="">
+              </div>
+            
+              <div class="clear"></div>
+          </div>
+  
+{% endblock %}
+
+
+
+   {% block bottom_content %}
+   
+     <div class="content>
+        <div class="wrap">
+          <div class="wrapper">
+        <div class="con-top">
+          <h3>Welcome to our Doctor(Medical) consultation Company!</h3>
+          <p>Login using  your Phonenumber and you will be automatically registered and then you will fill in your sickness  symptons and signs  . You will automatically get access to the home page and get in touch with the doctor the doctors very fast</p>
+        </div>
+        <div class="con-bot">
+          <div class="left">
+            <div class="bot-left">
+              <img src="{% static 'images/docts.jpeg' %}" alt=""/>
+            </div>
+            <div class="left-text">
+            <h4>A group of doctors with whom we partner</h4>
+            <span class="doller"></span>
+            <p>They just have been in a short meeting </p>
+            <p><span class="read">Read More ></span></p>
+            </div>
+          </div>
+          <div class="left">
+            <div class="bot-left">
+              <img src="{% static 'images/doctgirl.jpeg' %}" alt=""/>
+            </div>
+            <div class="left-text">
+            <h4>Our Senior Experienced Doctor(M)</h4>
+            <span class="doller"></span>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismo</p>
+              <p><span class="read">Read More >></span></p>
+            </div>
+          </div>
+          <div class="right">
+            <div class="bot-left">
+              <img src="{% static 'images/docts2.jpeg' %}" alt=""/>
+            </div>
+            <div class="left-text">
+              
+              <h4>Some of our medical doctors paying attention to a medical matter</h4>
+              <span class="doller"></span>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismo</p>
+                <p><span class="read">Read More ></span></p>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+          <div class="grids">
+        <div class="box1">
+                                <div class="padding">
+                                    <h4>This Week's Top 10</h4>
+                                    <ul class="list list-pad">
+                                        <li class="list-bg"><span>1.</span><a href="#">New maternity benefit law may cut jobs for women; 66 per cent startups</a></li>
+                                        <li class="list-bg1"><span>2.</span><a href="#">Weight-loss drug shows potential to treat opioid abuse</a></li>
+                                        <li class="list-bg"><span>3.</span><a href="#">Treatments need to address 'cue reactivity'</a></li>
+                                        <li class="list-bg1"><span>4.</span><a href="#">Lorcaserin reduced opioid use and cue reactivity  </a></li>
+                                        <li class="list-bg"><span>5.</span><a href="#">How do alcohol and caffeine affect A-fib?</a></li>
+                                        <li class="list-bg1"><span>6.</span><a href="#"> Aggression disorder linked to greater risk of substance abuse </a></li>
+                                        <li class="list-bg"><span>7.</span><a href="#">Hangover memories more likely with a family history of drinking problems </a></li>
+                                        <li class="list-bg1"><span>8.</span><a href="#">Given the choice, patients will reach for cannabis over prescribed opioids </a></li>
+                                        <li class="list-bg"><span>9.</span><a href="#">Review confirms link between drug use and poor dental health</a></li>
+                                        <li class="list-bg1"><span>10.</span><a href="#">Component of marijuana may help treat anxiety and substance abuse disorders </a></li>
+                                    </ul>
+                                    <a href="#" class="link1">See all headlines</a>
+                                </div>
+                            <div class="padding1">
+                                    <h4>Our Best Places</h4>
+                                    <div class="box-left">
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/pic3.jpg' %}" alt=""/>
+                                    </div>
+                                      <div class="bot-desc">
+                                        <p>Time and again, our clients report that Best Doctors more than pays for itself. Organizations save dollars, worry and even lives. Which is why we now serve more members in every industry. </p>
+                                      </div>
+                                    <div class="clear"></div>
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/dot2.jpeg' %}" alt=""/>
+                                     </div>
+                                      <div class="bot-desc">
+                                        <p>Best Doctors creates a collaborative environment where doctors work together to improve outcomes. We do this by creating a report that not only supports the member, but also the treating team, which supports decision making and helps ensure better outcomes.
+                                      </p>
+
+
+                                     </div>
+                                    <div class="clear"></div>
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/index12.jpeg' %}" alt=""/>
+                                    </div>
+                                      <div class="bot-desc">
+                                        <p>After seeing almost a dozen different doctors, Samuel was frustrated by his increasing pain levels, lack of mobility and the absence of any clear answers regarding her condition, so he contacted Doctors through us, he then got the clear answers to his condition from us</p>
+                                    </div>
+                                      <div class="clear"></div>
+                                    </div>
+                                    <div class="box1-left">
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/doctor12.jpeg' %}" alt=""/>
+                                    </div>
+                                      <div class="bot-desc1">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                     </div>
+                                    <div class="clear"></div>
+                                    
+                                    <div class="clear"></div>
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/dfriend.jpeg' %}" alt=""/>
+                                     </div>
+                                      <div class="bot-desc1">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                      </div>
+                                    <div class="clear"></div>
+                                    </div>
+                      </div>
+                        <div class="clear"></div>      
+        </div
+
+        {% endblock %}
+
+
+
+
+
+              {% block footer %}
+
+
+
+<div class="fo0ter-boottom">
+<div class="wrap">  
+  <div class="copy">
+    <p style="margin-left: 300px;">Your Company Name &copy; 2013 All rights Reserved | Design by <a href="http://w3layouts.com">W3Layouts</a> &nbsp;&nbsp;&nbsp;Photos by <a href="http://www.freegreatpicture.com/">Freegreatpicture</a></p>
+  </div>
+ </div>
+</div>
+</div>
+
+
+{% endblock %}

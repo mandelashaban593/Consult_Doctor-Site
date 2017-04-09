@@ -1,0 +1,474 @@
+{% extends 'Doct/base.html' %}
+
+{% load staticfiles %}
+
+
+
+
+
+
+{% block body_block %}
+
+
+
+
+ {% include "Doct/notifications.html" %} 
+
+
+
+
+
+
+
+<div style="visibility:hidden; top: 10px;
+    right: 34px" id="ccformContainer">
+
+{% include "Doct/order_amb.html" %}
+
+</div>
+
+
+
+
+{% if qconvs %}
+
+<table style="">
+
+
+{% for qconv in qconvs %}
+
+
+</table>
+
+{% endfor %}  
+
+
+
+
+<table style="position: absolute;margin-left:600px">
+
+<form action="/Doct/sendtext/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post">
+{% csrf_token %}
+<input type="hidden" name="password" value="{{password}}" style="width: 200px; border: 0px; "    id="dname"/>
+
+<input type="hidden" name="dpassword" value="{{dpassword}}" style="width: 200px; border: 0px; "    id="dname"/>
+
+<tr><td style="width: 100px;"><input type="text" name="pmsg"  style="width: 200px;"   id="dname"/></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 2px"><input type="submit" name="submit" value="Send"  style="width: 100px; border: 0px;" /></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 2px"></form>
+
+
+</table>
+
+
+
+{% else %}
+
+
+{% endif %}
+
+
+{% if pdiogs %}
+
+ 
+
+
+<table style="">
+
+<tr><td style="margin-right:700px;width: 200px;font-size: 12px">
+
+<form action="/Doct/converse/" style="width: 200px; border: 0px;margin-left: 400px;" id="changesicknessform_form" method="post"></td></tr>
+{% csrf_token %}
+<tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
+<tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 3px"><input type="hidden" name="password" value="{{password}}" style="width: 200px; border: 0px; padding-bottom: 3px"  readonly="readonly"  id="dname"/></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dpassword" value="{{dpassword}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 7px"></form></td></tr>
+
+</table>
+
+
+
+
+
+
+
+<table style="margin-right: 1000px; width: 1300px;">
+
+{% if pdiogs %}
+
+ {% if pdiogs %}
+<tr><td style="width: 200px">Sickness Details</td></tr>
+{% endif %}
+
+
+
+{% for pdiog in pdiogs %}
+
+<tr><td style="width: 200px">{{pdiog.username}}</td></tr>
+
+{% if pdiog.demail %} 
+
+<tr><td  style="width: 200px">{{pdiog.illness}}  </td></tr>
+<tr><td  style="width: 200px">{{pdiog.comp_signs}}  </td></tr>
+{% endif %}
+
+<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.demail  %} {{pdiog.diognosis}} {% else %} </td> </tr>
+<tr style=""><td  style="width:800px;padding-bottom: 7px; color: green; font-weight: bold;">Pay 20,000 to Mob Phone<br> 0754307471 for seeing<br>doctor's response</td> </tr>
+{% endif %}
+
+{% endfor %}  
+
+</table>
+
+
+
+{% load staticfiles %}
+
+
+
+
+<div style="visibility:visible;position: absolute;
+    top: 150px;
+    right: 0px" id="paypalformContainer" >
+
+<form id="signup" action="/Doct/illness/"  method="POST" align="center">
+{% csrf_token %}
+        
+        <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
+            <h3>Consult Doctor</h3>
+
+        
+       
+
+
+            <p style="padding: 7px">Disease  signs (Condition):<br>
+
+             <select name="comp_signs"  required="True" style="width: 160px;" autofocus>{% include "Doct/cond_options.html" %}
+              </select>
+              </p>
+
+               <p style=' padding: 7px' id='business'>Explain Disease signs:<br>
+               <textarea type='text' class='text' name='illness' rows="3" cols="38"  Placeholder="Disease signs" value size='20'  autofocus></textarea>
+
+               </p>
+
+                <p style="padding: 7px">
+                You need an ambulance ?:<br>
+                <input value="1" type="radio" name="amb" onClick="displayForm(this)"></input>Yes
+                <br>
+                <input value="0" type="radio" name="amb" onClick="displayForm2(this)"></input>No
+
+
+               </p>
+
+                <p style="padding: 7px"> Gender:<br>
+                 <select type="text" name="gender" Placeholder="Patient Age" id="page" autofocus>
+                 <option value="Male">Male</option>
+                 <option value="Female">Female</option>
+
+                 </select>
+              
+                </p>
+
+                 <p style="padding: 7px"> Patient Name:<br>
+                <input type="text" name="pname" id="pname" autofocus/>
+                </p>
+
+                  <p style="padding: 7px"> Doctor:<br>
+                 <select type="text" name="dname" Placeholder="Patient Age" id="page" autofocus>
+                 <option value="Peter">Choose A Doctor</option>
+                 <option value="Peter">Peter(General Doctor)</option>
+                 <option value="John">John(General Doctor)</option>
+                 <option value="Anguda">Anguda(Physicians)</option>
+
+                 </select>
+              
+                </p>
+
+                <input type="hidden" name="password"  id="telno"  Placeholder="Mobile Number" value="{{password}}"/>
+
+                <input type="hidden" name="role"  id="dname" value="patient"/> 
+                <input type="hidden" name="page"  id="dname" value="0"/> 
+           
+
+            <p style="padding: 7px">
+
+
+            <input type="submit" id="submit"  placeholder="Enter Message" value="Submit" name="SUBMIT" required>
+           
+             </p>
+
+        
+  
+
+    </form>
+
+</div>
+
+
+
+
+
+
+
+{% else %}
+
+
+
+
+
+{% endif %}
+
+
+
+
+
+{% else %}
+
+
+
+
+
+{% endif %}
+
+
+
+
+
+{% endblock %}
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+ <script type="text/javascript"> 
+    function displayForm(c) {
+        if (c.value == "1") {
+
+            document.getElementById("ccformContainer").style.visibility = 'visible';
+            document.getElementById("paypalformContainer").style.visibility = 'hidden';
+        } else if (c.value == "0") {
+            document.getElementById("ccformContainer").style.visibility = 'hidden';
+
+            document.getElementById("paypalformContainer").style.visibility = 'visible';
+        } else {}
+    }
+
+
+
+    function displayForm2(c) {
+        if (c.value == "0") {
+
+            document.getElementById("ccformContainer").style.visibility = 'visible';
+            document.getElementById("paypalformContainer").style.visibility = 'hidden';
+        } else if (c.value == "1") {
+            document.getElementById("ccformContainer").style.visibility = 'hidden';
+
+            document.getElementById("paypalformContainer").style.visibility = 'visible';
+        } else {}
+    }
+
+
+
+
+$(document).ready(function(){
+
+ $('#purpose').on('change', function() {
+      if ( this.value == '1')
+      //.....................^.......
+      {
+        $("#business").show();
+        $("#cond_options").hide();
+        
+      }
+      else
+      {
+        $("#business").hide();
+        $("#cond_options").show();
+      }
+    });
+
+
+     $('#ambulance').on('change', function() {
+      if ( this.value == '1')
+      //.....................^.......
+      {
+        $("#ambform").show();
+        $("#illness").hide();
+        
+      }
+      else
+      {
+        $("#ambform").hide();
+        $("#illness").show();
+      }
+    });
+
+
+
+
+
+
+});
+
+
+
+
+});
+
+
+    </script>
+
+
+
+
+
+
+
+  
+   {% block bottom_content %}
+
+     <div class="content>
+        <div class="wrap">
+          <div class="wrapper">
+        <div class="con-top">
+          <h3>Welcome to our Doctor(Medical) consultation Company!</h3>
+          <p>Login using  your Phonenumber and you will be automatically registered and then you will fill in your sickness  symptons and signs  . You will automatically get access to the home page and get in touch with the doctor the doctors very fast</p>
+        </div>
+        <div class="con-bot">
+          <div class="left">
+            <div class="bot-left">
+              <img src="{% static 'images/docts.jpeg' %}" alt=""/>
+            </div>
+            <div class="left-text">
+            <h4>A group of doctors with whom we partner</h4>
+            <span class="doller"></span>
+            <p>They just have been in a short meeting </p>
+            <p><span class="read">Read More ></span></p>
+            </div>
+          </div>
+          <div class="left">
+            <div class="bot-left">
+              <img src="{% static 'images/doctgirl.jpeg' %}" alt=""/>
+            </div>
+            <div class="left-text">
+            <h4>Our Senior Experienced Doctor(M)</h4>
+            <span class="doller"></span>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismo</p>
+              <p><span class="read">Read More >></span></p>
+            </div>
+          </div>
+          <div class="right">
+            <div class="bot-left">
+              <img src="{% static 'images/docts2.jpeg' %}" alt=""/>
+            </div>
+            <div class="left-text">
+              
+              <h4>Some of our medical doctors paying attention to a medical matter</h4>
+              <span class="doller"></span>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismo</p>
+                <p><span class="read">Read More ></span></p>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+          <div class="grids">
+        <div class="box1">
+                                <div class="padding">
+                                    <h4>This Week's Top 10</h4>
+                                    <ul class="list list-pad">
+                                        <li class="list-bg"><span>1.</span><a href="#">formas humanitatis pe</a></li>
+                                        <li class="list-bg1"><span>2.</span><a href="#">congue nihil imperdiet</a></li>
+                                        <li class="list-bg"><span>3.</span><a href="#">Aadipisicing elit sed do</a></li>
+                                        <li class="list-bg1"><span>4.</span><a href="#">luptatum zzril  </a></li>
+                                        <li class="list-bg"><span>5.</span><a href="#">Claritas est etiam</a></li>
+                                        <li class="list-bg1"><span>6.</span><a href="#">claritatem insitam;</a></li>
+                                        <li class="list-bg"><span>7.</span><a href="#">velit esse molestie consequa</a></li>
+                                        <li class="list-bg1"><span>8.</span><a href="#">nostrud exerci tation ulla</a></li>
+                                        <li class="list-bg"><span>9.</span><a href="#">demonstraverunt lectores</a></li>
+                                        <li class="list-bg1"><span>10.</span><a href="#">dolore te feu</a></li>
+                                    </ul>
+                                    <a href="#" class="link1">See all hotels</a>
+                                </div>
+                            <div class="padding1">
+                                    <h4>Our Best Places</h4>
+                                    <div class="box-left">
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/pic3.jpg' %}" alt=""/>
+                                    </div>
+                                      <div class="bot-desc">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                      </div>
+                                    <div class="clear"></div>
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/dot2.jpeg' %}" alt=""/>
+                                     </div>
+                                      <div class="bot-desc">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                     </div>
+                                    <div class="clear"></div>
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/index12.jpeg' %}" alt=""/>
+                                    </div>
+                                      <div class="bot-desc">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                    </div>
+                                      <div class="clear"></div>
+                                    </div>
+                                    <div class="box1-left">
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/doctor12.jpeg' %}" alt=""/>
+                                    </div>
+                                      <div class="bot-desc1">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                     </div>
+                                    <div class="clear"></div>
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/pic10.jpg' %}" alt=""/>
+                                    </div>
+                                      <div class="bot-desc1">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                      </div>
+                                    <div class="clear"></div>
+                                    <div class="bot-img">
+                                      <img src="{% static 'images/dfriend.jpeg' %}" alt=""/>
+                                     </div>
+                                      <div class="bot-desc1">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+                                      </div>
+                                    <div class="clear"></div>
+                                    </div>
+                      </div>
+                        <div class="clear"></div>      
+        </div
+
+        {% endblock %}
+
+
+
+
+
+              {% block footer %}
+
+
+
+<div class="fo0ter-boottom">
+<div class="wrap">  
+  <div class="copy">
+    <p>Your Company Name &copy; 2013 All rights Reserved | Design by <a href="http://w3layouts.com">W3Layouts</a> &nbsp;&nbsp;&nbsp;Photos by <a href="http://www.freegreatpicture.com/">Freegreatpicture</a></p>
+  </div>
+ </div>
+</div>
+
+
+{% endblock %}

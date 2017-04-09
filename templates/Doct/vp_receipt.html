@@ -1,0 +1,187 @@
+{% extends 'Doct/base.html' %}
+
+{% load staticfiles %}
+
+{% block navbar %}
+
+<div id = "navigation">
+
+<nav class="cf">
+  <ul class="topmenu">
+    <!--<li><a href="#" title="Home Page" class="current">Home</a></li>
+    -->
+
+ 
+      <ul class="submenu">
+                    
+                    </ul>
+
+        </li>
+   
+   
+ 
+     <li><a href="/Doct/receipt/">Print reciept</a>
+          <ul class="submenu">
+              </li>
+                    
+                    </ul>
+         </li>
+
+
+          <li><a href="/Doct/authdiog/">View Your Diognosis</a>
+        <ul class="submenu">
+             
+                    
+                    </ul>
+        
+    </li>
+
+    <li><a href="/Doct/" title="Logout">Logout</a>
+        <ul class="submenu">
+             
+                    
+                    </ul>
+        
+    </li>
+
+   
+                    
+   </ul>
+</nav>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block body_block %}
+
+      <div id="content">
+     {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
+ return false;
+ </script>
+ {% endif %}
+{% if pay_id %}
+<h2>Your payment Id is {{pay_id}}, please don't forget it</h2>
+
+{% elif ill_success %}
+<h2>Your have Successfully sent your illness detail</h2>
+{% endif %}
+
+
+{% if diog %}
+
+{% include "Doct/view_diog.html" %}
+
+{% elif expill or ill_more  %}
+
+{% include "Doct/expillness.html" %} 
+
+
+{% elif pay %}
+
+{% include "Doct/enterpay.html" %} 
+
+{% elif rec %}
+
+{% include "Doct/receiptform.html" %} 
+
+{% elif ill_et %}
+
+
+<h1  style="width:60%; height:20%; font-size:17px; ""><a href="/Doct/authdiog/" style="color: white; text-align: center;">View Prescription</a><br /></h1>
+
+
+{% elif ill_success %}
+<h1  style="width:60%; height:20%; font-size:17px; ""><a href="/Doct/authdiog/" style="color: white; text-align: center;">View Prescription</a><br /></h1>
+
+{% include "Doct/ill_det.html" %} 
+
+{% elif authd %}
+{% if msg and msg2 %}
+<h2 style="color:green"> {{ msg2 }} {{ msg }} </h2>
+
+{% endif %}
+
+{% include "Doct/authdiog.html" %}
+
+
+
+{% else  %}
+
+
+
+<script language="javascript">
+function printPage(id) {
+    var html="<html>";
+    html+= document.getElementById(id).innerHTML;
+    html+="</html>";
+    var printWin = window.open('','','left=0,top=0,width=1,height=1,toolbar=0,scrollbars=0,status =0');
+    printWin.document.write(html);
+    printWin.document.close();
+    printWin.focus();
+    printWin.print();
+    printWin.close();
+}
+</script>
+
+{% if illness %}You have successfully sent your Sickness detail And Check Your Diagnosis after 5 minutes {% endif %}
+<p>&nbsp;</p>
+<div class="heder"><h1 class="form-style-6" style="margin-left: 480px">Patients'  Payment Receipt</h1></div>
+<p>&nbsp;</p>
+
+
+
+ <table width="300" border="0" cellpadding="30" style="text-align: center">
+
+  <tr><th><span style="font-weight: bold;">Transaction Id</span></th>  <td><a href="tel:0123456785">{{p.id}}</a></td> </tr>
+
+  <tr> 
+    <th width="75"><strong> Telephone Number</strong></th> <td>{{p.telno}}</td></tr>
+  
+   <tr><th><span style="font-weight: bold;">Amount</span></th>  <td><a href="tel:0123456785">{{p.amount}}</a></td> </tr>
+   <tr><th><span style="font-weight: bold;">Staff pic</span></th><td><img src="{% static 'doct.jpg' %}" alt="checked" width="50px" height="50px" /></td></tr>
+   <tr><th width="75"><strong>Gender</strong></th><td>{{p.gender}}</td> </tr>
+   <tr><th width="75"><strong>When</strong></th><td><a href="tel:0123456785">{{p.added}}</a></td> </tr>
+   <tr><th width="75"><strong>Staff Pic</strong></th><td><img src="{% static 'pat.jpg' %}" alt="checked"  width="50px" height="50px"/></td></tr>
+ 
+    </tr>
+
+
+   </table>
+
+
+<center><input type="button" value="print" onclick="printPage('content');"/> </center>
+
+
+
+
+
+
+   {% endif %}
+</div>
+
+
+{% if illness %}You have successfully sent your illness detail And Check Your Diagnosis after 5 minutes {% endif %}
+<p>&nbsp;</p>
+</div>
+
+
+<script type="text/javascript">alert('You have successfully submitted payment Details'); 
+
+return false;
+</script>
+ 
+
+
+ <p>&nbsp;</p>
+
+
+
+{% endblock %}
+
+{% block footer %}
+<p>Posted by Mandela Shaban<br/>Contact Information:<a href="mailto:mandelashaban593@gmail.com">mandelashaban593@gmail.com</a><br/>
+&copy; Consult Doctor : Fast and Cheap Response 2016</p>
+{% endblock %}

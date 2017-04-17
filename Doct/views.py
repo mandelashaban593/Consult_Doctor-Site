@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, render
 from Doct.decorators import ajax_required, login_required
 from django.http import HttpResponse
 
-from Doct.models import Page, UserProfile, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages,Labtests
+from Doct.models import Page, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages,Labtests
 
 from Doct.forms import  UserForm,DiognosisForm
 from Doct.forms import PageForm, TopupForm, PatientForm, IllnessForm,DoctorForm,AddIllDetForm,ContactForm, LoginForm,patientConverseForm,doctorConverseForm, MessagesForm,UserProfileForm
@@ -26,7 +26,7 @@ from Doct.utils import check_illness,mailer,success_message, error_message
 from Doct.sms import send_illness_sms_notification
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from Doct.models import Transaction, Rate, Country, Charge,Ambulance,Orderdrugs
+from Doct.models import Ambulance,Orderdrugs
 from Doct.utils import COUNTRY_CHOICES, NETWORK_CHOICES
 
 # Create your views here.
@@ -34,7 +34,7 @@ from django.shortcuts import HttpResponse, render_to_response, \
     HttpResponseRedirect, render
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from Doct.models import Page,Transaction, UserProfile, Country, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
+from Doct.models import Page, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
 from django.contrib import messages
 
 import doct_admin.utils as admin_utils

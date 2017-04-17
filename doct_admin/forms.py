@@ -1,6 +1,6 @@
 
 from django import forms
-from Doct.models import  Register,UserActions,LoginInfo
+from Doct.models import  Register
 from django.contrib.auth.models import User
 from django.contrib.admin.models import LogEntry
 
@@ -80,20 +80,10 @@ class EditAdminUserForm(forms.Form):
 
  
  
-class UserActionsForm(forms.ModelForm):
-
-    """Form for saving user details on signup"""
-    class Meta:
-        model = UserActions
-        fields = ['session', 'log_entry', 'user']
 
 
-class LoginInfoForm(forms.ModelForm):
 
-    """Form for saving user details on login"""
-    class Meta:
-        model = LoginInfo
-        fields = ['user_agent', 'remote_addr', 'user']
+
 
 
 class LogEntryForm(forms.ModelForm):

@@ -1,10 +1,15 @@
 
 from django.contrib.contenttypes.models import ContentType
 
+<<<<<<< HEAD
 from django.conf import settings
+=======
+from manDoct.settings import LOCALHOST,BASE_DIR
+>>>>>>> cef45e25fa7d94e1e02aca2869d0cc8d366240dd
 
 from doct_admin.forms import LoginInfoForm, UserActionsForm, LogEntryForm
 
+<<<<<<< HEAD
 
 
 
@@ -70,12 +75,14 @@ def log_action(request, model_object, action_flag, change_message=''):
         #pass
     
 
+=======
+>>>>>>> cef45e25fa7d94e1e02aca2869d0cc8d366240dd
 
 
 
 
 def debug(e, txt=False, log='debug'):
-    if settings.LOCALHOST:
+    if LOCALHOST:
         if not txt:
             txt = ''
         print >> sys.stderr, 'Debuging____________________ %s' % txt
@@ -83,7 +90,7 @@ def debug(e, txt=False, log='debug'):
     else:
         try:
             old_stdout = sys.stdout
-            log_file = open("%slogs/%s.log" % (settings.BASE_DIR, log), "a")
+            log_file = open("%slogs/%s.log" % (BASE_DIR, log), "a")
             sys.stdout = log_file
             print '%s: Debuging____________________ %s' % (datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                            txt)

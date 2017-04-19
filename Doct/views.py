@@ -36,7 +36,11 @@ from django.shortcuts import HttpResponse, render_to_response, \
     HttpResponseRedirect, render
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
+<<<<<<< HEAD
 from Doct.models import Page,Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
+=======
+from Doct.models import Page, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
+>>>>>>> cef45e25fa7d94e1e02aca2869d0cc8d366240dd
 from django.contrib import messages
 
 import doct_admin.utils as admin_utils

@@ -1,11 +1,13 @@
 {% if enterpay %}
 <div class="alert alert-success notification" >
+
 The payment details were successfully added
 <script type="text/javascript">
 	toggleAddToPhoneBookForm();
 	clearForm('#phonebook_area_form');
 	window.location.reload();
 </script>
+
 </div>
 {% else %}
 <div class="alert alert alert-error notification" >

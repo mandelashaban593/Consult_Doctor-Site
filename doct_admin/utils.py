@@ -2,44 +2,9 @@
 from django.contrib.contenttypes.models import ContentType
 
 from django.conf import settings
-from Doct.models import Profile
+
 from doct_admin.forms import LoginInfoForm, UserActionsForm, LogEntryForm
 
-
-def users_pending_verification(count=False):
-    '''get pending users'''
-    user_list = Profile.objects.filter(
-        account_verified=False, id_verified=False, account_blocked=False, phone_verified=True)
-    if count:
-        user_list = user_list.count()
-    return user_list
-
-
-def verified_users(count=False):
-    '''get pending users'''
-    user_list = Profile.objects.filter(
-        account_verified=True, id_verified=True, account_blocked=False,
-        user__isnull=False)
-    if count:
-        user_list = user_list.count()
-    return user_list
-
-
-def unverified_users(count=False):
-    '''get pending users'''
-    user_list = Profile.objects.filter(id_pic='',account_verified=False, id_verified=False, account_blocked=False,user__isnull=False)
-    if count:
-        user_list = user_list.count()
-    return user_list
-
-
-def blocked_users(count=False):
-    '''get pending users'''
-    user_list = Profile.objects.filter(
-        account_blocked=True)
-    if count:
-        user_list = user_list.count()
-    return user_list
 
 
 

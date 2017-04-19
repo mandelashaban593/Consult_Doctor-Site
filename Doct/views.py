@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, render
 from Doct.decorators import ajax_required, login_required
 from django.http import HttpResponse
 
-from Doct.models import Page, UserProfile, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages,Labtests
+from Doct.models import Page, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages,Labtests
 
 from Doct.forms import  UserForm,DiognosisForm
 from Doct.forms import PageForm, TopupForm, PatientForm, IllnessForm,DoctorForm,AddIllDetForm,ContactForm, LoginForm,patientConverseForm,doctorConverseForm, MessagesForm,UserProfileForm
@@ -24,9 +24,11 @@ from  manDoct.settings import *
 from django.template.loader import render_to_string
 from Doct.utils import check_illness,mailer,success_message, error_message
 from Doct.sms import send_illness_sms_notification
+from AfricasTalkingGateway.server import *
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from Doct.models import Transaction, Rate, Country, Charge,Ambulance,Orderdrugs
+from Doct.models import Ambulance,Orderdrugs
 from Doct.utils import COUNTRY_CHOICES, NETWORK_CHOICES
 
 # Create your views here.
@@ -34,13 +36,17 @@ from django.shortcuts import HttpResponse, render_to_response, \
     HttpResponseRedirect, render
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from Doct.models import Page,Transaction, UserProfile, Country, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
+from Doct.models import Page,Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
 from django.contrib import messages
 
 import doct_admin.utils as admin_utils
 from django.contrib.auth.models import User
 from django.db.models import Sum, Max
+from firebase_cloud_msging.tasks import send_push_notification
 
+password = None
+
+username = None
 
 def dashboard_stats(request):
 	country = None
@@ -51,53 +57,11 @@ def dashboard_stats(request):
 	except Exception, e:
 		print "Invalid Username Or Password", e
 	data = {'boss_man': False}
-	countries = Country.objects.all()
+	
 
 	profile = User.objects.filter(
         is_superuser=False, is_staff=False).count()
-	data['user_count'] = profile
-	data['verified_user_count'] = admin_utils.verified_users(
-        count=True)
-	data['blocked_user_count'] = admin_utils.blocked_users(count=True)
-	data['pending_user_count'] = admin_utils.users_pending_verification(
-        count=True)
-	transaction = Transaction.objects.filter(
-        visa_success=True, is_processed=False, amount_sent__isnull=False).aggregate(Sum('amount_sent'))
-	data['amount_pending'] = transaction['amount_sent__sum']
-	currency = None
-	for country in countries:
-		currency = country.currency.lower()
-
-
-    
-
-    
-        
-        # amount pending
-        transaction = Transaction.objects.filter(
-            visa_success=True, is_processed=False, amount_sent__isnull=False).aggregate(Sum('amount_received'))
-        data['amount_pending_%s' % currency] = transaction[
-            'amount_received__sum']
-        # pending transactions
-        transaction = Transaction.objects.filter(
-            visa_success=True, is_processed=False, amount_sent__isnull=False).count()
-
-        data['pending_transactions_%s' % currency] = transaction
-        transaction = Transaction.objects.filter(visa_success=False, is_processed=False, amount_sent__isnull=False).count()
-   	data['failed_transactions'] = transaction
-   	transaction = Transaction.objects.filter(
-        visa_success=True, is_processed=True, amount_sent__isnull=False).aggregate(Sum('amount_sent'))
-   	data['total_amount_transfered'] = transaction['amount_sent__sum']
-   	transaction = Transaction.objects.filter(
-        visa_success=True, is_processed=True, amount_sent__isnull=False).aggregate(Sum('amount_sent'))
-   	data['total_amount_transfered'] = transaction['amount_sent__sum']
-   	transaction = Transaction.objects.filter(
-        visa_success=True, is_processed=True, amount_sent__isnull=False).aggregate(Sum('amount_received'))
-   	data['total_amount_transfered_ugx'] = transaction['amount_received__sum']
-   	data['user_with_transaction'] = Transaction.objects.filter(
-        visa_success=True, is_processed=True, amount_sent__isnull=False).values('user').distinct().count()
-   	data['complete_transactions'] = Transaction.objects.filter(
-        visa_success=True, is_processed=True, amount_sent__isnull=False).count()
+	
    	return data
     
 
@@ -455,7 +419,7 @@ def user_login(request):
 				doctlog=True
 				try:
 					diogs = Diognosis.objects.filter(doctorusername=username).order_by("-id")
-					convmem = convMembers.objects.filter(mem_username=username)
+					convmem = convMembers.objects.filter(mem_username=username).distinct()
 				except Exception, e:
 					print 'Error, retrieving diog or convmem ', e
 
@@ -476,10 +440,15 @@ def user_login(request):
 
 				staf=True
 				user = authenticate(username=username, password=password)
-				if user is not None:
-					if user.is_active:
-						login(request, user)
-						return render_to_response('Doct/index_staff.html', {'diogs':diogs,'data':data , 'staf':staf, 'username':username,'doctlog':doctlog}, context)
+				
+				if user:
+
+					login(request, user)
+					
+					return render_to_response('Doct/index_staff.html', {'diogs':diog,'data':data , 'staf':staf, 'username':username,'doctlog':doctlog}, context)
+					
+
+			
 			        			
 			elif r.role =='admin':
 				print "Username 3 %s "  % (username) 
@@ -509,7 +478,7 @@ def user_login(request):
 			 
 			 
 
-	elif request.method == 'GET':
+	else:
 		log = True
 		return render_to_response('Doct/index.html', {'log':log}, context)
 		
@@ -605,6 +574,11 @@ def illness(request):
     
     context = RequestContext(request)
     post_values = {}
+    push_notif = {}
+    AfricasTalk = None
+    AfricasTalk  = AfricasTalk
+    doctor_sms_data = {}
+
     password = None
     dname = None
     pdiog = None
@@ -645,12 +619,12 @@ def illness(request):
 		enterpay.save()
 		pay_id = enterpay.id
 		gender = pay_id
-		ill_det=Illness(gender=gender,comp_signs=comp_signs, illness=illness, page=0,pname=pname,username=username,dtelno=dtelno, dname=dname,doctorusername=dname,amt=amount)
+		ill_det=Illness(gender=gender,comp_signs=comp_signs, illness=illness, kintelno=ptelno,page=0,pname=pname,username=username,dtelno=dtelno, dname=dname,doctorusername=dname,amt=amount)
 		ill_det.save()
 		gender = ill_det.gender	
 		ill_id = ill_det.id	
 		amb = request.POST['amb']
-		diog=Diognosis(page=0,ill_id=ill_id,comp_signs=comp_signs, gender='0',dtelno = dtelno,  diognosis=illness,amb=amb,username=username, dname=dname,doctorusername=dname, illness=illness)
+		diog=Diognosis(page=0,ill_id=ill_id,telno=ptelno, comp_signs=comp_signs, gender='0',dtelno = dtelno,  diognosis=illness,amb=amb,username=username, dname=dname,doctorusername=dname, illness=illness)
 		diog.save()
 		print 'Username %s ' % diog.username
 
@@ -666,11 +640,29 @@ def illness(request):
 			mem=convMembers(mem_username = username)
 			mem.save()
 
+		# send patient consultation  successs
+
 		success_message(
                 request, 'process_illness', {'pay_id': pay_id})
+
+		push_notif['registration_id'] = "61464121334"
+		push_notif['message_title'] = "Medical Consulation"
+		push_notif['message_body'] = comp_signs
+		push_notif['api_key'] = "AIzaSyBdlecKJpqsOlgXah9-Bd-rGoG7m_hewWI"
         
 		# send_illness_sms_notification(request,
   #            msg)
+  		# send sms
+
+  		
+
+  		SendSms(doctor_sms_data)
+
+  		
+        
+        
+   		
+
 		illness_delivered_email(request, msg)
 
 		return render_to_response('Doct/illdecsuccess.html', { 'pay_id':pay_id,'password':password,'gender':gender, 'pdiogs':pdiogs,'pdiog':pdiog, 'qconvs':qconvs, 'dname':diog.username, 'dpassword':dpassword,'pname':pname}, context)
@@ -784,7 +776,7 @@ def doctConv(request):
 
 		try:
 			pmem = convMembers.objects.all().distinct()
-			diogs = Diognosis.objects.all()
+			diogs = Diognosis.objects.all().distinct()
 		except Exception, e:
 			pass
 
@@ -1139,34 +1131,43 @@ def doct_view_illness(request):
 
 
 def view_illness2(request):
-	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)
-	msg = ''
-	doct_ill = False
-	ill = Illness.objects.filter(doctorusername=request.user.username)
-	paginator = Paginator(ill, settings.PAGNATION_LIMIT)
+	doctlog=True
+	diog = Diognosis.objects.all().order_by("-id")
+	paginator = Paginator(diog, settings.PAGNATION_LIMIT)
 	page = request.GET.get('page')
 	try:
-		ill = paginator.page(page)
+		diog = paginator.page(page)
 	except PageNotAnInteger:
-		ill = paginator.page(1)
+		diog = paginator.page(1)
 		# If page is not an integer, deliver first page.
 	except EmptyPage:
 		# If page is out of range (e.g. 9999), deliver last page of results.
-		ill = paginator.page(paginator.num_pages)
+		diog = paginator.page(paginator.num_pages)
+	super_admin=True
 
-	if ill:
-		msg = "Illness records"
-		doctview_ill = True
-		staf = True
-		return render_to_response('Doct/index_staff.html', {'doctview_ill':doctview_ill, 'ill':ill,'staf':staf}, context)
-	else:
+	return render_to_response('Doct/view_consultation.html', {'diogs':diog,'super_admin':super_admin, 'doctlog':doctlog}, context)
+    
 
-		staf = True
-		msg = "No Illness record"
-		doct_ill = True
-		return render_to_response('Doct/doctorH.html', {'doct_ill':doct_ill, 'ill':ill}, context)
 
+    
+    
+
+    
+    
+    
+        
+    
+        
+        
+    
+        
+        
+
+    
+        
+  
+    
 
 	
 
@@ -1876,6 +1877,46 @@ def register(request):
 
 
 
+def verify_consultation(request,diog_id=1, ill_id=1):
+	# Like before, obtain the context for the user's hrequest.
+	context = RequestContext(request)
+	msg = ''
+	msg2 = ''
+	staf = False
+
+	doct_data = {}
+	
+	# If the request is a HTTP POST, try to pull out the relevant information.
+	if request.method == 'GET':
+		
+		ediog = Diognosis.objects.get(id=diog_id)
+		illpay = Illness.objects.get(id=ill_id)
+
+		ediog.consultation_success = True
+		ediog.save()
+		illpay.consultation_success = True
+		illpay.save()
+
+
+		doct_data['receiver_number'] = ediog.dtelno
+
+		# send sms to patient so that patient can view his or her diognosis results
+  		SendSms(doct_data)
+		
+		editD = True
+		staf = True 
+
+		messages.success(request, "The User Was Successfully Verified")
+		
+		return render_to_response('Doct/view_consultation.html', {'ediog':ediog,'illpay':illpay, 'editD':editD, 'staf':staf}, context)
+		
+	else:
+	# No context variables to pass to the template system, hence the
+	# blank dictionary object ...
+		return render_to_response(' ', {}, context)
+
+
+
 def editdiog(request,diog_id=1, ill_id=1):
 	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)
@@ -1883,11 +1924,18 @@ def editdiog(request,diog_id=1, ill_id=1):
 	msg2 = ''
 	staf = False
 
+	doct_data = {}
+
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'GET':
 		
 		ediog = Diognosis.objects.get(id=diog_id)
 		illpay = Illness.objects.get(id=ill_id)
+
+		doct_data['receiver_number'] = ediog.telno
+
+		# send sms to patient so that patient can view his or her diognosis results
+  		SendSms(doct_data)
 		
 		editD = True
 		staf = True 
@@ -1899,6 +1947,8 @@ def editdiog(request,diog_id=1, ill_id=1):
 	# blank dictionary object ...
 		return render_to_response(' ', {}, context)
 
+
+		
 def follup(request):
 	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)

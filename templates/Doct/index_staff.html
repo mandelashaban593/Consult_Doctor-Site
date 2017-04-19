@@ -160,6 +160,7 @@ Remit Dashboard
           </tr>
 
         
+        {% if diog.consultation_success %}
 
            <tr>
             <td>Edit</td>
@@ -167,7 +168,7 @@ Remit Dashboard
           </tr>
 
           
-         {% endfor %}
+         {% endif %}
           
 
           
@@ -177,6 +178,7 @@ Remit Dashboard
 
 
 
+{% endfor %}
 
 
 {% endif %}

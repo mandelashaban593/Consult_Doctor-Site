@@ -204,6 +204,7 @@ INSTALLED_APPS = (
     'Doct',
     'doct_admin',
     'djangoChat',
+    'firebase_cloud_msging',
 
 )
 
@@ -264,6 +265,16 @@ STATIC_URL = BASE_URL + 'static/'
 LOCALHOST = False
 
 AJAX_TEMPLATE_DIR = BASE_DIR + 'templates/Doct/'
+
+
+#celery
+BROKER_URL = 'amqp://'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+
 
 try:
     from local_settings import *

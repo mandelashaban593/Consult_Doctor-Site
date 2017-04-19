@@ -3,7 +3,7 @@ from django.shortcuts import HttpResponse, render_to_response, \
     HttpResponseRedirect, render,get_object_or_404
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from Doct.models import Page,Rate, UserProfile, Register,Profile, Topup,Register, Enterpay,Illness
+from Doct.models import Page, UserProfile, Register, Topup,Register, Enterpay,Illness
 from Doct.models import Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
 from django.contrib import messages
 from django.contrib.auth.models import Permission
@@ -415,7 +415,7 @@ def dashboard(request):
         
   
     return render_to_response('Doct/index_staff.html', {'diogs':diog,'staf':staf, 'doctlog':doctlog}, context)
-
+    
 
 
 def dashboard2(request):

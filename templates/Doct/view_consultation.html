@@ -1,0 +1,123 @@
+{% extends "Doct/base_site_admin.html" %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+<li>Home'</li>
+</ul>
+{% endblock %}
+
+{% block pretitle %}
+Es-doctor Stats
+{% endblock %}
+
+
+{% block content %}
+
+<section class="module">
+            <div class="module-head">
+                <b>Stat Summary</b>
+            </div><!--/.module-head-->
+            <div class="module-body">
+               <table class="table table-utilities vertical-top">
+              <tbody>
+
+                <div class="muted">
+
+                {% include "Doct/notifications.html" %}
+
+                </div>
+
+
+
+
+
+      
+                <tr>
+                  <td class="cell-detail">
+                    
+                    {% if diogs%}
+
+                  <div class="span8">
+
+                    <div class="people-brief">
+                    {% for diog in diogs %}
+                      
+                      <table class="table table-bordered">
+          <thead>
+          
+          <tr>
+            <th># <a href="#">{{diog.telno}}</a></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr>
+            <td>Payment Id</td>
+            <td>{{ diog.gender}}</td>
+          </tr>
+
+         
+          <tr>
+            <td>Diognosis</td>
+            <td>{{ diog.diognosis}}</td>
+          </tr>
+ 
+           <tr>
+            <td>Patient Age</td>
+            <td>{{ diog.gender}}</td>
+          </tr>
+
+           <tr>
+            <td>Ambulance</td>
+            <td>{{ diog.amb}}</td>
+          </tr>
+
+          {% if diog.illness %}
+
+           <tr>
+            <td>Complicated Sickness Condition</td>
+            <td>{{ diog.illness}}</td>
+          </tr>
+
+          {% endif %}
+
+
+           <tr>
+            <td>Diognised Signs</td>
+            <td>{{ diog.comp_signs}}</td>
+          </tr>
+
+
+          
+         <tr>
+            <td>When</td>
+            <td>{{ diog.added | date:'d-m-Y'}}</td>
+          </tr>
+
+        
+
+           <tr>
+            <td>Edit</td>
+            <td><a href="/Doct/verify_consultation/{{diog.id}}/{{diog.ill_id}}/">Verify Consultation</a></td>
+          </tr>
+
+
+
+          
+         {% endfor %}
+          
+          {% endif %}
+
+          
+
+          </tbody>
+        </table>
+
+            </div><!--/.module-body-->
+        </section>
+
+
+{% endblock %}
+
+

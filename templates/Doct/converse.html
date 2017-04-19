@@ -258,8 +258,16 @@
                                         <table>
                                      {% for qconv in qconvs %}
 
+
+
                                     <tr><td style="width: 200px;background: #add8e6;">{{qconv.dusername}}</td></tr>
+
+                                    {% if  qconv.dmsg == False %}
+                                    
+                                    {% else %}
                                     <tr><td  style="width: 200px;background: #add8e6;">{{qconv.dmsg}}</td></tr>
+                                    {% endif %}
+
                                     <tr style=""><td  style="width:200px;background: #90ee90;">{{qconv.username}}</td></tr>
                                     <tr style=""><td  style="width:200px;padding-bottom: 7px;background: #90ee90;">{{qconv.pmsg}}</td></tr>
 

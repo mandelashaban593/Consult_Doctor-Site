@@ -159,18 +159,36 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
   
 
 
-<p>Location:<br>
-  <input type="text" name="location"  style=" padding: 12px 20px;
+<p>City:<br>
+  <select  type="text" name="city"  style="width:280px;padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
-    " ng-model="location" required>
+    box-sizing: border-box;" ng-model="location" required>
+    <option value="Kampala">Kampala</option>
+   
+
+    </select>
+
+</p>
+
+
+
+<p>Area :<br>
+  <select  type="text" name="area"  style="width:280px;padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;" ng-model="location" required>
+
+    {% include "Doct/area_in_kampala.html" %}
+   
+    </select>
 
 </p>
   
-
 
 
   

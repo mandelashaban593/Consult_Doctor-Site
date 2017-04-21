@@ -1,8 +1,8 @@
 # Import the helper gateway class
 from AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayException
 # Specify your login credentials
-username = "MyAfricasTalkingUsername"
-apikey   = "MyAfricasTalkingAPIKey"
+username = "mandela.shaban"
+apikey   = "e89af6fff6753e401ca208eefaad414248cbf3dd425f87712bd3cda24ca3b46e"
 # NOTE: If connecting to the sandbox, please use your sandbox login credentials
 # Specify the numbers that you want to send to in a comma-separated list
 # Please ensure you include the country code (+256 for Uganda)
@@ -14,6 +14,13 @@ def SendSms(self, transaction=""):
 
     if 'receiver_number' in transaction:
         to = transaction['receiver_number']
+        try:
+            if not to[0] == '+':
+                to="+256%s%s"%(to[0].strip("0"), to[1:])
+                print to
+        except Exception, e:
+            debug(e, 'Error sending twilio sms', 'sms')
+
     else:
         to =  "+256786031444"
 
@@ -28,6 +35,8 @@ def SendSms(self, transaction=""):
     # **************************************************************************************
     # Any gateway errors will be captured by our custom Exception class below, 
     # so wrap the call in a try-catch block
+
+
     try:
         # Thats it, hit send and we'll take care of the rest.
         

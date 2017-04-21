@@ -211,18 +211,15 @@ class convPersonFrien(models.Model):
 
 
 
-<<<<<<< HEAD
 
 
 def current_rate():
     '''current rate , backwards compatability , using charge now'''
     return False
-=======
-    
 
 
 
->>>>>>> cef45e25fa7d94e1e02aca2869d0cc8d366240dd
+
 
 class Register(models.Model):
 

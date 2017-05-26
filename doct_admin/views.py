@@ -10,11 +10,11 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from doct_admin.forms import ChangeAdminTelephoneForm,ChangeAdminPassword,CreateAdminUserForm,EditAdminUserForm
 from django.contrib.auth.models import User
-from doct_admin.utils import debug
+
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import doct_admin.utils as admin_utils
-from doct_admin.utils import log_action, store_login_info
+
 from django.db.models import Q
 
 

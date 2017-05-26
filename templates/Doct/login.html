@@ -1,16 +1,12 @@
 
 
-<p>&nbsp;</p>
-   <p>&nbsp;</p>
- <p>&nbsp;</p>
-
 
 {% load staticfiles %}
 
-<div style="visibility:visible;position:relative;top: 10px;
-    right: 44px; margin-left: 500px;" id="paypalformContainer" align="center">
 
-<form id="signup" action="/Doct/login/"  method="POST" style=" ">
+
+<form id="signup" action="/Doct/login/"  method="POST" style="position: relative;
+  z-index: 1; left:380px;top:8px;">
 {% csrf_token %}
    
             <h3>Log In</h3>
@@ -19,26 +15,27 @@
         
 
 
-            <p style="padding: 7px">Username:<br>
-            <input type="text" name="username" id="pname" autofocus style="width:340px; height:40px;" />
+            <p >Username:<br>
+            <input type="text" name="username" id="pname" autofocus style="width:260px;height:30px;padding: 7px;"/>
 
               </p>
 
-               <p style=' padding: 7px' '>Password:<br>
-               <input type="password" name="password" id="pname" autofocus/>
+               <p>Password:<br>
+               <input type="password" name="password" id="pname" style="width:260px;height:30px;padding: 7px;" autofocus/>
 
                </p>
 
-            <p style="padding: 7px">
+            <p>
 
 
-            <input type="submit" id="submit"  placeholder="Enter Message" value="Login" name="SUBMIT" required>
+            <input type="submit" id="submit" class="read" placeholder="Enter Message" value="Login" name="SUBMIT" required>
            
              </p>
+
+                      </p>
+        <p>Don't have an account? <a href="/Doct/register/" style="font-family: sans-serif;font-size: 20px;color:rgb(8, 218, 243);">Sign up!</a></p>
 
      
 
     </form>
-
-    </div>
 

@@ -36,11 +36,8 @@ from django.shortcuts import HttpResponse, render_to_response, \
     HttpResponseRedirect, render
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-<<<<<<< HEAD
 from Doct.models import Page,Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
-=======
 from Doct.models import Page, Topup,Register, Enterpay,Illness, Diognosis,Conddrugs,Contact,converse,convMembers,convReg,convPersonFrien,Messages
->>>>>>> cef45e25fa7d94e1e02aca2869d0cc8d366240dd
 from django.contrib import messages
 
 import doct_admin.utils as admin_utils
@@ -48,9 +45,13 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Max
 from firebase_cloud_msging.tasks import send_push_notification
 
+from Doct.check_areas import test_staff, drug_staff
+
 password = None
 
 username = None
+
+pname = None
 
 def dashboard_stats(request):
 	country = None
@@ -164,6 +165,9 @@ def p_reg(request):
 			profile = profile_form.save()
 			
 			registered = True
+
+			
+
 			return render_to_response(
 			'Doct/index.html',
 			{'user_form': user_form, 'profile_form': profile_form, 'registered': registered, 'signup':signup},
@@ -367,7 +371,7 @@ def add_page(request, category_name_url):
  
 
 
-def user_login(request):
+def user_login(request,username='', password=''):
 	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)
 	msg = ''
@@ -379,6 +383,7 @@ def user_login(request):
 	password = None
 	username = None
 	staf=False
+	auth_error = False
 
 
 	# If the request is a HTTP POST, try to pull out the relevant information.
@@ -387,6 +392,18 @@ def user_login(request):
 		# This information is obtained from the login form.
 		password = request.POST.get('password', None)
 		username = request.POST['username']
+
+		try:
+			check_user = Register.objects.get(password=password, username=username)
+
+		except Exception,e:
+
+			print 'User Does not exist', e
+			log = True
+			auth_error = True
+			return render_to_response('Doct/index.html', {'log':log, 'auth_error':auth_error}, context)
+
+
 		r = None	
 		data.update({'admin_data': dashboard_stats(request)})
 
@@ -412,7 +429,7 @@ def user_login(request):
 				if user is not None:
 					if user.is_active:
 						login(request, user)
-
+						
 						return render_to_response('Doct/patientH.html', {'patlog':patlog}, context)
 			elif r.role =='doctor':
 
@@ -583,19 +600,20 @@ def illness(request):
     AfricasTalk  = AfricasTalk
     doctor_sms_data = {}
 
+
     password = None
     dname = None
     pdiog = None
     if request.POST:
 		post_values = request.POST.copy()
 		
-		dname = request.POST['dname']
+		
 
 		comp_signs = request.POST['comp_signs']
 		illness = request.POST['illness']
 		amb = request.POST['amb']
 		gender = request.POST['gender']
-		pname = request.POST['pname']
+		
 		username = request.POST['username']
 		password = request.POST['password']
 		role= request.POST['role']
@@ -623,12 +641,12 @@ def illness(request):
 		enterpay.save()
 		pay_id = enterpay.id
 		gender = pay_id
-		ill_det=Illness(gender=gender,comp_signs=comp_signs, illness=illness, kintelno=ptelno,page=0,pname=pname,username=username,dtelno=dtelno, dname=dname,doctorusername=dname,amt=amount)
+		ill_det=Illness(gender=gender,comp_signs=comp_signs, illness=illness, kintelno=ptelno,page=0,username=username,dtelno=dtelno, dname=dname,doctorusername=dname,amt=amount)
 		ill_det.save()
 		gender = ill_det.gender	
 		ill_id = ill_det.id	
 		amb = request.POST['amb']
-		diog=Diognosis(page=0,ill_id=ill_id,telno=ptelno, comp_signs=comp_signs, gender='0',dtelno = dtelno,  diognosis=illness,amb=amb,username=username, dname=dname,doctorusername=dname, illness=illness)
+		diog=Diognosis(page=0,ill_id=ill_id,telno=ptelno, comp_signs=comp_signs, gender='0',dtelno = dtelno,  diognosis=illness,amb=amb, dname=dname,doctorusername=dname, illness=illness)
 		diog.save()
 		print 'Username %s ' % diog.username
 
@@ -659,15 +677,16 @@ def illness(request):
   		# send sms
 
   		
+  		doctor_sms_data['receiver_number'] = "0786031444"
 
-  		SendSms(doctor_sms_data)
+  		
 
   		
         
         
    		
 
-		illness_delivered_email(request, msg)
+		
 
 		return render_to_response('Doct/illdecsuccess.html', { 'pay_id':pay_id,'password':password,'gender':gender, 'pdiogs':pdiogs,'pdiog':pdiog, 'qconvs':qconvs, 'dname':diog.username, 'dpassword':dpassword,'pname':pname}, context)
 
@@ -1680,7 +1699,7 @@ def enterpay(request):
 
 
 
-def enterpay2(request):
+def enterpay2(request,username='', password=''):
 	# Like before, obtain the context for the user's hrequest.
 	context = RequestContext(request)
 	msg = ''
@@ -1698,6 +1717,7 @@ def enterpay2(request):
 	qconvs = None
 	username=  None
 	password = None
+	auth_error = False
 
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	post_values = request.POST.copy()
@@ -1717,10 +1737,18 @@ def enterpay2(request):
 		form = LoginForm(post_values)
 		user_form = UserForm(data=request.POST)
 
+
 		try:
-			r = Register.objects.get(password=password)
-		except Exception, e:
-			print "Account  doesn't exist", e
+			check_user = Register.objects.get(password=password, username=username)
+
+		except Exception,e:
+
+			print 'User Does not exist', e
+			
+			auth_error = True
+			return render_to_response('Doct/index.html', {'auth_error':auth_error}, context)
+
+
 
 		try:
 			pdiogs = Diognosis.objects.filter(username=username).distinct()
@@ -1859,6 +1887,7 @@ def register(request):
 			print 'Password %s' % rg.username
 			# Did the user provide a profile picture?
 			# If so, we need to get it from the input form and put it in the UserPro
+			return user_login(request,username,password);
 			registered = True
 		else:
 			print user_form.errors, profile_form.errors
@@ -1870,6 +1899,8 @@ def register(request):
 		profile_form = UserProfileForm()
 		
 		# Render the template depending on the context.
+
+	print "OOOK"
 	return render_to_response(
 	'Doct/register.html',
 	{'user_form': user_form, 'registered': registered},
@@ -2455,15 +2486,23 @@ def orderdrugs(request):
     response = False
     post_values = {}
     context = RequestContext(request)
+    Check_area = None
+
+    staff_no = " "
+    staff_name  = " "
 
     if request.POST:
         post_values = request.POST.copy()
         telno = post_values['telno']
-        location = post_values['location']
+        location = post_values['city']
+        area = post_values['area']
         msg = post_values['msg']
         print "Message %s " %  msg
+
+  
+        staff_no, staff_name = drug_staff(location, staff_no, staff_name)
         
-    	cont=Orderdrugs(telno=telno,location=location, msg=msg)
+    	cont=Orderdrugs(telno=telno,city=location, area=area, msg=msg, staff_no=staff_no, staff_name=staff_name)
     	cont.save()
     	response = True
 
@@ -2484,17 +2523,26 @@ def orderdrugs(request):
 def labtests(request):
     
     response = False
+    staff_no = None
+    staff_name  = None
+    Check_area = None
+
     post_values = {}
     context = RequestContext(request)
 
     if request.POST:
         post_values = request.POST.copy()
         telno = post_values['telno']
-        location = post_values['location']
+        location = post_values['city']
         msg = post_values['msg']
         print "Message %s " %  msg
+
+
+      
+        staff_no, staff_name = test_staff(location, staff_no, staff_name)
+
         
-    	cont=Labtests(telno=telno,location=location, msg=msg)
+    	cont=Labtests(telno=telno,city=location, msg=msg, staff_no=staff_no, staff_name=staff_name)
     	cont.save()
     	response = True
 

@@ -16,7 +16,7 @@
 {% block nav_bar %}
 <div class="header" style="width: 2000px; ">
 <div class="wrap">
-<div class="logo"  ><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpe' %}"  style="" alt="" />Online Doctor(Medical) Consulation</a></div>
+<div class="logo"  ><p  style="color: #fff; font-size: 32px;"><img style="width:200px; height:100px" src="{% static 'images/doctorWom.jpg' %}"  style="" alt="" />Online Doctor(Medical) Consulation</p></div>
    <div class="con-right">
       <div class="grid1-l-img">
         <img src="{% static 'images/contact.png' %}" alt="">
@@ -37,8 +37,8 @@
                 <li><a class="hsubs" href="/Doct/team/">Our Team</a>
                 {% if not request.user.authenticated  %}
                 <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
-
-                <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
+                  <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
+                
                 {% endif %}
 
                 <li><a href="/Doct/contact/">Contact Us</a></li>
@@ -90,10 +90,20 @@
 {% endblock %}
 
 
+{% block slider %}
+
+
+
+{% endblock %}
+
+
+
 
 {% block sickness_det %}
 
 {% endblock %}
+
+
 
 
 <div class="header-banner">

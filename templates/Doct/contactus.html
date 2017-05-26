@@ -89,38 +89,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </div>
 
 
-<div class="contact">
+<div class="contact" style="margin-left:160px;">
     <div class="wrap">
                         <div class="contact-top">
                         <h3>Contact Information</h3>
                         <p> You can use this page to reach us through commenting about our work, say anything about how you were handled by our doctor . We are there for you</p>
                         </div>
+
+                        {% include "Doct/notifications.html" %}
                     <div class="form">
-                        <form class="cmxform" action="/Doct/addcontact/"  id="contactForm" method="post">
+                        <form class="cmxfor" action="/Doct/addcontact/"  id="contactFor" method="post">
+                        {% csrf_token %}
                         <div>
-                            <input type="text" class="textbox" name="name" >
+                            <input type="text" class="textbox" name="name" placeholder="Name:">
                         </div>
                         <div>
-                            <input type="text" class="textbox"  name="email" >
+                            <input type="text" class="textbox"  name="email" placeholder="Email:">
                         </div>
                         <div>
-                            <input type="text" class="textbox"  name="telno" value="Phone:" >
+                            <input type="text" class="textbox"  name="telno" placeholder="Phone:">
                         </div>
+
+                              <div class="form1">
+                            <div>
+                <textarea value="Message:" type="text" name="msg" placeholder="Message:"></textarea>
+            </div>
+            </div>
 
                
 
 
                        <div>
-                            <p><span class="read">Submit</span></p>
+                            <p><input type="submit" class="read"  name="submit" value="submit"></p>
                        </div>
                   
              </div>
 
-                       <div class="form1">
-                            <div>
-                <textarea value="Message:" type="text" name="msg"></textarea>
-            </div>
-            </div>
+                 
                
 
 

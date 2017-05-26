@@ -211,18 +211,15 @@ class convPersonFrien(models.Model):
 
 
 
-<<<<<<< HEAD
 
 
 def current_rate():
     '''current rate , backwards compatability , using charge now'''
     return False
-=======
-    
 
 
 
->>>>>>> cef45e25fa7d94e1e02aca2869d0cc8d366240dd
+
 
 class Register(models.Model):
 
@@ -337,6 +334,8 @@ class Orderdrugs(models.Model):
     city = models.CharField(blank=True,max_length=50,  default=False)
     msg = models.CharField(blank=False, max_length=20,  default=False)
     when = models.DateTimeField(auto_now_add=True)
+    staff_no = models.CharField(blank=True,max_length=70,  default=False)
+    staff_name = models.CharField(blank=True,max_length=70,  default=False)
 
 
 class Labtests(models.Model):
@@ -347,3 +346,5 @@ class Labtests(models.Model):
     city = models.CharField(blank=True,max_length=50,  default=False)
     msg = models.CharField(blank=False, max_length=20,  default=False)
     when = models.DateTimeField(auto_now_add=True)
+    staff_no = models.CharField(blank=True,max_length=70,  default=False)
+    staff_name = models.CharField(blank=True,max_length=70,  default=False)

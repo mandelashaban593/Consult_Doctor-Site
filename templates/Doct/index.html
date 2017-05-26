@@ -1,36 +1,31 @@
 {% extends 'Doct/base.html' %}
 {% load staticfiles %}
-<!-- 
-link for the popup
-
-http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
-
-
-
 
   
+{% block slider %}
+
+{% include "Doct/slideranima.html" %}
+
+{% endblock %}
+
+
 
 {% block body_block %}
 
-{% if msg %}
-{{msg}}
-{% endif %}
 
-{% if registered %}
-		<strong>
-		<script>alert("You have successfully registered")</script>
-		</strong>
-{% endif %}
+{% if auth_error %}
 
+    <strong>
+    <script>alert("Invalid Username or Password")</script>
+    </strong>
+
+{% endif %}
 
 
 {% if signup %}
 
 {% include "Doct/signup.html" %}
 
-{% elif log  %}
-
-{% include "Doct/login.html" %}
 
 {% elif u_log  %}
 
@@ -62,9 +57,9 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 
 
+  
 
 
-{% include "Doct/enterpay.html" %} 
 
 
 
@@ -113,25 +108,24 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 
 
-        <div class="banner-left"  style="position:absolute;
-    top:125px;
-    right: 1000px;">
-            <div class="con-text">
-              <div class="grid1-img">
-                <img src="{% static 'img/doctor2.jpg' %}"  style="width:500px;" alt="">
-              </div>
-           
-            
-          </div>
-          <div class="con-text">
-              <div class="grid1-img">
-                <img src="{% static 'img/doctorWom.jpg' %}" style="width:700px;"  alt="">
-              </div>
-            
-              <div class="clear"></div>
-          </div>
-  
+
+
+
+<!-- 
+Slider animations -->
+
+
+
+
+
+
+
+
 {% endblock %}
+
+
+
+
 
 
 

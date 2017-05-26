@@ -23,7 +23,7 @@
                 <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
                 <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
                 <li><a class="hsubs" href="/Doct/team/">Our Team</a>
-                 <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
+               
                 <li><a href="/Doct/contact/">Contact Us</a></li>
                 <li><a href="/Doct/how_it_works/">How it works</a></li>
                 <li><a href="/Doct/convbaddy/">Converse</a></li>
@@ -72,7 +72,7 @@ enctype="multipart/form-data">
 <h2 class="form-signin-heading" style="width:280px">Sign up </h2>
 <!-- Display each form here -->
 {% for field in user_form.visible_fields %}
-{{ field.errors }}
+<p style="margin-bottom: 20px; width: 500px;">{{ field.errors }}</p>
 {{ field.help_text }}<br />
 <p style="margin-bottom: 20px">{{ field }}</p>
 {% endfor %}
@@ -83,7 +83,7 @@ enctype="multipart/form-data">
 {% endfor %}
 <br />
 <!-- Provide a button to click to submit the form. -->
-<input class="btn btn-primary" type="submit" name="submit" value="Register"/>
+<input  class="read" type="submit" name="submit" value="Register"/>
 </form>
 {% endif %}
 </div>

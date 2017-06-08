@@ -132,42 +132,37 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 {% include "Doct/notifications.html" %}
 
     <form ng-app="myApp" action="/Doct/orderdrugs/" ng-controller="validateCtrl" name="myForm"   novalidate class="form-style-6" style="margin-left: 450px;" method="post">
-    <h1 style="width:300px;font-family: Helvetica, sans-serif;">Order Drugs</h1>
+    <h1 style="width:300px;font-family: Helvetica, sans-serif;"  >Order Drugs</h1>
 {% csrf_token %}
 <p>Drugs:<br>
-  <textarea ng-model="msg" name="msg" rows="4" cols="27"
-                        class="input-no-width rounded shaded left clearboth"   style=" padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    " required>
+  <textarea ng-model="msg" name="msg" rows="4" cols="34"
+                        required="True">
 </textarea>
 
   <span style="color:red" ng-show="myForm.msg.$dirty && myForm.msg.$invalid">
   <span ng-show="myForm.msg.$error.required">Message is required.</span>
   </span>
 </p>
+<br>
 
-<p>Phonenumber:<br>
+
+Phonenumber:<br>
   <input type="text" name="telno"  style="width:280px; padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;" required>
+    box-sizing: border-box;" required="True">
  
-</p>
-  
 
+ 
   <p>City:<br>
   <select  type="text" name="city"  style="width:280px;padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;" ng-model="location" required>
+    box-sizing: border-box;" ng-model="location" required="True">
     <option value="Kampala">Kampala</option>
     
 
@@ -175,7 +170,8 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 </p>
 
-
+<br>
+ 
 
 <p>Area :<br>
   <select  type="text" name="area"  style="width:280px;padding: 12px 20px;
@@ -183,7 +179,7 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;" ng-model="location" required>
+    box-sizing: border-box;" ng-model="location" required="True">
 
      {% include "Doct/area_in_kampala.html" %}
 
@@ -191,12 +187,23 @@ http://makecodeeasy.blogspot.ug/2012/07/popup-in-java-script-and-css.html -->
 
 </p>
   
-
+  
 
   
 <p>
-  <input type="submit" style="background-color: #4CAF50;display: inline-block;
-    font-size: 16px;" name="submit">
+  <input type="submit" style="font-size: 110%;
+line-height: 1;
+text-align: center;
+background-color: #1fadc5;
+display: inline-block;
+color: #fff !important;
+border-radius: 3em;
+cursor: pointer;
+max-width: 300px;
+width: 500px;
+padding: 0.9em;
+margin: 0.6em 0;
+border: 0;" name="submit" value="Order Drugs">
 </p>
 
     </form>
@@ -234,6 +241,37 @@ app.controller('validateCtrl', function($scope) {
 </div>
 
 
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p><p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<div class="footer-bottom" style="width: 2000px; ">
+<div class="wrap">  
+  <div class="copy">
+    <p>ES - DOCTOR&copy; 2017 All rights Reserved | Design by <a href="http://w3layouts.com">Mandela Shaban</a> &nbsp;&nbsp;&nbsp;Photos by <a href="http://www.freegreatpicture.com/">Freegreatpicture</a></p>
+  </div>
+ </div>
+</div>
+</body>
+</html>
 
 {% endblock %}
 

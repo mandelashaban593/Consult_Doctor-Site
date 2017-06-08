@@ -192,6 +192,13 @@ class Messages(models.Model):
 	password_phone = models.CharField(blank=True, max_length=20)
 	msg = models.CharField(blank=True, max_length=700)
 	password_phone = models.CharField(blank=True, max_length=20)
+
+
+class PaymentVeryUnvery(models.Model):
+    pay_very = models.BooleanField(default=False)
+    pay_unvery = models.BooleanField(default=False)
+    username  = models.CharField(blank=True, max_length=20)
+
 	
 
 

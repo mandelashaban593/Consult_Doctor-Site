@@ -45,8 +45,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
                 <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
                 <li><a class="hsubs" href="/Doct/team/">Our Team</a>
-                <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
-                 <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
                 <li><a href="/Doct/contact/">Contact Us</a></li>
                 <li><a href="/Doct/how_it_works/">How it works</a></li>
 
@@ -77,12 +75,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <li><a href="#">Beach Resorts</a></li>
                     </ul>
                 </li>
-                {% if user.is_authenticated %}
+                
+                 {% if user.is_authenticated %}
 
                 <li><a href="/Doct/logout/">Logout</a></li>
 
+                {%  else %}
+                <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
+                <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
+
+
                 {% endif %}
-               
+                                            
         </ul>
 
        </div>
@@ -120,7 +124,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
                        <div>
-                            <p><input type="submit" class="read"  name="submit" value="submit"></p>
+                            <p><input type="submit" class="rea" style="font-size: 120%;
+line-height: 2;
+text-align: center;
+background-color: #1fadc5;
+display: inline-block;
+color: #fff !important;
+border-radius: 3em;
+cursor: pointer;
+max-width: 350px;
+width: 100%;
+padding: 0.9em;
+margin: 0.6em 0;
+border: 0;"  name="submit" value="submit"></p>
                        </div>
                   
              </div>

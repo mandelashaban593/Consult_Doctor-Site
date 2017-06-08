@@ -21,7 +21,7 @@
 <body>
 <div class="header" style="width: 2000px; ">
 <div class="wrap">
-<div class="logo"><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpe' %}"  style="width:40px" alt="" />Online Doctor(Medical) Consulation</a></div>
+<div class="logo"><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/doctorWom.jpg' %}"  style="width:40px" alt="" />Online Doctor(Medical) Consulation</a></div>
    <div class="con-right">
       <div class="grid1-l-img">
         <img src="{% static 'images/contact.png' %}" alt="">
@@ -40,9 +40,7 @@
                 <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
                 <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
                 <li><a class="hsubs" href="/Doct/team/">Our Team</a>
-                <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
-                 <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
-                <li><a href="/Doct/contact/">Contact Us</a></li>
+                <li><a href="/Doct/contact/">Feedback</a></li>
                 <li><a href="/Doct/how_it_works/">How it works</a></li>
 
                 {% if qconvs or ill_more %}
@@ -72,11 +70,18 @@
                         <li><a href="#">Beach Resorts</a></li>
                     </ul>
                 </li>
-                {% if user.is_authenticated %}
+                
+                 {% if user.is_authenticated %}
 
                 <li><a href="/Doct/logout/">Logout</a></li>
 
+                {%  else %}
+                <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
+                <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
+
+
                 {% endif %}
+                             
                
         </ul>
 
@@ -118,7 +123,7 @@
   </div>
   </div>
   </div>
-<div class="footer-bottom" style="width: 2000px; ">
+<div class="footer-bottom" style="width: 2000px; height: 2000px;">
 <div class="wrap">  
   <div class="copy">
     <p style="text-align: left;">ES - DOCTOR&copy; 2017 All rights Reserved | Design by <a href="http://w3layouts.com">Mandela Shaban</a> &nbsp;&nbsp;&nbsp;Photos by <a href="http://www.freegreatpicture.com/">Freegreatpicture</a></p>

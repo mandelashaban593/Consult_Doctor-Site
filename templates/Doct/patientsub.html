@@ -11,433 +11,115 @@
 <link href="{% static 'css/slider.css' %}" rel="stylesheet" type="text/css" media="all"/>
 <script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
     <script src="app.js"></script>
+
+    <style type="text/css">
+      html, body { height: 100%; padding: 0; margin: 0; }
+div { width: 50%; height: 50%; float: left; }
+#div1 { background: #DDD; }
+#div2 { background: #AAA; }
+#div3 { background: #777; }
+#div4 { background: #444; }
+
+
+
+    </style>
     
 </head>
 <body>
 
 {% block nav_bar %}
-<div class="header" style="width: 2000px; ">
-<div class="wrap">
-<div class="logo"  ><a href="index.html" style="color: #fff; font-size: 32px;"><img src="{% static 'images/logocon.jpe' %}"  style="" alt="" />Online Doctor(Medical) Consulation</a></div>
-   <div class="con-right">
-      <div class="grid1-l-img">
-        <img src="{% static 'images/contact.png' %}" alt="">
-      </div>
-      <div class="grid1-l-desc">
-        <p>Contact : +256754307471</p>
-      </div>
-      <div class="clear"></div>
-  </div>
-    <div class="clear"></div>
-     </div>
-</div>
-<div class="header-bottom">
-      <div class="wrap">
-        <ul id="nav">
-                <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
-                <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
-                <li><a class="hsubs" href="/Doct/team/">Our Team</a>
-        
-                <li><a href="/Doct/contact/">Contact Us</a></li>
-                <li><a href="/Doct/how_it_works/">How it works</a></li>
-                {% if ill_more %}
-                <li><a href="/Doct/orderdrugs/">Order Drugs</a></li>
-                <li><a href="/Doct/labtests/">Order Lab Test</a></li>
-
-                {% endif %}
-
-                {% if qconvs or ill_more %}
-            
-                 <li><form action="/Doct/converse/" style="height:35px;border: 0px; background-color: #3399FF" id="changesicknessform_form" method="post">
-                {% csrf_token %}
-
-                <input type="hidden" name="username" value="{{username}}" style="width: 200px; border: 0px; " id="dname"/>
-
-                <input type="hidden" name="dusername" value="0754307471" style="width: 200px; border: 0px; " id="dname"/>
-
-                <tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
-
-                </form>
-                <ul class="submenu">
-                      <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                            <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul> </li>
-
-                    {% endif %}
-
-                <li><a href="/Doct/whyus/">Why Us</a></li>
-                    <ul class="subs">
-                        <li><a href="#">Hotels</a></li>
-                        <li><a href="#">Restaurants</a></li>
-                        <li><a href="#">Beach Resorts</a></li>
-                    </ul>
-                </li>
-                {% if user.is_authenticated %}
-
-                <li><a href="/Doct/logout/">Logout</a></li>
-
-                {% endif %}
-               
-        </ul>
-
-       </div>
-</div>
-
+ {% include "Doct/patient_nav_bar.html" %} 
 {% endblock %}
 
 
 
 {% block body_block %}
 
-      <div id="conten">
-     {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
- return false;
- </script>
- {% endif %}
 
 
- {% include "Doct/notifications.html" %} 
 
- {% if pdiogs %}
-<h1 style="color: #337ab7; font-size: 18px;font-weight: bold; margin-right: 999px">Sickness Details</h1>
-{% endif %}
 
+
+
+
+
+<div id="div2">
+
+{% if onepdiog and pay_status == True  %}
+
+ 
+
+{% include "Doct/converse_diogD.html" %}
+
+
+
+
+{% else %}
+
+
+
+{% include "Doct/converse_diogDs.html" %}
+
+
+
+{% endif %}  <!-- End converse if -->
+
+
+
+<!-- Form for explaining condition -->
+
+{% include "Doct/expillness.html" %}
+
+
+
+
+</div>
+
+
+<div id="div3">
 
 {% if qconvs %}
 
-<table style="position: absolute; left: 200px;margin-left: 200px;padding-bottom: 4px;" ">
+<!-- Form for explaining condition -->
 
-<tr><td style="width: 200px;padding-bottom: 4px;"><h1 style="color: #337ab7; font-size: 25px;font-weight: bold;padding-bottom: 20px;"></h1></td></tr>
-<tr><td style="width: 200px"><a href="#">
-{{dname}}(Doctor)
-<br/>
-<br/>
-
-
-</td></tr>
-
-{% for qconv in qconvs %}
-
-<tr><td style="width: 200px;font-size: 100px;">{{qconv.dtelno}}</td></tr>
-<tr><td  style="width: 200px">{{qconv.dmsg}}</td></tr>
-<tr style=""><td  style="width:200px;">{{qconv.telno}}</td></tr>
-<tr style=""><td  style="width:200px;padding-bottom: 7px">{{qconv.pmsg}}</td></tr>
-
-{% endfor %}  
-
-<form action="/Doct/sendtext/" style="width: 200px; border: 0px;" id="changesicknessform_form" method="post">
-{% csrf_token %}
-<input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; "    id="dname"/>
-
-<input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; "    id="dname"/>
-
-<tr><td style="width: 100px;"><textarea class="form-control" placeholder="Enter message herei..." name="pmsg" style="margin-left:0px;width:200px; border: 0px; padding-bottom: 7px" rows="2"> </textarea>
-</td></tr>
-
-<tr><td style="width: 100px; padding-bottom: 2px; height: 4px;"><input type="submit" name="submit" value="Send"  style="background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 8px 27px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px; " /></td></tr>
-
-<tr><td style="width: 100px; padding-bottom: 2px"></form>
-
-
-</table>
-{% else %}
-
-
-{% endif %}
-
-
-{% if pdiogs %}
-
- 
-
-
-
-<tr><td><form action="/Doct/converse/" style="width: 200px; border: 0px;margin-left: 400px;" id="changesicknessform_form" method="post"></td></tr>
-{% csrf_token %}
-<tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
-<tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
-
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
-
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
-
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
-
-<tr><td style="width: 100px; padding-bottom: 7px"></form></td></tr>
-
-</table>
-
-
-
-<table>
-
-</table>
-
-
-<table>
-<tr>
-
-<td>
-<table  style="left:0px;margin-left: 0px; ">
-<tr><td>
-<table style="margin-right: 500px; top: 0px;">
-
-{% if pdiogs %}
-
-{% for pdiog in pdiogs %}
-
-<tr><td style="width: 200px">{{pdiog.telno}}</td></tr>
-
-
-<tr><td  style="width: 200px">{{pdiog.illness}}  </td></tr>
-
-<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.demail %} {{pdiog.iillness}} {% else %} <font style="color:green">Pay 3,000 to Mob Phone 0754307471 for seeing doctor's response</font>{% endif %}</td></tr>
-
-{% endfor %}  
-
-</table>
-
-
- <td style="margin-top: 0px"></td></tr>
-
-{% else %}
-
- <td style="margin-top: 0px"></td></tr>
-
-</td>
-
-<td>
-<table>
-
-<tr>
-
-
-{% endif %}
-
-</td></tr>
-</table>
-
-</td>
-<td>
-<table>
-
-
-
-
-</table>
-
-<div style="visibility:visible;position:absolute;
-   top:0;
-   right:0;padding-right: 50px;
-padding-top: 45px;" id="paypalformContainer" align="center">
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<form id="signup" action="/Doct/illness/"  method="POST" style="margin-top: 0px; ">
-{% csrf_token %}
-       <form id="signup" action="/Doct/illness/"  method="POST" style=" ">
-{% csrf_token %}
-       
-        <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
-            <h3>Consult Doctor</h3>
-          
- 
-        
-      
-
-
-            <p style="padding: 4px">Disease  signs (Condition):<br>
-
-             <select name="comp_signs"  required="True" style="width: 160px;" autofocus>{% include "Doct/cond_options.html" %}
-              </select>
-              </p>
-
-               <p style=' padding: 4px' id='business'>Explain Disease signs:<br>
-               <textarea type='text' class='text' name='illness' rows="3" cols="38"  Placeholder="Disease signs" value size='20'  autofocus></textarea>
-
-               </p>
-
-                <p style="padding: 4px">
-                You need an ambulance ?:<br>
-                <input value="1" type="radio" name="amb" onClick="displayForm(this)"></input>Yes
-                <br>
-                <input value="0" type="radio" name="amb" onClick="displayForm2(this)"></input>No
-
-
-               </p>
-
-                <p style="padding: 4px"> Gender:<br>
-                 <select type="text" name="gender" Placeholder="Patient Age" id="page" autofocus>
-                 <option value="Male">Male</option>
-                 <option value="Female">Female</option>
-
-                 </select>
-              
-                </p>
-
-                 <p style="padding: 7px"> Patient Name:<br>
-                <input type="text" name="pname" id="pname" autofocus/>
-                </p>
-
-`                <p style="padding: 7px"> Phonenumber:<br>    
-                 <input type="telno" name="telno"  id="password"  Placeholder="Mobile Number" />
-                 </p>
-
-
-                <p style="padding: 7px"> Doctor:<br>
-                 <select type="text" name="dname" Placeholder="Patient Age" id="page" autofocus>
-                 <option value="Peter">Choose A Doctor</option>
-                 <option value="Peter">Peter(General Doctor)</option>
-                 <option value="John">John(General Doctor)</option>
-                 <option value="Anguda">Anguda(Physicians)</option>
-
-                 </select>
-              
-                </p>
-
-
-
-                <input type="hidden" name="username"  id="username"   value="{{username}}"/>
-                 <input type="hidden" name="password"  id="password" value="{{password}"/>
-
-                <input type="hidden" name="role"  id="dname" value="patient"/> 
-                <input type="hidden" name="page"  id="dname" value="0"/> 
-           
-
-            <p style="padding: 7px">
-
-
-            <input type="submit" id="submit"  placeholder="Enter Message" value="Submit" name="SUBMIT" required>
-           
-             </p>
-
-    </form>
-
-    </div>
-
-
+{% include "Doct/expillness.html" %}
 <div style="visibility:hidden; position:relative;top:-110px;margin-top:40px" id="ccformContainer">
 
-{% include "Doct/ambulance.html" %}
-
 </div>
-{% else %}
-
-
-
-
 
 {% endif %}
 
 
-</div>
 
 
 
 
 
 
-
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
-
- <script type="text/javascript"> 
-    function displayForm(c) {
-        if (c.value == "1") {
-
-            document.getElementById("ccformContainer").style.visibility = 'visible';
-            document.getElementById("paypalformContainer").style.visibility = 'hidden';
-        } else if (c.value == "0") {
-            document.getElementById("ccformContainer").style.visibility = 'hidden';
-
-            document.getElementById("paypalformContainer").style.visibility = 'visible';
-        } else {}
-    }
-
-
-
-    function displayForm2(c) {
-        if (c.value == "0") {
-
-            document.getElementById("ccformContainer").style.visibility = 'visible';
-            document.getElementById("paypalformContainer").style.visibility = 'hidden';
-        } else if (c.value == "1") {
-            document.getElementById("ccformContainer").style.visibility = 'hidden';
-
-            document.getElementById("paypalformContainer").style.visibility = 'visible';
-        } else {}
-    }
-
-
-
-
-$(document).ready(function(){
-
- $('#purpose').on('change', function() {
-      if ( this.value == '1')
-      //.....................^.......
-      {
-        $("#business").show();
-        $("#cond_options").hide();
-        
-      }
-      else
-      {
-        $("#business").hide();
-        $("#cond_options").show();
-      }
-    });
-
-
-     $('#ambulance').on('change', function() {
-      if ( this.value == '1')
-      //.....................^.......
-      {
-        $("#ambform").show();
-        $("#illness").hide();
-        
-      }
-      else
-      {
-        $("#ambform").hide();
-        $("#illness").show();
-      }
-    });
-
-
-
-
-
-
-});
-
-
-
-
-});
-
-
-    </script>
-
-
-
-
-{% endblock %}
-
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p><p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 
 <div class="footer-bottom" style="width: 2000px; ">
@@ -449,3 +131,5 @@ $(document).ready(function(){
 </div>
 </body>
 </html>
+
+        {% endblock %}

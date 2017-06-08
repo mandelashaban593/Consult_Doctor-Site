@@ -1,14 +1,15 @@
 {% load staticfiles %}
 
-<div style="visibility:visible;position:relative;top:-40px;left: 320px;" id="paypalformContainer" align="center">
+<div style="visibility:visible;position:absolute;top:180px;left: 580px;">
 
-<form id="signup" action="/Doct/illness/"  method="POST" style=" ">
-{% csrf_token %}
-       <form id="signup" action="/Doct/illness/"  method="POST" style=" ">
+       <form id="signu" action="/Doct/illness/"  method="POST" style=" display: inline-block;
+vertical-align: top;
+text-align: left;
+width: 50%;">
 {% csrf_token %}
        
         <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
-            <h3>Consult Doctor</h3>
+            <h3>Consult </h3>
           
  
         
@@ -28,12 +29,11 @@
 
                 <p style="padding: 4px">
                 You need an ambulance ?:<br>
-                <input value="1" type="radio" name="amb" onClick="displayForm(this)"></input>Yes
-                <br>
-                <input value="0" type="radio" name="amb" onClick="displayForm2(this)"></input>No
+                <a href="/Doct/ambulance/"><input value="1" type="radio" name="amb" onClick="displayForm(this)"></input>Yes</a>&nbsp;&nbsp;&nbsp;
+               <input value="0" type="radio" name="amb" onClick="displayForm2(this)"></input>No
 
 
-                </p>
+               </p>
 
                 <p style="padding: 4px"> Gender:<br>
                  <select type="text" name="gender" Placeholder="Patient Age" id="page" autofocus>
@@ -44,12 +44,12 @@
               
                 </p>
 
-                <p style="padding: 7px"> Phonenumber:<br>    
+`                <p style="padding: 4px"> Phonenumber:<br>    
                  <input type="telno" name="telno"  id="password"  Placeholder="Mobile Number" />
                  </p>
 
 
-                <p style="padding: 7px"> Doctor:<br>
+                <p style="padding: 4px"> Doctor:<br>
                  <select type="text" name="dname" Placeholder="Patient Age" id="page" autofocus>
                  <option value="Peter">Choose A Doctor</option>
                  <option value="Peter">Peter(General Doctor)</option>
@@ -61,18 +61,29 @@
                 </p>
 
 
-
                 <input type="hidden" name="username"  id="username"   value="{{username}}"/>
-                 <input type="hidden" name="password"  id="password" value="{{password}"/>
+                 <input type="hidden" name="password"  id="password" value="{{password}}"/>
 
                 <input type="hidden" name="role"  id="dname" value="patient"/> 
                 <input type="hidden" name="page"  id="dname" value="0"/> 
            
 
-            <p style="padding: 7px">
+            <p style="padding: 4px">
 
 
-            <input type="submit" id="subm"  class="read"   value="Submit" name="SUBMIT" required>
+            <input type="submit" id="subm"  class="read" style="font-size: 110%;
+line-height: 1;
+text-align: center;
+background-color: #1fadc5;
+display: inline-block;
+color: #fff !important;
+border-radius: 3em;
+cursor: pointer;
+max-width: 350px;
+width: 100%;
+padding: 0.9em;
+margin: 0.6em 0;
+border: 0;"   value="Submit" name="SUBMIT" required>
            
              </p>
 
@@ -80,12 +91,6 @@
 
     </div>
 
-
-<div style="visibility:hidden; position:relative;top:-110px;margin-top:40px" id="ccformContainer">
-
-{% include "Doct/ambulance.html" %}
-
-</div>
 
 
 

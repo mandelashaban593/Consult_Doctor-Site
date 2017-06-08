@@ -88,7 +88,19 @@
 
 <tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dpassword" value="{{dpassword}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
 
-<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
+<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="font-size: 110%;
+line-height: 1;
+text-align: center;
+background-color: #1fadc5;
+display: inline-block;
+color: #fff !important;
+border-radius: 3em;
+cursor: pointer;
+max-width: 350px;
+width: 34%;
+padding: 0.9em;
+margin: 0.6em 0;
+border: 0;" /></td></tr>
 
 <tr><td style="width: 100px; padding-bottom: 7px"></form></td></tr>
 
@@ -136,10 +148,12 @@
 
 
 <div style="visibility:visible;position: absolute;
-    top: 150px;
-    right: 0px" id="paypalformContainer" >
-
-<form id="signup" action="/Doct/illness/"  method="POST" align="center">
+    top: 170px;
+    right: 85px" id="paypalformContainer" >
+<form id="signu" style=" display: inline-block;
+vertical-align: top;
+text-align: left;
+width: 50%;" action="/Doct/illness/"  method="POST" align="center">
 {% csrf_token %}
         
         <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
@@ -202,7 +216,19 @@
             <p style="padding: 7px">
 
 
-            <input type="submit" id="submit"  placeholder="Enter Message" value="Submit" name="SUBMIT" required>
+            <input type="submit" id="submi"  style="font-size: 110%;
+line-height: 1;
+text-align: center;
+background-color: #1fadc5;
+display: inline-block;
+color: #fff !important;
+border-radius: 3em;
+cursor: pointer;
+max-width: 350px;
+width: 100%;
+padding: 0.9em;
+margin: 0.6em 0;
+border: 0;" placeholder="Enter Message" value="Submit" name="SUBMIT" required>
            
              </p>
 

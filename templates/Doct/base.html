@@ -3,15 +3,39 @@
 <html>
 <head>
 <title>Doctor(Medical)  Consultation Website | Home </title>
+<meta charset="utf-8">
+    <meta name="Description" CONTENT="Online Doctor or medical consultation">
+    <meta name="google-site-verification" content="+nxGUDJ4QpAZ5l9Bsjdi102tLVC21AIh5d1Nl23908vVuFHs34="/>
+    <meta name="robots" content="noindex,nofollow">
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href="{% static 'css/slider.css' %}" rel="stylesheet" type="text/css" media="all"/>
 <script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
     <script src="app.js"></script>
+     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
     
 </head>
 <body>
+
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
 
 {% block nav_bar %}
 <div class="header" style="width: 2000px; ">
@@ -35,40 +59,25 @@
                 <li><a class="hsubs" href="/Doct/" title="Logout">Home</a></li>
                 <li><a class="hsubs" href="/Doct/about/">About Us</a></li>
                 <li><a class="hsubs" href="/Doct/team/">Our Team</a>
-                {% if not request.user.authenticated  %}
-                <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
-                  <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
                 
+                <li><a href="/Doct/contact/">Feedback</a></li>
+                <li><a href="/Doct/how_it_works/">How it works</a></li>
+
+                {% if ill_more  or order_drug %}
+                <li><a href="/Doct/orderdrugs/">Order Drugs</a></li>
                 {% endif %}
 
-                <li><a href="/Doct/contact/">Contact Us</a></li>
-                <li><a href="/Doct/how_it_works/">How it works</a></li>
-                {% if ill_more %}
-                <li><a href="/Doct/orderdrugs/">Order Drugs</a></li>
+
+                {% if labtest or ill_more %}
+
                 <li><a href="/Doct/labtests/">Order Lab Test</a></li>
 
-                {% endif %}
+                {%  endif %}
 
-                {% if qconvs or ill_more %}
-            
-                 <li><form action="/Doct/converse/" style="height:35px;border: 0px; background-color: #3399FF" id="changesicknessform_form" method="post">
-                {% csrf_token %}
 
-                <input type="hidden" name="username" value="{{username}}" style="width: 200px; border: 0px; " id="dname"/>
+           
 
-                <input type="hidden" name="dusername" value="0754307471" style="width: 200px; border: 0px; " id="dname"/>
-
-                <tr><td style="width: 4px; padding-bottom: 10px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px; background-color: white; color: #337ab7; " /></td></tr>
-
-                </form>
-                <ul class="submenu">
-                      <!-- <li><a href="edit_username.php" title="Update Username">Change Username</a></li>   
-                            <li><a href="edit_password.php" title=" Update Password">Change Password</a></li> -->
-                    
-                    </ul> </li>
-
-                    {% endif %}
-
+             
                 <li><a href="/Doct/whyus/">Why Us</a></li>
                     <ul class="subs">
                         <li><a href="#">Hotels</a></li>
@@ -76,9 +85,16 @@
                         <li><a href="#">Beach Resorts</a></li>
                     </ul>
                 </li>
+
+
                 {% if user.is_authenticated %}
 
                 <li><a href="/Doct/logout/">Logout</a></li>
+
+                {%  else %}
+                <li><a class="hsubs" href="/Doct/register/">Sign Up</a>
+                <li><a class="hsubs" href="/Doct/login/">Doctor/Admin Log In</a></li>
+
 
                 {% endif %}
                
@@ -105,12 +121,6 @@
 
 
 
-
-<div class="header-banner">
-<div class="wrap">
-  <div class="banner">
-    <div class="indent">
-                
                 {% block body_block %} 
 
 
@@ -130,31 +140,20 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script src="{% static 'js/script.js' %}"></script>
-         </div>                                   
 
-{% block side_menue %}
 
-{% endblock %}
 
-     
-  </div>
     <div class="clear"></div>
       
         <div class="clear"></div>
-      </div>
-      </div>
-
+     
 
       {% block bottom_content %}
 
     
         {% endblock %}
 
-     </div>
-      </div>
-
-      </div></div>
-
+   
 
 
       {% block footer %}

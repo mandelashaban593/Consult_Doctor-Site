@@ -8,7 +8,10 @@
 
 <div style="visibility:visible;position:relative;top:-40px;left: 320px; height:300px" id="paypalformContainer" align="center">
 
-<form id="signup" action="/Doct/illness/"  method="POST" style=" ">
+<form id="signu" action="/Doct/illness/"  method="POST" style=" display: inline-block;
+vertical-align: top;
+text-align: left;
+width: 50%;">
 {% csrf_token %}
        
         <img src="{% static 'img/images4.jpg' %}" alt="pat" width="50px" height="50px" align="left" />
@@ -32,9 +35,8 @@
 
                 <p style="padding: 4px">
                 You need an ambulance ?:<br>
-                <input value="1" type="radio" name="amb" onClick="displayForm(this)"></input>Yes
-                <br>
-                <input value="0" type="radio" name="amb" onClick="displayForm2(this)"></input>No
+                <table><tr><td><input value="1" type="radio" name="amb" onClick="displayForm(this)"></input>Yes</td>
+               <td>                <input value="0" type="radio" name="amb" onClick="displayForm2(this)"></input>No</td></tr></table>
 
 
                </p>
@@ -67,7 +69,7 @@
 
 
                 <input type="hidden" name="username"  id="username"   value="{{username}}"/>
-                 <input type="hidden" name="password"  id="password" value="{{password}"/>
+                 <input type="hidden" name="password"  id="password" value="{{password}}"/>
 
                 <input type="hidden" name="role"  id="dname" value="patient"/> 
                 <input type="hidden" name="page"  id="dname" value="0"/> 
@@ -76,7 +78,19 @@
             <p style="padding: 7px">
 
 
-            <input type="submit" id="subm" class="read"  value="Submit" name="SUBMIT" required>
+            <input type="submit" id="subm" class="red" style="font-size: 110%;
+line-height: 1;
+text-align: center;
+background-color: #1fadc5;
+display: inline-block;
+color: #fff !important;
+border-radius: 3em;
+cursor: pointer;
+max-width: 350px;
+width: 100%;
+padding: 0.9em;
+margin: 0.6em 0;
+border: 0;" value="Submit" name="SUBMIT" required>
            
              </p>
 

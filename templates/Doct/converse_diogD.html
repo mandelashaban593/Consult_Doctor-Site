@@ -1,0 +1,141 @@
+
+<div id="div2">
+
+
+     {% if illness %} <script type="text/javascript">alert("You have successfully submitted your Illness details, Please view Your diognosis");
+ return false;
+ </script>
+ {% endif %}
+
+<strong style="color:green;margin-left:150px; font-size:18px;"><p style="color:green;margin-left:150px; font-size:18px;"> Pay 20,000 to Mob Phone<br> 0754307471 for seeing<br>doctor's response , <br>get Diognosis  and even converse(chat).
+</p></strong>
+
+<table style="margin-left: 150px; top: 0px;">
+
+
+
+
+<tr><td style="width: 200px">{{onepdiog.telno}}</td></tr>
+
+
+<tr><td  style="width: 200px">{{onepdiog.illness}}  </td></tr>
+
+<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if onepdiog.consultation_success == True %} {{onepdiog.comp_signs}} {% else %} <font style="color:green">Pay 3,000 to Mob Phone 0754307471 for seeing doctor's response</font>{% endif %}</td></tr>
+
+</table>
+
+
+
+{% if pay_status == True %}
+
+
+<form action="/Doct/sendtext/" style="width: 200px; margin-left:150px;top:-150px;border: 0px;" id="changesicknessform_form" method="post">
+{% csrf_token %}
+<h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1>
+<input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>
+
+<input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; "    id="dname"/>
+
+<input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; "    id="dname"/>
+
+<tr><td style="width: 100px;"><textarea class="form-control" placeholder="Enter message herei..." name="pmsg" style="margin-left:0px;width:200px; border: 0px; padding-bottom: 7px" rows="2"> </textarea>
+</td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 2px; height: 4px;"><input type="submit" name="submit" value="Send"  style="background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 27px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px; " /></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 2px"></form>
+
+
+</table>
+{% endif %} <!-- End convesre if -->
+
+
+
+
+ {% include "Doct/notifications.html" %} 
+
+
+
+
+
+
+</div>
+
+
+
+
+
+<tr><td><form action="/Doct/converse/" style="width: 200px; border: 0px;margin-left: 400px;" id="changesicknessform_form" method="post"></td></tr>
+{% csrf_token %}
+	<tr><td style="width: 100px"><h1 style="color: #337ab7; font-size: 18px;font-weight: bold;">Converse</h1></td></tr>
+<tr style="border: 0px; padding-bottom: 7px"><td style="width: 100px; padding-bottom: 7px"><input type="text" name="telno"  value="{{dname}}" style="width: 100px; border: 0px; padding-bottom: 7px" readonly="readonly" id="dname"/>(Doctor)</td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="telno" value="{{ptelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 7px"><input type="hidden" name="dtelno" value="{{dtelno}}" style="width: 200px; border: 0px; padding-bottom: 7px"  readonly="readonly"  id="dname"/></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 7px"><input type="submit" name="submit" value="Converse"  style="width: 100px; border: 0px;" /></td></tr>
+
+<tr><td style="width: 100px; padding-bottom: 7px"></form></td></tr>
+
+</table>
+
+
+
+<table>
+
+</table>
+
+
+<table>
+<tr>
+
+<td>
+<table  style="left:0px;margin-left: 0px; ">
+<tr><td>
+<table style="margin-right: 500px; top: 0px;">
+
+{% if pdiogs %}
+
+
+<tr><td style="width: 200px">{{pdiogs.telno}}</td></tr>
+
+
+<tr><td  style="width: 200px">{{pdiogs.illness}}  </td></tr>
+
+<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if pdiog.demail %} {{pdiogs.comp_signs
+}} {% else %} <font style="color:green">Pay 3,000 to Mob Phone 0754307471 for seeing doctor's response</font>{% endif %}</td></tr>
+
+
+
+</table>
+
+{% endif %} <!-- end dionossis if -->
+
+
+
+{% if  onepdiog %} 
+
+<table style="margin-right: 500px; top: 0px;">
+
+
+
+
+<tr><td style="width: 200px">{{onepdiog.telno}}</td></tr>
+
+
+<tr><td  style="width: 200px">{{onepdiog.illness}}  </td></tr>
+
+<tr style=""><td  style="width:400px;padding-bottom: 7px"> {% if onepdiog.demail %} {{onepdiog.comp_signs
+}} {% else %} <font style="color:green">Pay 3,000 to Mob Phone 0754307471 for seeing doctor's response</font>{% endif %}</td></tr>
+	
+</table>
+
+{% endif %} <!-- end single diog 8 if -->

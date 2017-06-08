@@ -3,7 +3,7 @@
 
 
 <form id="signup" action="/Doct/enterpay/"  method="POST" style="position: relative;
-  z-index: 1; left:380px;top:8px;">
+  z-index: 1; left:340px;top:8px; height:40px;margin-bottom: 200px;">
 {% csrf_token %}
         
         
@@ -13,13 +13,13 @@
 
             <p>Username:<br>
         
-            <input type="text" placeholder="username" name="username"  autofocus  style="width:260px;height:30px;padding: 7px;" />
+            <input type="text" placeholder="username" name="username"  style="width:260px;height:30px;padding: 7px;" />
             </p>
 
 
             <p>Password:<br>
         
-            <input type="password" placeholder="Password" name="password"  autofocus  style="width:260px;height:30px;padding: 7px;" />
+            <input type="password" placeholder="Password" name="password"  style="width:260px;height:30px;padding: 7px;" />
             </p>
 
             
@@ -30,7 +30,19 @@
 
             <p>
 
-            <input type="submit" id="submit" class="read"  placeholder="Enter Message" value="Log in" name="SUBMIT" required>
+            <input type="submit" id="submit" class="rea"  style="font-size: 110%;
+line-height: 1;
+text-align: center;
+background-color: #1fadc5;
+display: inline-block;
+color: #fff !important;
+border-radius: 3em;
+cursor: pointer;
+max-width: 350px;
+width: 100%;
+padding: 0.9em;
+margin: 0.6em 0;
+border: 0;" placeholder="Enter Message" value="Log in" name="SUBMIT" required>
            
              </p>
 <p>Don't have an account? <a href="/Doct/register/" style="font-family: sans-serif;font-size: 20px;color:rgb(8, 218, 243);">Sign up!</a></p>

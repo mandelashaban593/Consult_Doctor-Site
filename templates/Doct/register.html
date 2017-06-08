@@ -26,8 +26,7 @@
                
                 <li><a href="/Doct/contact/">Contact Us</a></li>
                 <li><a href="/Doct/how_it_works/">How it works</a></li>
-                <li><a href="/Doct/convbaddy/">Converse</a></li>
-                <li><a href="/Doct/whyus/">Why Us</a></li>
+                    <li><a href="/Doct/whyus/">Why Us</a></li>
                     <ul class="subs">
                         <li><a href="#">Hotels</a></li>
                         <li><a href="#">Restaurants</a></li>
@@ -58,7 +57,7 @@ input[type=text], input[type=password] {
 
 
 {% block body_block %}
-<div class="hero-unit"  style="margin-left: 500px">
+<div class="hero-unit"   style="margin-left: 0px;width: 2000px; height: 2000px;"">
 
 <br />
 <div class="container">
@@ -66,10 +65,16 @@ input[type=text], input[type=password] {
 <p style="width:380px">Thank you for registering.</p>
 <p style="width:380px"><a href="/Doct/">Login</a> when you are ready to Consult A doctor.</p>
 {% else %}
-<form class="form-signin span8" id="user_form" method="post" action="/Doct/register/"
+<form class="form-signin span8" id="user_form" style=" display: inline-block;
+vertical-align: top;
+text-align: left;
+width: 50%;" method="post" action="/Doct/register/" 
 enctype="multipart/form-data">
 {% csrf_token %}
-<h2 class="form-signin-heading" style="width:280px">Sign up </h2>
+<strong class="" style="width:280px;text-align: center;font-size: 40px;
+  line-height: 29px;
+  font-family: Century Gothic, Helvetica, sans-serif;
+  color:; ">Sign up </strong>
 <!-- Display each form here -->
 {% for field in user_form.visible_fields %}
 <p style="margin-bottom: 20px; width: 500px;">{{ field.errors }}</p>
@@ -83,7 +88,19 @@ enctype="multipart/form-data">
 {% endfor %}
 <br />
 <!-- Provide a button to click to submit the form. -->
-<input  class="read" type="submit" name="submit" value="Register"/>
+<input  class="rea" style="font-size: 110%;
+line-height: 1;
+text-align: center;
+background-color: #1fadc5;
+display: inline-block;
+color: #fff !important;
+border-radius: 3em;
+cursor: pointer;
+max-width: 300px;
+width: 500px;
+padding: 0.9em;
+margin: 0.6em 0;
+border: 0;" type="submit" name="submit" value="Register"/>
 </form>
 {% endif %}
 </div>
@@ -93,7 +110,7 @@ enctype="multipart/form-data">
 
 
 
-<div class="footer-bottom" style="width: 1800px; ">
+<div class="footer-bottom" style="width: 2000px; height: 2000px;">
 <div class="wrap">  
   <div class="copy">
     <p>ES - DOCTOR&copy; 2017 All rights Reserved | Design by <a href="http://w3layouts.com">Mandela Shaban</a> &nbsp;&nbsp;&nbsp;Photos by <a href="http://www.freegreatpicture.com/">Freegreatpicture</a></p>

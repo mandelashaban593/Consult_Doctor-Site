@@ -273,7 +273,6 @@ def stuff_users(request, name=False):
     pretitle = None
     
     user_list = Register.objects.filter(role="doctor")  # (is_staff=True)
-    debug(user_list, 'stuff')
     user_list = user_list.filter().order_by('-id')
     # search query
     if 'q' in request.GET:
@@ -346,10 +345,59 @@ def patients(request, name=''):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         users = paginator.page(paginator.num_pages)
-    log_action(request, model_object=user_list,
-               action_flag=13, change_message='searched user')
     return render_to_response('Doct/users.html', {'users': users, 'super_admin':super_admin,'admin':admin},context)
 
+
+
+def feedbacks(request, name=''):
+    '''
+    @request  request object
+    '''
+    # user_list = Profile.objects.filter(account_verified=True,user__isnull=False)
+    # print name
+    context = RequestContext(request)
+    pretitle = 'verified users'
+    page_title = 'verified users'
+    admin= True
+    super_admin= True
+
+    feedbacks = Contact.objects.all()
+    
+    if name == 'blocked':
+        pretitle = 'Blocked Users'
+        page_title = 'Blocked Users'
+        user_list = admin_utils.blocked_users()
+    elif name == 'top':
+        pretitle = 'Blocked Users'
+        page_title = 'Blocked Users'
+        user_list = Illness.objects.all()
+    elif name == 'search':
+        pretitle = 'User Search'
+        page_title = 'User Search'
+        user_list = Illness.objects.filter()
+    else:
+        print "Nothing"
+      
+
+    feedbacks = feedbacks.filter().order_by('-id')
+    # search query
+    if 'q' in request.GET:
+        pretitle += ' | %s' % request.GET['q']
+        page_title += ' | %s' % request.GET['q']
+        user_list = user_list.filter(
+            Q(username__icontains='' + request.GET['q'] + '')  )
+
+    paginator = Paginator(feedbacks, settings.PAGNATION_LIMIT)
+    page = request.GET.get('page')
+    try:
+        feedbacks = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        feedbacks = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        feedbacks = paginator.page(paginator.num_pages)
+    return render_to_response('Doct/feedbacks.html', {'feedbacks': feedbacks, 'super_admin':super_admin,'admin':admin},context)
 
 
 

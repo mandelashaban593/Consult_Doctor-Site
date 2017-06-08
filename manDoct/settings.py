@@ -29,12 +29,12 @@ DEBUG_EMAILS = {
 
 }
 
-BASE_URL = 'https://es-doctor.com/'
+BASE_URL = 'https://e-mdoctor.com/'
 
 
-APP_NAME = 'es-doctor'
-DOMAIN_NAME = 'es-doctor'
-APP_TITLE = 'Es-doctor | Consult a doctor online'
+APP_NAME = 'e-mdoctor'
+DOMAIN_NAME = 'e-mdoctor'
+APP_TITLE = 'E-mdoctor | Consult a doctor online'
 
 MANAGERS = ADMINS
 
@@ -74,9 +74,9 @@ BASE_DIR = os.path.abspath(
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'doct_db',
-        'USER': 'doctuser',
-        'PASSWORD': 'doctpassword',
+        'NAME': 'django_db',
+        'USER': 'djangouser',
+        'PASSWORD': 'mypassword',
         'HOST': '',
         'PORT': '',
     }
